@@ -1,0 +1,14 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+from building import *
+
+cwd     = os.path.join(str(Dir('#')), 'HMI')
+src	= Glob('*.c')+Glob('*.h')
+
+CPPPATH = [cwd +'/lcd',
+          GetCurrentDir() 
+         ]
+
+group = DefineGroup('HMI', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')

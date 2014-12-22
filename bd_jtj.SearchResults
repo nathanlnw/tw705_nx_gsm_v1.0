@@ -1,0 +1,17 @@
+---- ISP_buffer Matches (21 in 1 files) ----
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):static u8	ISP_buffer[1024];
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):      memset(ISP_buffer,0,sizeof(ISP_buffer));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):	  SST25V_BufferRead(ISP_buffer,ISP_StartArea,256); 
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):      if(ISP_buffer[32]!=ISP_BYTE_CrcPass)   //  计算校验通过后  更新标志改成0xE1     以前是0xF1
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):	  memcpy(FileHead,ISP_buffer,32);
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):	  if(strncmp(ISP_buffer+32+13,"70420TW705",10)==0) //判断厂商和型号
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):			 HardVersion=(ISP_buffer[32+38]<<24)+(ISP_buffer[32+39]<<16)+(ISP_buffer[32+40]<<8)+ISP_buffer[32+41]; 
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):			 if(strncmp((const char*)ISP_buffer+32+42,"NXBXGGHYPT",10)==0) 
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):			 if(strncmp((const char*)ISP_buffer+32+62,"NXBX",4)==0) 
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):								    //SST25V_BufferRead(ISP_buffer,ISP_StartArea,256); //---------------
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                                   //if(strncmp(BD_ISP.ContentData+32+13,ISP_buffer+14,10)==0) //判断厂商和型号
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):								  memset(ISP_buffer,0,sizeof(ISP_buffer));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):								  SST25V_BufferRead(ISP_buffer,ISP_StartArea+(BD_ISP.CurrentPacket_Num-1)*BD_ISP.PacketSizeGet,infolen); 
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                                     if(BD_ISP.ContentData[i]!=ISP_buffer[i])
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                                          rt_kprintf("\r\n ISP error at :%d   wr=0x%2X rd=0x%2X\r\n",i,BD_ISP.ContentData[i],ISP_buffer[i]);  
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                                //  OutPrint_HEX("Read",ISP_buffer,infolen);   

@@ -1,0 +1,644 @@
+ARM Linker, 4.1 [Build 894] [Professional]
+
+==============================================================================
+
+Removing Unused input sections from the image.
+
+    Removing application.o(.emb_text), (8 bytes).
+    Removing startup.o(.emb_text), (8 bytes).
+    Removing App_moduleConfig.o(.emb_text), (8 bytes).
+    Removing spi_flash.o(.emb_text), (8 bytes).
+    Removing sst25vfxx.o(.emb_text), (8 bytes).
+    Removing SST25VF.o(.emb_text), (8 bytes).
+    Removing App_gps.o(.emb_text), (8 bytes).
+    Removing Device_gps.o(.emb_text), (8 bytes).
+    Removing App_gsm.o(.emb_text), (8 bytes).
+    Removing App_gsm.o(.data), (1 bytes).
+    Removing App_gsm.o(.data), (1 bytes).
+    Removing App_gsm.o(.data), (1 bytes).
+    Removing App_gsm.o(.data), (1 bytes).
+    Removing Device_gsm.o(.emb_text), (8 bytes).
+    Removing Device_gsm.o(.constdata), (26 bytes).
+    Removing Device_gsm.o(.constdata), (20 bytes).
+    Removing Device_gsm.o(.constdata), (27 bytes).
+    Removing Device_gsm.o(.data), (90 bytes).
+    Removing Device_gsm.o(.data), (90 bytes).
+    Removing Device_gsm.o(.data), (15 bytes).
+    Removing Device_gsm.o(.data), (18 bytes).
+    Removing Device_gsm.o(.data), (2 bytes).
+    Removing Device_gsm.o(.data), (1 bytes).
+    Removing Device_gsm.o(.data), (1 bytes).
+    Removing app_hmi.o(.emb_text), (8 bytes).
+    Removing Menu_1_CarSet.o(.emb_text), (8 bytes).
+    Removing Menu_1_CarSet.o(.text), (292 bytes).
+    Removing Menu_1_CarSet.o(.conststring), (9 bytes).
+    Removing Menu_1_CarSet.o(.data), (8 bytes).
+    Removing Menu_1_CarSet.o(.data), (8 bytes).
+    Removing Menu_1_CarSet.o(.data), (8 bytes).
+    Removing Menu_1_CarSet.o(.data), (44 bytes).
+    Removing Menu_1_CarSet.o(.data), (21 bytes).
+    Removing Menu_1_Idle.o(.emb_text), (8 bytes).
+    Removing Menu_1_Idle.o(.text), (196 bytes).
+    Removing Menu_1_Idle.o(.conststring), (9 bytes).
+    Removing Menu_1_Idle.o(.data), (1 bytes).
+    Removing Menu_1_Idle.o(.data), (1 bytes).
+    Removing Menu_1_Idle.o(.data), (21 bytes).
+    Removing Menu_1_InforCheck.o(.emb_text), (8 bytes).
+    Removing Menu_1_InforCheck.o(.text), (308 bytes).
+    Removing Menu_1_InforCheck.o(.conststring), (9 bytes).
+    Removing Menu_1_InforCheck.o(.data), (8 bytes).
+    Removing Menu_1_InforCheck.o(.data), (8 bytes).
+    Removing Menu_1_InforCheck.o(.data), (8 bytes).
+    Removing Menu_1_InforCheck.o(.data), (48 bytes).
+    Removing Menu_1_InforCheck.o(.data), (21 bytes).
+    Removing Menu_1_InforInteract.o(.emb_text), (8 bytes).
+    Removing Menu_1_InforInteract.o(.text), (308 bytes).
+    Removing Menu_1_InforInteract.o(.conststring), (9 bytes).
+    Removing Menu_1_InforInteract.o(.data), (8 bytes).
+    Removing Menu_1_InforInteract.o(.data), (8 bytes).
+    Removing Menu_1_InforInteract.o(.data), (8 bytes).
+    Removing Menu_1_InforInteract.o(.data), (48 bytes).
+    Removing Menu_1_InforInteract.o(.data), (21 bytes).
+    Removing Menu_1_InforTirExspd.o(.emb_text), (8 bytes).
+    Removing Menu_1_InforTirExspd.o(.text), (296 bytes).
+    Removing Menu_1_InforTirExspd.o(.conststring), (9 bytes).
+    Removing Menu_1_InforTirExspd.o(.data), (8 bytes).
+    Removing Menu_1_InforTirExspd.o(.data), (8 bytes).
+    Removing Menu_1_InforTirExspd.o(.data), (8 bytes).
+    Removing Menu_1_InforTirExspd.o(.data), (28 bytes).
+    Removing Menu_1_InforTirExspd.o(.data), (21 bytes).
+    Removing Menu_1_Usb.o(.emb_text), (8 bytes).
+    Removing Menu_1_Usb.o(.text), (928 bytes).
+    Removing Menu_1_Usb.o(.conststring), (8 bytes).
+    Removing Menu_1_Usb.o(.data), (4 bytes).
+    Removing Menu_1_Usb.o(.data), (10 bytes).
+    Removing Menu_1_Usb.o(.data), (21 bytes).
+    Removing Menu_2_2_1_License.o(.emb_text), (8 bytes).
+    Removing Menu_2_2_1_License.o(.text), (1028 bytes).
+    Removing Menu_2_2_1_License.o(.bss), (10 bytes).
+    Removing Menu_2_2_1_License.o(.conststring), (7 bytes).
+    Removing Menu_2_2_1_License.o(.data), (146 bytes).
+    Removing Menu_2_2_1_License.o(.data), (5 bytes).
+    Removing Menu_2_2_1_License.o(.data), (5 bytes).
+    Removing Menu_2_2_1_License.o(.data), (8 bytes).
+    Removing Menu_2_2_1_License.o(.data), (21 bytes).
+    Removing Menu_2_2_2_CarType.o(.emb_text), (8 bytes).
+    Removing Menu_2_2_2_CarType.o(.text), (500 bytes).
+    Removing Menu_2_2_2_CarType.o(.conststring), (13 bytes).
+    Removing Menu_2_2_2_CarType.o(.data), (8 bytes).
+    Removing Menu_2_2_2_CarType.o(.data), (66 bytes).
+    Removing Menu_2_2_2_CarType.o(.data), (21 bytes).
+    Removing Menu_2_2_3_SpeedSet.o(.emb_text), (8 bytes).
+    Removing Menu_2_2_3_SpeedSet.o(.text), (376 bytes).
+    Removing Menu_2_2_3_SpeedSet.o(.conststring), (9 bytes).
+    Removing Menu_2_2_3_SpeedSet.o(.data), (8 bytes).
+    Removing Menu_2_2_3_SpeedSet.o(.data), (1 bytes).
+    Removing Menu_2_2_3_SpeedSet.o(.data), (21 bytes).
+    Removing Menu_2_2_4_VINset.o(.emb_text), (8 bytes).
+    Removing Menu_2_2_4_VINset.o(.text), (616 bytes).
+    Removing Menu_2_2_4_VINset.o(.bss), (18 bytes).
+    Removing Menu_2_2_4_VINset.o(.conststring), (12 bytes).
+    Removing Menu_2_2_4_VINset.o(.data), (8 bytes).
+    Removing Menu_2_2_4_VINset.o(.data), (12 bytes).
+    Removing Menu_2_2_4_VINset.o(.data), (5 bytes).
+    Removing Menu_2_2_4_VINset.o(.data), (21 bytes).
+    Removing Menu_2_2_5_Cancel.o(.emb_text), (8 bytes).
+    Removing Menu_2_2_5_Cancel.o(.text), (188 bytes).
+    Removing Menu_2_2_5_Cancel.o(.conststring), (13 bytes).
+    Removing Menu_2_2_5_Cancel.o(.data), (8 bytes).
+    Removing Menu_2_2_5_Cancel.o(.data), (21 bytes).
+    Removing Menu_2_3_1_Status8.o(.emb_text), (8 bytes).
+    Removing Menu_2_3_1_Status8.o(.text), (120 bytes).
+    Removing Menu_2_3_1_Status8.o(.conststring), (11 bytes).
+    Removing Menu_2_3_1_Status8.o(.data), (21 bytes).
+    Removing Menu_2_3_2_sudu.o(.emb_text), (8 bytes).
+    Removing Menu_2_3_2_sudu.o(.text), (356 bytes).
+    Removing Menu_2_3_2_sudu.o(.conststring), (17 bytes).
+    Removing Menu_2_3_2_sudu.o(.data), (4 bytes).
+    Removing Menu_2_3_2_sudu.o(.data), (21 bytes).
+    Removing Menu_2_3_3_TextInforStor.o(.emb_text), (8 bytes).
+    Removing Menu_2_3_3_TextInforStor.o(.text), (28 bytes).
+    Removing Menu_2_3_3_TextInforStor.o(.conststring), (13 bytes).
+    Removing Menu_2_3_3_TextInforStor.o(.data), (21 bytes).
+    Removing Menu_2_3_4_CarInforNew.o(.emb_text), (8 bytes).
+    Removing Menu_2_3_4_CarInforNew.o(.text), (368 bytes).
+    Removing Menu_2_3_4_CarInforNew.o(.conststring), (13 bytes).
+    Removing Menu_2_3_4_CarInforNew.o(.data), (3 bytes).
+    Removing Menu_2_3_4_CarInforNew.o(.data), (21 bytes).
+    Removing Menu_2_3_5_jiayuan.o(.emb_text), (8 bytes).
+    Removing Menu_2_3_5_jiayuan.o(.text), (556 bytes).
+    Removing Menu_2_3_5_jiayuan.o(.conststring), (15 bytes).
+    Removing Menu_2_3_5_jiayuan.o(.data), (21 bytes).
+    Removing Menu_2_3_5_jiayuan.o(.data), (3 bytes).
+    Removing Menu_2_3_6_CarMileage.o(.emb_text), (8 bytes).
+    Removing Menu_2_3_6_CarMileage.o(.text), (152 bytes).
+    Removing Menu_2_3_6_CarMileage.o(.conststring), (13 bytes).
+    Removing Menu_2_3_6_CarMileage.o(.data), (8 bytes).
+    Removing Menu_2_3_6_CarMileage.o(.data), (18 bytes).
+    Removing Menu_2_3_6_CarMileage.o(.data), (21 bytes).
+    Removing Menu_2_3_7_CenInforMeun.o(.emb_text), (8 bytes).
+    Removing Menu_2_3_7_CenInforMeun.o(.text), (28 bytes).
+    Removing Menu_2_3_7_CenInforMeun.o(.conststring), (13 bytes).
+    Removing Menu_2_3_7_CenInforMeun.o(.data), (21 bytes).
+    Removing Menu_2_3_8_Ver.o(.emb_text), (8 bytes).
+    Removing Menu_2_3_8_Ver.o(.text), (128 bytes).
+    Removing Menu_2_3_8_Ver.o(.conststring), (9 bytes).
+    Removing Menu_2_3_8_Ver.o(.data), (21 bytes).
+    Removing Menu_2_4_1_CenQuesSend.o(.emb_text), (8 bytes).
+    Removing Menu_2_4_1_CenQuesSend.o(.text), (28 bytes).
+    Removing Menu_2_4_1_CenQuesSend.o(.conststring), (13 bytes).
+    Removing Menu_2_4_1_CenQuesSend.o(.data), (21 bytes).
+    Removing Menu_2_4_2_CarStatus.o(.emb_text), (8 bytes).
+    Removing Menu_2_4_2_CarStatus.o(.text), (424 bytes).
+    Removing Menu_2_4_2_CarStatus.o(.conststring), (13 bytes).
+    Removing Menu_2_4_2_CarStatus.o(.data), (14 bytes).
+    Removing Menu_2_4_2_CarStatus.o(.data), (8 bytes).
+    Removing Menu_2_4_2_CarStatus.o(.data), (21 bytes).
+    Removing Menu_2_4_3_CarEleInfor.o(.emb_text), (8 bytes).
+    Removing Menu_2_4_3_CarEleInfor.o(.text), (196 bytes).
+    Removing Menu_2_4_3_CarEleInfor.o(.conststring), (13 bytes).
+    Removing Menu_2_4_3_CarEleInfor.o(.data), (8 bytes).
+    Removing Menu_2_4_3_CarEleInfor.o(.data), (21 bytes).
+    Removing Menu_2_4_4_Multimedia.o(.emb_text), (8 bytes).
+    Removing Menu_2_4_4_Multimedia.o(.text), (440 bytes).
+    Removing Menu_2_4_4_Multimedia.o(.conststring), (15 bytes).
+    Removing Menu_2_4_4_Multimedia.o(.data), (8 bytes).
+    Removing Menu_2_4_4_Multimedia.o(.data), (3 bytes).
+    Removing Menu_2_4_4_Multimedia.o(.data), (21 bytes).
+    Removing Menu_2_4_5_Record.o(.emb_text), (8 bytes).
+    Removing Menu_2_4_5_Record.o(.text), (456 bytes).
+    Removing Menu_2_4_5_Record.o(.conststring), (13 bytes).
+    Removing Menu_2_4_5_Record.o(.data), (8 bytes).
+    Removing Menu_2_4_5_Record.o(.data), (2 bytes).
+    Removing Menu_2_4_5_Record.o(.data), (21 bytes).
+    Removing Menu_2_4_6_CenAffair.o(.emb_text), (8 bytes).
+    Removing Menu_2_4_6_CenAffair.o(.text), (28 bytes).
+    Removing Menu_2_4_6_CenAffair.o(.conststring), (9 bytes).
+    Removing Menu_2_4_6_CenAffair.o(.data), (21 bytes).
+    Removing Menu_2_4_7_LogOut.o(.emb_text), (8 bytes).
+    Removing Menu_2_4_7_LogOut.o(.text), (496 bytes).
+    Removing Menu_2_4_7_LogOut.o(.conststring), (9 bytes).
+    Removing Menu_2_4_7_LogOut.o(.data), (4 bytes).
+    Removing Menu_2_4_7_LogOut.o(.data), (21 bytes).
+    Removing Menu_2_5_1_pilao.o(.emb_text), (8 bytes).
+    Removing Menu_2_5_1_pilao.o(.text), (28 bytes).
+    Removing Menu_2_5_1_pilao.o(.conststring), (13 bytes).
+    Removing Menu_2_5_1_pilao.o(.data), (21 bytes).
+    Removing Menu_2_5_2_chaosu.o(.emb_text), (8 bytes).
+    Removing Menu_2_5_2_chaosu.o(.text), (860 bytes).
+    Removing Menu_2_5_2_chaosu.o(.conststring), (13 bytes).
+    Removing Menu_2_5_2_chaosu.o(.data), (2 bytes).
+    Removing Menu_2_5_2_chaosu.o(.data), (21 bytes).
+    Removing Menu_CenTextInfor.o(.emb_text), (8 bytes).
+    Removing Menu_CenTextInfor.o(.text), (436 bytes).
+    Removing Menu_CenTextInfor.o(.bss), (50 bytes).
+    Removing Menu_CenTextInfor.o(.conststring), (13 bytes).
+    Removing Menu_CenTextInfor.o(.data), (8 bytes).
+    Removing Menu_CenTextInfor.o(.data), (21 bytes).
+    Removing Menu_Include.o(.emb_text), (8 bytes).
+    Removing Menu_Include.o(.text), (304 bytes).
+    Removing Menu_Include.o(.bss), (90 bytes).
+    Removing Menu_Include.o(.bss), (22 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (13 bytes).
+    Removing Menu_Include.o(.bss), (372 bytes).
+    Removing Menu_Include.o(.bss), (640 bytes).
+    Removing Menu_Include.o(.bss), (24 bytes).
+    Removing Menu_Include.o(.bss), (250 bytes).
+    Removing Menu_Include.o(.bss), (140 bytes).
+    Removing Menu_Include.o(.bss), (217 bytes).
+    Removing Menu_Include.o(.bss), (217 bytes).
+    Removing Menu_Include.o(.bss), (217 bytes).
+    Removing Menu_Include.o(.bss), (217 bytes).
+    Removing Menu_Include.o(.bss), (217 bytes).
+    Removing Menu_Include.o(.bss), (11 bytes).
+    Removing Menu_Include.o(.bss), (528 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (20 bytes).
+    Removing Menu_Include.o(.bss), (160 bytes).
+    Removing Menu_Include.o(.bss), (160 bytes).
+    Removing Menu_Include.o(.data), (8 bytes).
+    Removing Menu_Include.o(.data), (4 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (20 bytes).
+    Removing Menu_Include.o(.data), (10 bytes).
+    Removing Menu_Include.o(.data), (5 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (1 bytes).
+    Removing Menu_Include.o(.data), (4 bytes).
+    Removing Menu_Include.o(.data), (2 bytes).
+    Removing Menu_Include.o(.data), (2 bytes).
+    Removing Menu_Include.o(.data), (4 bytes).
+    Removing Menu_SetTZXS.o(.emb_text), (8 bytes).
+    Removing Menu_SetTZXS.o(.text), (492 bytes).
+    Removing Menu_SetTZXS.o(.conststring), (13 bytes).
+    Removing Menu_SetTZXS.o(.data), (8 bytes).
+    Removing Menu_SetTZXS.o(.data), (15 bytes).
+    Removing Menu_SetTZXS.o(.data), (21 bytes).
+    Removing SED1520.o(.emb_text), (8 bytes).
+    Removing SLE4442.o(.emb_text), (8 bytes).
+    Removing SLE4442.o(.text), (1360 bytes).
+    Removing SLE4442.o(.data), (1 bytes).
+    Removing SLE4442.o(.data), (1 bytes).
+    Removing SLE4442.o(.data), (4 bytes).
+    Removing SLE4442.o(.data), (3 bytes).
+    Removing SLE4442.o(.data), (4 bytes).
+    Removing lcd.o(.emb_text), (8 bytes).
+    Removing lcd.o(.data), (4 bytes).
+    Removing scr_CarMulTrans.o(.emb_text), (8 bytes).
+    Removing scr_CarMulTrans.o(.text), (204 bytes).
+    Removing scr_CarMulTrans.o(.conststring), (15 bytes).
+    Removing scr_CarMulTrans.o(.data), (8 bytes).
+    Removing scr_CarMulTrans.o(.data), (1 bytes).
+    Removing scr_CarMulTrans.o(.data), (21 bytes).
+    Removing scr_TelText.o(.emb_text), (8 bytes).
+    Removing scr_TelText.o(.text), (360 bytes).
+    Removing scr_TelText.o(.conststring), (7 bytes).
+    Removing scr_TelText.o(.data), (8 bytes).
+    Removing scr_TelText.o(.data), (22 bytes).
+    Removing scr_TelText.o(.data), (21 bytes).
+    Removing Device_printer.o(.emb_text), (8 bytes).
+    Removing Device_808.o(.emb_text), (8 bytes).
+    Removing Sys_config.o(.emb_text), (8 bytes).
+    Removing Sys_config.o(.data), (2 bytes).
+    Removing Sys_config.o(.data), (1 bytes).
+    Removing Sys_config.o(.data), (1 bytes).
+    Removing Sys_config.o(.data), (1 bytes).
+    Removing Sys_config.o(.data), (1 bytes).
+    Removing Sys_config.o(.data), (1 bytes).
+    Removing Sys_config.o(.data), (4 bytes).
+    Removing Sys_config.o(.data), (4 bytes).
+    Removing Sys_config.o(.data), (1 bytes).
+    Removing app_808.o(.emb_text), (8 bytes).
+    Removing protocol_808.o(.emb_text), (8 bytes).
+    Removing protocol_808.o(.bss), (40 bytes).
+    Removing protocol_808.o(.bss), (28 bytes).
+    Removing protocol_808.o(.bss), (512 bytes).
+    Removing protocol_808.o(.bss), (14 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (4 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (4 bytes).
+    Removing protocol_808.o(.data), (4 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (4 bytes).
+    Removing protocol_808.o(.data), (4 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (1 bytes).
+    Removing protocol_808.o(.data), (4 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (6 bytes).
+    Removing protocol_808.o(.data), (2 bytes).
+    Removing protocol_808.o(.data), (6 bytes).
+    Removing rtc.o(.emb_text), (8 bytes).
+    Removing App_485.o(.emb_text), (8 bytes).
+    Removing App_485.o(.data), (1 bytes).
+    Removing Device_485.o(.emb_text), (8 bytes).
+    Removing board.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_it.o(.emb_text), (8 bytes).
+    Removing usart.o(.emb_text), (8 bytes).
+    Removing serial.o(.emb_text), (8 bytes).
+    Removing system_stm32f4xx.o(.emb_text), (8 bytes).
+    Removing misc.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_adc.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_adc.o(.text), (852 bytes).
+    Removing stm32f4xx_can.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_can.o(.text), (1792 bytes).
+    Removing stm32f4xx_crc.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_crc.o(.text), (64 bytes).
+    Removing stm32f4xx_cryp.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_cryp.o(.text), (544 bytes).
+    Removing stm32f4xx_cryp_aes.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_cryp_aes.o(.text), (1210 bytes).
+    Removing stm32f4xx_cryp_des.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_cryp_des.o(.text), (384 bytes).
+    Removing stm32f4xx_cryp_tdes.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_cryp_tdes.o(.text), (436 bytes).
+    Removing stm32f4xx_dac.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_dac.o(.text), (324 bytes).
+    Removing stm32f4xx_dbgmcu.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_dbgmcu.o(.text), (76 bytes).
+    Removing stm32f4xx_dcmi.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_dcmi.o(.text), (312 bytes).
+    Removing stm32f4xx_dma.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_exti.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_exti.o(.text), (236 bytes).
+    Removing stm32f4xx_flash.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_flash.o(.text), (912 bytes).
+    Removing stm32f4xx_fsmc.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_fsmc.o(.text), (1164 bytes).
+    Removing stm32f4xx_gpio.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_hash.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_hash.o(.text), (436 bytes).
+    Removing stm32f4xx_hash_md5.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_hash_md5.o(.text), (434 bytes).
+    Removing stm32f4xx_hash_sha1.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_hash_sha1.o(.text), (442 bytes).
+    Removing stm32f4xx_i2c.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_i2c.o(.text), (804 bytes).
+    Removing stm32f4xx_iwdg.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_iwdg.o(.text), (60 bytes).
+    Removing stm32f4xx_pwr.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_rcc.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_rng.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_rng.o(.text), (140 bytes).
+    Removing stm32f4xx_rtc.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_sdio.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_sdio.o(.text), (440 bytes).
+    Removing stm32f4xx_spi.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_syscfg.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_syscfg.o(.text), (108 bytes).
+    Removing stm32f4xx_tim.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_tim.o(.text), (2388 bytes).
+    Removing stm32f4xx_usart.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_wwdg.o(.emb_text), (8 bytes).
+    Removing stm32f4xx_wwdg.o(.text), (124 bytes).
+    Removing backtrace.o(.text), (2 bytes).
+    Removing div0.o(.text), (2 bytes).
+    Removing showmem.o(.text), (144 bytes).
+    Removing showmem.o(.constdata), (18 bytes).
+    Removing completion.o(.text), (476 bytes).
+    Removing completion.o(.constdata), (57 bytes).
+    Removing dataqueue.o(.text), (1044 bytes).
+    Removing dataqueue.o(.constdata), (75 bytes).
+    Removing pipe.o(.text), (628 bytes).
+    Removing pipe.o(.constdata), (27 bytes).
+    Removing pipe.o(.data), (4 bytes).
+
+429 unused section(s) (total 36547 bytes) removed from the image.
+
+==============================================================================
+
+Image component sizes
+
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
+
+      1872        482         86         56       4272       9578   App_485.o
+      1856        410          0         16       2818       6480   App_gps.o
+       868        260          0         33       3520       6230   App_gsm.o
+        20          0          0          0          0       1181   App_moduleConfig.o
+       368         18          0         22        600       3693   Device_485.o
+       568         18          0          0          0       6908   Device_808.o
+       136         10          0          0          0       1869   Device_gps.o
+      4780       1310        277        237       1514      12184   Device_gsm.o
+      2316        138         71         32       3436      10212   Device_printer.o
+         0          0          0         25          0       7160   Menu_Include.o
+      2500         40          8          0        488      12188   SED1520.o
+      1584         20          0          0          0       6841   SST25VF.o
+      7228       2514       1051        126        588      13111   Sys_config.o
+       892        334          0          4       3984       3895   app_808.o
+       328        170          0          0       2280       3531   app_hmi.o
+       136         28          0          0       1152     305677   application.o
+       176         16          0          0          0      20004   board.o
+        96          6          0          4          0       1620   clock.o
+      2708       1186        999          4          0      10351   cmd.o
+         0          0          0          0          0       1456   completion.o
+       204         20          0          0          0        892   context_rvds.o
+       376        220         19         12          0       3147   cpuport.o
+       732        114        168          0          0       5829   device.o
+      1940        102          0          8          0       9554   finsh_compiler.o
+        36          4        216         64          0       1753   finsh_error.o
+       428         14          0          8        128       3501   finsh_heap.o
+        76          4          0          0          0       1700   finsh_init.o
+       340          6          0          0        320       3600   finsh_node.o
+      1328         36        196          0          0       8816   finsh_ops.o
+      1868         32          0          0          0      10373   finsh_parser.o
+      1292         18        108          0          0       6008   finsh_token.o
+       352         16          0          4        192       7433   finsh_var.o
+       176         20          0         12        384       7046   finsh_vm.o
+         0          0       6747          0          0       1557   fonts.o
+       296        102         22          4       1152       2815   idle.o
+      4900        262        454          0          0      21675   ipc.o
+        56          6          0          1          0       1482   irq.o
+      1856        162         34          8        128      11614   kservice.o
+       308         26          0          0          0        858   lcd.o
+      1740        460        363         32         32       6107   mem.o
+       864         96         62          8          0       5242   mempool.o
+       176         16          0          0          0       2065   misc.o
+       688        148         94        164          0       6132   object.o
+     28404       6710        345        220       8141      57383   protocol_808.o
+       408         54         99          0          0       3161   ringbuffer.o
+      1168        370         15         23         76       4814   rtc.o
+       736        158        334         24        256       5172   scheduler.o
+      1232        274        133          0          0       5077   serial.o
+      1556        256         77          4       2176       6805   shell.o
+      2220        224         28          0         76      13704   spi_flash.o
+      2112        296         24          4         64       7089   sst25vfxx.o
+       344        172          0          0          0       2823   startup.o
+        64         26        392          0       1536        904   startup_stm32f4xx.o
+       800         32          0          0          0       7045   stm32f4xx_dma.o
+       488         36          0          0          0       4553   stm32f4xx_gpio.o
+       112         18          0          0          0       2649   stm32f4xx_it.o
+       212         20          0          0          0       2708   stm32f4xx_pwr.o
+       984         42          0         16          0      11567   stm32f4xx_rcc.o
+      2584         36          0          0          0      16286   stm32f4xx_rtc.o
+       748         22          0          0          0       7365   stm32f4xx_spi.o
+       836         26          0          0          0       8340   stm32f4xx_usart.o
+         0          0          0         16          0       4149   symbol.o
+       364         38          0         20          0       2155   system_stm32f4xx.o
+      1496        216        170          0          0       8266   thread.o
+      1092        120         92         20        640       6967   timer.o
+       768         70          0         48        544       3205   usart.o
+
+    ----------------------------------------------------------------------
+     97192      18060      12729       1292      40524     765555   Object Totals
+         0          0         32          0          0          0   (incl. Generated)
+         0          0         13         13         27          0   (incl. Padding)
+
+    ----------------------------------------------------------------------
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Member Name
+
+        60          8          0          0          0         84   __0sscanf.o
+        44          6          0          0          0         84   __2sprintf.o
+        90          0          0          0          0          0   __dczerorl2.o
+         8          0          0          0          0         68   __main.o
+       316          6         17          0          0         92   __printf_flags_wp.o
+        14          0          0          0          0         68   __printf_wp.o
+        52          8          0          0          0          0   __scatter.o
+        28          0          0          0          0          0   __scatter_zi.o
+        28          0          0          0          0         68   _chval.o
+        48          6          0          0          0         96   _printf_char_common.o
+       120         18          0          0          0         92   _printf_dec.o
+       184          0          0          0          0         88   _printf_intcommon.o
+         0          0          0          0          0          0   _printf_percent.o
+         4          0          0          0          0          0   _printf_percent_end.o
+         6          0          0          0          0          0   _printf_u.o
+        22          0          0          0          0        100   _rserrno.o
+       888          6          0          0          0        100   _scanf.o
+       336          0          0          0          0         96   _scanf_int.o
+        64          0          0          0          0         84   _sgetc.o
+        10          0          0          0          0         68   _sputc.o
+       158          0          0          0          0         92   _strtoul.o
+        26          0          0          0          0         80   atoi.o
+       228          6        148          0          0         96   bigflt0.o
+      1846        132          0          0          0        736   btod.o
+        12          0          0          0          0         72   exit.o
+         6          0          0          0          0        152   heapauxi.o
+         0          0          0          0          0          0   indicate_semi.o
+        18          0          0          0          0         76   isspace.o
+        44         10        272          0          0         76   lc_ctype_c.o
+        44         10         28          0          0         76   lc_numeric_c.o
+         6          0          0          0          0          0   libinit.o
+        30          0          0          0          0          0   libinit2.o
+         2          0          0          0          0          0   libshutdown.o
+         2          0          0          0          0          0   libshutdown2.o
+         8          4          0          0         96         68   libspace.o
+        38          0          0          0          0         68   llshl.o
+        16          4          0          0          0         76   rt_ctype_table.o
+         8          4          0          0          0         68   rt_errno_addr_intlibspace.o
+         8          4          0          0          0         68   rt_locale_intlibspace.o
+        68          0          0          0          0         68   rt_memclr.o
+        78          0          0          0          0         80   rt_memclr_w.o
+       138          0          0          0          0         68   rt_memcpy_v6.o
+       100          0          0          0          0         80   rt_memcpy_w.o
+         0          0          0          0          0          0   rtentry.o
+        12          0          0          0          0          0   rtentry2.o
+         6          0          0          0          0          0   rtentry4.o
+         2          0          0          0          0          0   rtexit.o
+        10          0          0          0          0          0   rtexit2.o
+        48         10          0          0          0         84   scanf_char.o
+      1192         14          0          0          0        148   scanf_fp.o
+       796         14          0          0          0        100   scanf_hexfp.o
+       316         18          0          0          0        100   scanf_infnan.o
+        24          0          0          0          0         68   strcat.o
+        62          0          0          0          0         76   strlen.o
+       150          0          0          0          0         80   strncmp.o
+        86          0          0          0          0         76   strncpy.o
+       160         12          0          0          0        120   strtod.o
+       112          0          0          0          0         88   strtol.o
+        12          4          0          0          0         68   sys_exit.o
+        74          0          0          0          0         80   sys_stackheap_outer.o
+         2          0          0          0          0         68   use_no_semi.o
+        98          4          0          0          0        140   d2f.o
+        16          4          0          0          0        116   dcheck1.o
+        24          0          0          0          0        116   dcmpi.o
+       120          4          0          0          0        140   deqf.o
+        90          4          0          0          0        140   dfixu.o
+        38          0          0          0          0        116   dflt_clz.o
+       120          4          0          0          0        140   dleqf.o
+       340         12          0          0          0        152   dmul.o
+       156          4          0          0          0        140   dnaninf.o
+        12          0          0          0          0        116   dretinf.o
+       108          0          0          0          0        128   drleqf.o
+       408         56          0          0          0        168   dsqrt_umaal.o
+         0          0          8          0          0          0   fpconst.o
+        10          0          0          0          0        116   fpinit.o
+        10          0          0          0          0        116   fretinf.o
+       100          0          0          0          0        116   retnan.o
+        92          0          0          0          0        116   scalbn.o
+         4          0          0          0          0        116   scanf1.o
+         8          0          0          0          0        132   scanf2.o
+        48          0          0          0          0        116   trapv.o
+         0          0          0          0          0          0   usenofp.o
+        56         12          0          0          0        132   atof.o
+        32          8          0          0          0        124   dunder.o
+       156         22          0          0          0        132   frexp.o
+       252         16          0          0          0        312   ldexp.o
+       192         22          0          0          0        152   narrow.o
+       108          0          0          0          0        148   sqrt.o
+
+    ----------------------------------------------------------------------
+     10892        478        475          0         96       7884   Library Totals
+        24          2          2          0          0          0   (incl. Padding)
+
+    ----------------------------------------------------------------------
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Name
+
+      8270        304        465          0         96       4444   c_w.l
+      1802         92          8          0          0       2440   fz_wm.l
+       796         80          0          0          0       1000   m_wm.l
+
+    ----------------------------------------------------------------------
+     10892        478        475          0         96       7884   Library Totals
+
+    ----------------------------------------------------------------------
+
+==============================================================================
+
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
+
+    108084      18538      13204       1292      40620     752939   Grand Totals
+    108084      18538      13204        440      40620     752939   ELF Image Totals (compressed)
+    108084      18538      13204        440          0          0   ROM Totals
+
+==============================================================================
+
+    Total RO  Size (Code + RO Data)               121288 ( 118.45kB)
+    Total RW  Size (RW Data + ZI Data)             41912 (  40.93kB)
+    Total ROM Size (Code + RO Data + RW Data)     121728 ( 118.88kB)
+
+==============================================================================
+

@@ -1,0 +1,13 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+from building import *
+
+cwd     = os.path.join(str(Dir('#')), 'drivers')
+src	= Glob('*.c')+Glob('serial/*.c')
+CPPPATH = [cwd +'/include',
+          cwd +'/include/drivers',
+           cwd ]
+
+group = DefineGroup('Drivers', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')

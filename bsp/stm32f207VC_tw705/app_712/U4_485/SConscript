@@ -1,0 +1,9 @@
+from building import *
+
+cwd     = os.path.join(str(Dir('#')), 'U4_485')
+src	= Glob('*.c')+Glob('*.h')
+CPPPATH = [cwd, str(Dir('#'))]
+
+group = DefineGroup('U4_485', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')

@@ -1,0 +1,10 @@
+
+from building import *
+
+cwd     = os.path.join(str(Dir('#')), 'gps')
+src	= Glob('*.c')
+CPPPATH = [cwd, str(Dir('#'))]
+
+group = DefineGroup('gps', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')

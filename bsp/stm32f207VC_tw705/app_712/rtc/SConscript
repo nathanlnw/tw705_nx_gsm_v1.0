@@ -1,0 +1,10 @@
+
+from building import *
+
+cwd     = os.path.join(str(Dir('#')), 'rtc')
+src	= Glob('*.c')+Glob('*.h')
+CPPPATH = [cwd, str(Dir('#'))]
+
+group = DefineGroup('rtc', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')
