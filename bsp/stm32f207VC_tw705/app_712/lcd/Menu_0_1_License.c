@@ -109,7 +109,7 @@ lcd_update_all();
 }
 
 
-static void keypress(unsigned int key) 
+static void keypress(unsigned int key)  
 {
 	switch(KeyValue)
 		{

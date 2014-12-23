@@ -41,6 +41,21 @@
 #include "Device_printer.h"
 #include <finsh.h>
 
+// 
+#define Dotline_Num_V3		  384 
+#define Prnt_asii_width_V3	  12
+#define Prnt_HZ_Width_V3	  24
+#define GLYPH_COL_V3   48	
+
+
+
+//    新打印头 设置
+#define Dotline_Num 	   192 
+#define Prnt_asii_width    6
+#define Prnt_HZ_Width	   12
+#define GLYPH_COL  24	
+
+
 
 /*打印头相关*/
 
@@ -111,11 +126,7 @@ struct rt_ringbuffer		rb_printer_data;
    但是由于有左边界，右边界，所以并不是8bit或1byte对齐的方式
  */
 
-#define GLYPH_ROW	24
-#define GLYPH_COL	48
-
-//static unsigned char print_glyph[GLYPH_ROW][GLYPH_COL] __attribute__( ( at( 0x20001000 ) ) ) = { 0 };
-static unsigned char	print_glyph[GLYPH_ROW][GLYPH_COL] = { 0 };
+static unsigned char	print_glyph[24][48] = { 0 }; //48	 //  新打印头需要 24 个自己就够了。 多余的没用， 48 是给384 点打印头用的
 
 static struct rt_device dev_printer;
 static struct rt_timer	tmr_printer;
@@ -133,15 +144,16 @@ struct _PRINTER_PARAM
 {
 	//1000, 2, { 5000, 10000, 15000, 20000 }, 4, 0, 0
 	//800, 2, { 2000, 3000, 4000, 6000 },3, 0, 0 	
-	800, 2, { 2500, 5000, 4500, 6500 },3, 0, 0 
+	//800, 2, { 3000, 6000, 5000, 7000 },6, 0, 0 
+	800, 2, { 4000, 7000, 8000, 12000 }, 5, 0, 0    
 };
 
-static unsigned short	dotremain = 384;    //还可使用的dot，每汉字24dot 每ascii 12dots
+static unsigned short	dotremain = 0;    //还可使用的dot，每汉字24dot 每ascii 12dots
 static unsigned char	print_str[36];      //要打印的单行最大字节数 全ascii 384/12=32  汉字 384/24*3
 static unsigned char	print_str_len = 0;
 
 /*要不要4字节对齐*/
-static unsigned char font_glyph[80];        //每个汉字或ascii的最大字节数 24x24dot = 72bytes
+static unsigned char font_glyph[80];        //每个汉字或ascii的最大字节数 24x24dot = 72bytes 
 
 //延时nus
 //nus为要延时的us数.
@@ -162,6 +174,46 @@ static unsigned char font_glyph[80];        //每个汉字或ascii的最大字节数 24x24d
    }while (1);
    }
  */
+
+void printer_setting_init(u8 value)
+{
+if(value)
+{
+
+	 printer_param.step_delay=800;                 //步进延时,影响行间隔
+	 printer_param.gray_level=2;                 //灰度等级,加热时间
+	 printer_param.heat_delay[0]=4000;              //加热延时
+	 printer_param.heat_delay[1]=7000;              //加热延时
+	 printer_param.heat_delay[2]=8000;              //加热延时
+	 printer_param.heat_delay[3]=12000;              //加热延时
+	 printer_param.line_space=5;                 //行间隔
+	 printer_param.margin_left=0;                //左边界
+	 printer_param.margin_right=0;               //右边界
+
+	 
+	 dotremain = Dotline_Num_V3;
+}
+else
+{
+	 
+  
+     	//800, 2, { 3000, 6000, 5000, 7000 },6, 0, 0 
+	    //800, 2, { 4000, 7000, 8000, 12000 }, 5, 0, 0    
+	 printer_param.step_delay=800;                 //步进延时,影响行间隔
+	 printer_param.gray_level=2;                 //灰度等级,加热时间
+	 printer_param.heat_delay[0]=3000;              //加热延时
+	 printer_param.heat_delay[1]=6000;              //加热延时
+	 printer_param.heat_delay[2]=5000;              //加热延时
+	 printer_param.heat_delay[3]=7000;              //加热延时
+	 printer_param.line_space=6;                 //行间隔
+	 printer_param.margin_left=0;                //左边界
+	 printer_param.margin_right=0;               //右边界
+
+	 
+	 dotremain = Dotline_Num;
+}
+   
+}
 
 static void delay_us_printer( const uint32_t usec )
 {
@@ -265,6 +317,7 @@ void printer_port_init( void )
 	gpio_init.GPIO_Pin	= PHE_PIN;
 	gpio_init.GPIO_Mode = GPIO_Mode_IN;
 	GPIO_Init( PHE_PORT, &gpio_init );
+
 }
 
 /***********************************************************
@@ -347,6 +400,7 @@ void printer_print_glyph( unsigned char len )
 {
 	unsigned char	*p;
 	unsigned char	b, c, row, col_byte;
+	u8 COL=0;
 /*缺纸检测 PA8 缺纸为高*/
 
 
@@ -360,13 +414,26 @@ void printer_print_glyph( unsigned char len )
    GPIO_ResetBits( NO_PAPER_OUT_PORT, NO_PAPER_OUT_PIN );
    }
  */
-	fprinting = 1;
-	GPIO_SetBits( PRINTER_POWER_PORT_5V, PRINTER_POWER_PIN_5V );
 
-	for( row = 0; row < 12; row++ )
+	if(HardWareVerion==0x01)
+		 {
+		   COL=GLYPH_COL;
+		 }
+	 if(HardWareVerion==0x03)
+		 {
+		   COL=GLYPH_COL_V3;
+		 }
+
+	fprinting = 1;
+	GPIO_SetBits( PRINTER_POWER_PORT_5V, PRINTER_POWER_PIN_5V ); 
+
+    
+	drivers2( );
+
+	for( row = 0; row < 12; row++ )       
 	{
 		p = print_glyph[row * 2 + 0];
-		for( col_byte = 0; col_byte < GLYPH_COL; col_byte++ )
+		for( col_byte = 0; col_byte < COL; col_byte++ )
 		{
 			c = *p++;
 			for( b = 0; b < 8; b++ )
@@ -396,9 +463,9 @@ void printer_print_glyph( unsigned char len )
 		delay_us_printer( printer_param.heat_delay[printer_param.gray_level] );
 		GPIO_ResetBits( STB4_6_PORT, STB4_6_PIN );
 		drivers1( );
-
+         //==============================================
 		p = print_glyph[row * 2 + 1];
-		for( col_byte = 0; col_byte < GLYPH_COL; col_byte++ )
+		for( col_byte = 0; col_byte < COL; col_byte++ )
 		{
 			c = *p++;
 			for( b = 0; b < 8; b++ )
@@ -407,7 +474,7 @@ void printer_print_glyph( unsigned char len )
 
 				if( 0x80 == ( c & 0x80 ) )
 				{
-					GPIO_SetBits( DI_PORT, DI_PIN );
+					GPIO_SetBits( DI_PORT, DI_PIN ); 
 				}else
 				{
 					GPIO_ResetBits( DI_PORT, DI_PIN );
@@ -474,14 +541,28 @@ void printer_get_str_glyph( unsigned char *pstr, unsigned char len )
 	unsigned int	start_col = printer_param.margin_left;
 
 	unsigned char	row, col, offset;
-	unsigned int	val_old, val_new, val_mask, val_ret;
+	unsigned int	val_old, val_new, val_mask, val_ret;	
+	unsigned  char	new_bit_cnt=0,i=0;	 // 新字符的bit计数器
 	unsigned char 	font_buf[80];
 
+	unsigned char  reg_counter=0,get_bit_value=0;
+	u8 COL=0;
+
     WatchDog_Feed(); 
+
 	
-	for( row = 0; row < GLYPH_ROW; row++ )
+	if(HardWareVerion==0x01)
+		 {
+		   COL=GLYPH_COL;
+		 }
+	 if(HardWareVerion==0x03)
+		 {
+		   COL=GLYPH_COL_V3;
+		 }
+	
+	for( row = 0; row < 24; row++ )
 	{
-		for( col = 0; col < GLYPH_COL; col++ )
+		for( col = 0; col < COL; col++ )
 		{
 			print_glyph[row][col] = 0;
 		}
@@ -498,86 +579,279 @@ DF_TAKE;
 		charnum--;
 		if( msb <= 0x80 ) //ascii字符
 		{
-			///OUT FLASH
-			addr = ( msb - 0x20 ) * 48 + FONT_ASC1224_ADDR;
-			SST25V_BufferRead( font_buf,addr,48);
-			addr = (int)font_buf;
-			///CPU FLASH
-			//addr = ( msb - 0x20 ) * 48 + FONT_ASC1224_ADDR;
-			for( offset = 0; offset < 12; offset++ )
-			{
-				val_new						= *(__IO uint32_t*)addr;
-				font_glyph[offset * 4 + 0]	= (unsigned char)( val_new & 0xff );
-				font_glyph[offset * 4 + 1]	= (unsigned char)( val_new >> 8 );
-				font_glyph[offset * 4 + 2]	= (unsigned char)( val_new >> 16 );
-				font_glyph[offset * 4 + 3]	= (unsigned char)( val_new >> 24 );
-				addr						+= 4;
-			}
+           if(HardWareVerion==0x01)
+           {
+				   //     读取 6x12  点阵， 逐列逆向式矩阵字库
+					///OUT FLASH
+					addr = ( msb - 0x20 ) * 12 + FONT_ASC0612_ADDR;
+					SST25V_BufferRead( font_buf,addr,12);			
+   
+	 
+					/*
+										  将一个 逐列式 逆向的点阵转换成  行列式顺向的点阵
+			
+										  font_buf:   逐列式逆向 6x12 的点阵	12	bytes	  简称old
+										  font_glyph:	  行列式 顺向的点阵 	  12 bytes		简称new
+								*/
+			
+					//	part 1	:  将old 的字节的 6个bit 位，逐级变成 new 的行字节， 先转换new 的前8个字节，part2 转换生成new的后4个字节
+					for(new_bit_cnt=0;new_bit_cnt<8;new_bit_cnt++)
+					{
+					   for(i=0;i<6;i++) 	 // old  生产点阵后只有6 列 ，所以是 6
+						{
+						         if((font_buf[i*2]&(1<<new_bit_cnt)))
+						            get_bit_value=1;
+								 else
+								    get_bit_value=0;
+								   
+						  	font_glyph[new_bit_cnt]+=get_bit_value<<(7-i);    
+						  // note  :font_buf[i*2]&(1<<new_bit_cnt))  :	 表示获取每个 old  偶数下标字节的对应bit信息，组合6 个bit ，将结果 给 new的第new_bit_cnt 个字节  
+						  //			<< (8-i)   :  表示依次获取对应bit 信息给new    低字节自动填充0 
+						  
+						}
+					}	
+			
+				   //  part 2:	  将old 的字节的 6个bit 位，逐级变成 new 的行字节，琾art2 转换生成new的后4个字节  
+				   
+				   for(new_bit_cnt=0;new_bit_cnt<4;new_bit_cnt++)
+				   {
+					  for(i=0;i<6;i++)		// old	生产点阵后只有6 列 ，所以是 6
+					   {
+						     if(font_buf[i*2+1]&(1<<new_bit_cnt))
+							 	    get_bit_value=1;
+							 else
+								    get_bit_value=0;								   
+						 font_glyph[new_bit_cnt+8]+=(get_bit_value<<(7-i));	  
+						 // note  :font_buf[i*2]&(1<<new_bit_cnt))	:	表示获取每个 old  偶数下标字节的对应bit信息，组合6 个bit ，将结果 给 new的第new_bit_cnt 个字节	
+						 // 		   << (8-i)   :  表示依次获取对应bit 信息给new	  低字节自动填充0  
+					   }
+				   }	
+			
 
-			for( row = 0; row < 24; row++ )
-			{
-				val_new = ( font_glyph[row * 2] << 24 ) | ( font_glyph[row * 2 + 1] << 16 );    //读出的字库2byte，只有高12位有效，左对齐
 
-				col		= start_col >> 3;                                                       //查找所在的列字节 [0..7]对应字节0
-				val_old = ( print_glyph[row][col] << 24 ) | ( print_glyph[row][col + 1] << 16 ) | ( print_glyph[row][col + 2] << 8 );
 
-				offset						= start_col & 0x07;
-				val_new						>>= offset;
-				val_mask					= ( 0xFFF00000 >> offset );                         //12bit个1的mask
-				val_ret						= val_old ^ ( ( val_new ^ val_old ) & val_mask );
-				print_glyph[row][col]		= ( val_ret >> 24 ) & 0xff;
-				print_glyph[row][col + 1]	= ( val_ret >> 16 ) & 0xff;
-				print_glyph[row][col + 2]	= ( val_ret >> 8 ) & 0xff;
-			}
-			start_col += 12;
-		}else
-		{
-			lsb = *p++;
-			charnum--;
-			if( ( msb >= 0xa1 ) && ( msb <= 0xa3 ) && ( lsb >= 0xa1 ) )
+					     //---------------------------------------------------------		
+				 
+						for( row = 0; row < 12; row++ ) 
+						{
+							val_new = ( font_glyph[row] << 24 );    //读出的字库2byte，只有高6 位有效，左对齐    
+
+							col		= start_col >> 3;                //    除以8bit  。查找到当前要填充位的字节下标
+
+							//  获取打印数组中当从前字节开始，后24个bit的信息  以便计算   因为每个点要打2行，所以要row*2    
+							val_old = ( print_glyph[row*2][col] << 24 ) | ( print_glyph[row*2][col + 1] << 16 ) | ( print_glyph[row*2][col + 2] << 8 );
+
+							offset						= start_col & 0x07; //  起始行除以8   取余数 ，获取字节内偏移
+							val_new						>>= offset;  // 将new_val   字节内容。做向右偏移
+							val_mask					= ( 0xFC000000 >> offset );    //6bit个1的mask      
+							//val_ret						= val_old ^ ( ( val_new ^ val_old ) & val_mask ); // 只替换每一行对应的bit
+							
+							val_ret						= val_old+val_new; // 只替换每一行对应的bit
+							//  高度要乘以2 ，所以每个点描2 行
+							print_glyph[row*2+0][col]	= ( val_ret >> 24 ) & 0xff;
+							print_glyph[row*2+1][col]	= ( val_ret >> 24 ) & 0xff;
+							print_glyph[row*2][col+1]	= ( val_ret >> 16 ) & 0xff;
+							print_glyph[row*2+1][col+1]	= ( val_ret >> 16 ) & 0xff; 
+						  
+							
+						}
+						start_col += 6; // 列数
+           	}	
+		    else
+			if(HardWareVerion==0x03)
 			{
-				///OUT FLASH
-				addr = FONT_HZ2424_ADDR + ( ( ( (unsigned long)msb ) - 0xa1 ) * 94 + ( ( (unsigned long)lsb ) - 0xa1 ) ) * 72;
-				SST25V_BufferRead( font_buf,addr,72);
+			  //-------------------------------
+	              			///OUT FLASH
+				addr = ( msb - 0x20 ) * 48 + FONT_ASC1224_ADDR;
+				SST25V_BufferRead( font_buf,addr,48);
 				addr = (int)font_buf;
 				///CPU FLASH
-				//addr = FONT_HZ2424_ADDR + ( ( ( (unsigned long)msb ) - 0xa1 ) * 94 + ( ( (unsigned long)lsb ) - 0xa1 ) ) * 72;
+				//addr = ( msb - 0x20 ) * 48 + FONT_ASC1224_ADDR;
+				for( offset = 0; offset < 12; offset++ )
+				{
+					val_new						= *(__IO uint32_t*)addr;
+					font_glyph[offset * 4 + 0]	= (unsigned char)( val_new & 0xff );
+					font_glyph[offset * 4 + 1]	= (unsigned char)( val_new >> 8 );
+					font_glyph[offset * 4 + 2]	= (unsigned char)( val_new >> 16 );
+					font_glyph[offset * 4 + 3]	= (unsigned char)( val_new >> 24 );
+					addr						+= 4;
+				}
+
+				for( row = 0; row < 24; row++ )
+				{
+					val_new = ( font_glyph[row * 2] << 24 ) | ( font_glyph[row * 2 + 1] << 16 );    //读出的字库2byte，只有高12位有效，左对齐
+
+					col		= start_col >> 3;                                                       //查找所在的列字节 [0..7]对应字节0
+					val_old = ( print_glyph[row][col] << 24 ) | ( print_glyph[row][col + 1] << 16 ) | ( print_glyph[row][col + 2] << 8 );
+
+					offset						= start_col & 0x07;
+					val_new						>>= offset;
+					val_mask					= ( 0xFFF00000 >> offset );                         //12bit个1的mask
+					val_ret						= val_old ^ ( ( val_new ^ val_old ) & val_mask );
+					print_glyph[row][col]		= ( val_ret >> 24 ) & 0xff;
+					print_glyph[row][col + 1]	= ( val_ret >> 16 ) & 0xff;
+					print_glyph[row][col + 2]	= ( val_ret >> 8 ) & 0xff;
+				}
+				start_col += 12;	
+			}
+		}
+		else
+		{
+		   //     读取 12x12  点阵， 逐列逆向式矩阵字库
+			lsb = *p++;
+			charnum--;
+			
+			if( ( msb >= 0xa1 ) && ( msb <= 0xa3 ) && ( lsb >= 0xa1 ) )
+			{
+			  		///OUT FLASH
+			  if(HardWareVerion==0x01)
+			  {		
+				addr = FONT_HZ1212_ADDR + ( ( ( (unsigned long)msb ) - 0xa1 ) * 94 + ( ( (unsigned long)lsb ) - 0xa1 ) ) * 24;
+				SST25V_BufferRead( font_buf,addr,24);
+				addr = (int)font_buf;
+			  }
+			  else
+			  if(HardWareVerion==0x03)
+			  {
+				  addr = FONT_HZ2424_ADDR + ( ( ( (unsigned long)msb ) - 0xa1 ) * 94 + ( ( (unsigned long)lsb ) - 0xa1 ) ) * 72;
+				  SST25V_BufferRead( font_buf,addr,72);
+				  addr = (int)font_buf;
+			  }
 			}else if( ( msb >= 0xb0 ) && ( msb <= 0xf7 ) && ( lsb >= 0xa1 ) )
 			{
 				///OUT FLASH
-				addr = FONT_HZ2424_ADDR + ( ( ( (unsigned long)msb ) - 0xb0 ) * 94 + ( ( (unsigned long)lsb ) - 0xa1 ) ) * 72 + 282 * 72;
-				SST25V_BufferRead( font_buf,addr,72);
-				addr = (int)font_buf;
-				///CPU FLASH
-				//addr = FONT_HZ2424_ADDR + ( ( ( (unsigned long)msb ) - 0xb0 ) * 94 + ( ( (unsigned long)lsb ) - 0xa1 ) ) * 72 + 282 * 72;
+				if(HardWareVerion==0x01)
+				{
+					addr = FONT_HZ1212_ADDR + ( ( ( (unsigned long)msb ) - 0xb0 ) * 94 + ( ( (unsigned long)lsb ) - 0xa1 ) ) * 24 + 282 * 24;
+					SST25V_BufferRead( font_buf,addr,24);
+					addr = (int)font_buf;
+				}
+				else
+				if(HardWareVerion==0x03)
+				{				   
+				   addr = FONT_HZ2424_ADDR + ( ( ( (unsigned long)msb ) - 0xb0 ) * 94 + ( ( (unsigned long)lsb ) - 0xa1 ) ) * 72 + 282 * 72;
+				   SST25V_BufferRead( font_buf,addr,72);
+				   addr = (int)font_buf;
+				}
 			}
-			for( offset = 0; offset < 18; offset++ )
-			{
-				val_new						= *(__IO uint32_t*)addr;
-				font_glyph[offset * 4 + 0]	= (unsigned char)( val_new & 0xff );
-				font_glyph[offset * 4 + 1]	= (unsigned char)( val_new >> 8 );
-				font_glyph[offset * 4 + 2]	= (unsigned char)( val_new >> 16 );
-				font_glyph[offset * 4 + 3]	= (unsigned char)( val_new >> 24 );
+            
+        
+            if(HardWareVerion==0x01)
+            {
+	             //  Sart  : 矩阵转换 
+	             
+				  /*
+										将一个 逐列式 逆向的点阵转换成	行列式顺向的点阵
+				 
+										font_buf:	逐列式逆向 6x12 的点阵	  12  bytes 	简称old
+										font_glyph: 	行列式 顺向的点阵		12 bytes	  简称new
+							  */
+				 
+				  //  part 1  :  将old 的字节的 12 个bit 位，逐级变成 new 的行字节， 先转换new 的前16个字节，part2 转换生成new的后8个字节
+	              reg_counter=0;
+				 
+				  for(new_bit_cnt=0;new_bit_cnt<8;new_bit_cnt++)
+				  {
+				      val_new=0;  // clear value
+					 for(i=0;i<12;i++)	   // old  生产点阵后只有12 列 ，先转换前8 列 ，后转换4 列
+					  {
+						   if((font_buf[i*2]&(1<<new_bit_cnt)))
+							  get_bit_value=1;
+						   else
+							  get_bit_value=0; 
+								 
+						  val_new+=get_bit_value<<(15-i);	// 获取12个bit 的信息
+						// note  :font_buf[i*2]&(1<<new_bit_cnt))  :   表示获取每个 old  偶数下标字节的对应bit信息，组合6 个bit ，将结果 给 new的第new_bit_cnt 个字节  
+						//			  << (8-i)	 :	表示依次获取对应bit 信息给new	 低字节自动填充0 
+						
+					  }
+					  // 将获取到的12bit 的信息，分别赋给 字库数值
+					  font_glyph[reg_counter++]=(unsigned char)(val_new>>8);
+					  font_glyph[reg_counter++]=(unsigned char)val_new;
+				  }   
+				 
+				 //  part 2:	将old 的字节的 6个bit 位，逐级变成 new 的行字节，琾art2 转换生成new的后4个字节	
+				 
+				 for(new_bit_cnt=0;new_bit_cnt<4;new_bit_cnt++)
+				 {
+				     val_new=0;  // clear value
+					for(i=0;i<12;i++)	  // old  生产点阵后只有6 列 ，所以是 6
+					 {
+						   if(font_buf[i*2+1]&(1<<new_bit_cnt))
+								  get_bit_value=1;
+						   else
+								  get_bit_value=0;									 
+					   val_new+=(get_bit_value<<(15-i)); 	
+					   // note	:font_buf[i*2]&(1<<new_bit_cnt))  :   表示获取每个 old	偶数下标字节的对应bit信息，组合8 个bit ，将结果 给 new的第new_bit_cnt 个字节  
+					   //			 << (15-i)	:  表示依次获取对应bit 信息给new	低字节自动填充0  
+					 }
+					 // 将获取到的12bit 的信息，分别赋给 字库数值
+					  font_glyph[reg_counter++]=(unsigned char)(val_new>>8);
+					  font_glyph[reg_counter++]=(unsigned char)val_new;  
+				 }	  			 
+				 // OutPrint_HEX("convert",font_glyph,24);
+				//    矩阵转换结束     
+				 
+				for( row = 0; row < 12; row++ )
+				{
+					val_new = ( font_glyph[row * 2]<<24 ) | (font_glyph[row * 2+ 1] << 16 ); //读出的字库24byte ,每行取
+					val_new&=0xFFF00000;
+					col		= start_col >> 3;  
+					//查找所在的列字节 [0..7]对应字节0     因为每个点要打2行，所以要row*2    
+					val_old = ( print_glyph[row*2][col] << 24 ) | ( print_glyph[row*2][col + 1] << 16 ) | ( print_glyph[row*2][col + 2] << 8 ) | print_glyph[row*2][col + 3];
 
-				addr += 4;
-			}
-			for( row = 0; row < 24; row++ )
-			{
-				val_new = ( font_glyph[row * 3] << 24 ) | ( font_glyph[row * 3 + 1] << 16 ) | ( font_glyph[row * 3 + 2] << 8 ); //读出的字库24byte
+					offset						= (start_col & 0x07); 
+					val_new						>>= offset;
+					
+					val_mask					= (0xFFF00000 >> offset );            //12bit个1的mask 
+					val_ret						= val_old ^ ( ( val_new ^ val_old ) & val_mask ); 
+	                
+				    //  两行 左 8  列
+					print_glyph[row*2][col]		= ( val_ret >> 24 ) & 0xff;				
+					print_glyph[row*2+1][col]	= ( val_ret >> 24 ) & 0xff;
 
-				col		= start_col >> 3;                                                                                       //查找所在的列字节 [0..7]对应字节0
-				val_old = ( print_glyph[row][col] << 24 ) | ( print_glyph[row][col + 1] << 16 ) | ( print_glyph[row][col + 2] << 8 ) | print_glyph[row][col + 3];
+					// 两行右 4列
+					print_glyph[row*2][col+1]	= ( val_ret >> 16 ) & 0xff; 
+					print_glyph[row*2+1][col+1]	= ( val_ret >> 16 ) & 0xff;  
 
-				offset						= start_col & 0x07;
-				val_new						>>= offset;
-				val_mask					= ( 0xFFFFFF00 >> offset );                                                         //24bit个1的mask
-				val_ret						= val_old ^ ( ( val_new ^ val_old ) & val_mask );
-				print_glyph[row][col]		= ( val_ret >> 24 ) & 0xff;
-				print_glyph[row][col + 1]	= ( val_ret >> 16 ) & 0xff;
-				print_glyph[row][col + 2]	= ( val_ret >> 8 ) & 0xff;
-				print_glyph[row][col + 3]	= val_ret & 0xff;
-			}
-			start_col += 24;
+					// 
+					print_glyph[row*2][col+2]	= ( val_ret >> 8 ) & 0xff;  
+					print_glyph[row*2+1][col+2]	= ( val_ret >> 8) & 0xff;    
+				}			
+				start_col+= 12;    
+           }
+		   else
+		   if(HardWareVerion==0x03)
+		   {
+	      		for( offset = 0; offset < 18; offset++ )
+				{
+					val_new						= *(__IO uint32_t*)addr;
+					font_glyph[offset * 4 + 0]	= (unsigned char)( val_new & 0xff );
+					font_glyph[offset * 4 + 1]	= (unsigned char)( val_new >> 8 );
+					font_glyph[offset * 4 + 2]	= (unsigned char)( val_new >> 16 );
+					font_glyph[offset * 4 + 3]	= (unsigned char)( val_new >> 24 );
+
+					addr += 4;
+				}
+				for( row = 0; row < 24; row++ )
+				{
+					val_new = ( font_glyph[row * 3] << 24 ) | ( font_glyph[row * 3 + 1] << 16 ) | ( font_glyph[row * 3 + 2] << 8 ); //读出的字库24byte
+
+					col		= start_col >> 3;                                                                                       //查找所在的列字节 [0..7]对应字节0
+					val_old = ( print_glyph[row][col] << 24 ) | ( print_glyph[row][col + 1] << 16 ) | ( print_glyph[row][col + 2] << 8 ) | print_glyph[row][col + 3];
+
+					offset						= start_col & 0x07;
+					val_new						>>= offset;
+					val_mask					= ( 0xFFFFFF00 >> offset );                                                         //24bit个1的mask
+					val_ret						= val_old ^ ( ( val_new ^ val_old ) & val_mask );
+					print_glyph[row][col]		= ( val_ret >> 24 ) & 0xff;
+					print_glyph[row][col + 1]	= ( val_ret >> 16 ) & 0xff;
+					print_glyph[row][col + 2]	= ( val_ret >> 8 ) & 0xff;
+					print_glyph[row][col + 3]	= val_ret & 0xff;
+				}
+				start_col += 24;
+		   }
+			 
 		}
 	}
   DF_RELEASE;
@@ -610,6 +884,25 @@ DF_TAKE;
 static void printer_get_str_line( void )
 {
 	unsigned char CH, CL;
+	int Dotline=0; 	 
+    u8 asii_width=0;
+    u8 HZ_Width=0;
+    u8 COL=0;	
+
+    if(HardWareVerion==0x01)
+	    {
+	      Dotline=Dotline_Num; 	 
+	      asii_width=Prnt_asii_width;
+	      HZ_Width=Prnt_HZ_Width;
+	      COL=GLYPH_COL;
+    	}
+	if(HardWareVerion==0x03)
+		{
+		  Dotline=Dotline_Num_V3; 	 
+	      asii_width=Prnt_asii_width_V3;
+	      HZ_Width=Prnt_HZ_Width_V3;
+	      COL=GLYPH_COL_V3;
+		}
 
 	while( rt_ringbuffer_getchar( &rb_printer_data, &CH ) == 1 )
 	{
@@ -626,25 +919,25 @@ static void printer_get_str_line( void )
 					printer_get_str_glyph( print_str, print_str_len );
 				}
 				print_str_len	= 0;
-				dotremain		= 384 - printer_param.margin_left - printer_param.margin_right;
+				   dotremain		= Dotline - printer_param.margin_left - printer_param.margin_right;
 			}else
 			{
-				if( dotremain >= 12 )       //还可打印一个ascii
+				if( dotremain >= asii_width )       //还可打印一个ascii
 				{
 					print_str[print_str_len++]	= CH;
-					dotremain					-= 12;
-					if( dotremain < 12 )    //剩下不足放一个ascii,打印吧。
+					dotremain					-= asii_width;
+					if( dotremain < asii_width )    //剩下不足放一个ascii,打印吧。
 					{
 						printer_get_str_glyph( print_str, print_str_len );
 						print_str_len	= 0;
-						dotremain		= 384 - printer_param.margin_left - printer_param.margin_right;
+						  dotremain		= Dotline - printer_param.margin_left - printer_param.margin_right;
 					}
 				}else //这个条件应该执行不到.主要是中英混排时,剩余点阵在12-24 之间又要打印汉字时产生。
 				{
 					printer_get_str_glyph( print_str, print_str_len );
 					print_str[0]	= CH;
 					print_str_len	= 1;
-					dotremain		= 384 - printer_param.margin_left - printer_param.margin_right - 12;
+					dotremain		= Dotline - printer_param.margin_left - printer_param.margin_right - asii_width;
 				}
 			}
 		}else if( ( CH > 0x80 ) && ( CH < 0xff ) ) //GBK编码，保证取到完整,正好，多一个，多两个
@@ -652,16 +945,16 @@ static void printer_get_str_line( void )
 			rt_ringbuffer_getchar( &rb_printer_data, &CL );
 			if( ( CL >= 0x40 ) && ( CL <= 0xfe ) )
 			{
-				if( dotremain >= 24 )
+				if( dotremain >= HZ_Width )
 				{
 					print_str[print_str_len++]	= CH;
 					print_str[print_str_len++]	= CL;
-					dotremain					-= 24;
-					if( dotremain < 12 ) //剩下不足放一个ascii,打印吧。
+					dotremain					-= HZ_Width;
+					if( dotremain < asii_width ) //剩下不足放一个ascii,打印吧。
 					{
 						printer_get_str_glyph( print_str, print_str_len );
 						print_str_len	= 0;
-						dotremain		= 384 - printer_param.margin_left - printer_param.margin_right;
+					    dotremain		= Dotline - printer_param.margin_left - printer_param.margin_right;
 					}
 				}else //应该可以放个ASCII,结果来了个汉字 ;-(
 				{
@@ -669,17 +962,17 @@ static void printer_get_str_line( void )
 					print_str[0]	= CH;
 					print_str[1]	= CL;
 					print_str_len	= 2;
-					dotremain		= 384 - printer_param.margin_left - printer_param.margin_right - 24;
+					   dotremain		= Dotline - printer_param.margin_left - printer_param.margin_right - HZ_Width;
 				}
 			}
-		}else if( CH == 0xff ) //结束符 0xFFFF
+		}else if( CH == 0xff ) //结束符 0xFFFF 
 		{
 			if( print_str_len > 0 )
 			{
 				printer_get_str_glyph( print_str, print_str_len );
 			}
 			print_str_len	= 0;
-			dotremain		= 384 - printer_param.margin_left - printer_param.margin_right;
+			dotremain		= Dotline - printer_param.margin_left - printer_param.margin_right;
 			//todo 断电
 		}
 	}
@@ -709,14 +1002,30 @@ static void timer_printer_cb( void* parameter )
 static rt_err_t printer_init( rt_device_t dev )
 {
 //	delay_init( 72 );
+   int Dotline=0;
+
+    HardWareVerion=HardWareGet();
+    if(HardWareVerion==0x03)  // common
+    	{
+            printer_setting_init(1);     //192 point
+             Dotline=Dotline_Num_V3; 	 
+            
+    	}
+	else   //  new  printer 
+	if(HardWareVerion==0x01)
+		{
+            printer_setting_init(0);     //192 point
+             Dotline=Dotline_Num; 	 
+		}
 
 	rt_ringbuffer_init( &rb_printer_data, printer_data,PRINTER_DATA_SIZE );
 	printer_load_param( );
-	dotremain = 384 - printer_param.margin_left - printer_param.margin_right; //新的一行可打印字符点阵数
+	 dotremain = Dotline - printer_param.margin_left - printer_param.margin_right; //新的一行可打印字符点阵数
+    
 	printer_port_init( );
 	printer_stop( );
 
-	return RT_EOK;
+	return RT_EOK; 
 }
 
 /***********************************************************
@@ -777,7 +1086,7 @@ static rt_size_t printer_write( rt_device_t dev, rt_off_t pos, const void* buff,
 static rt_err_t printer_control( rt_device_t dev, rt_uint8_t cmd, void *arg )
 {
 	uint32_t	code = *(uint32_t*)arg;
-	int			i;
+	int			i,HZ_Width;
 	switch( cmd )
 	{
 		case PRINTER_CMD_CHRLINE_N:
@@ -789,7 +1098,17 @@ static rt_err_t printer_control( rt_device_t dev, rt_uint8_t cmd, void *arg )
 			}
 			break;
 		case PRINTER_CMD_DOTLINE_N:
-			for( i = 0; i < code * 24; i++ )
+			
+			    if(HardWareVerion==0x01)
+			    {
+			      HZ_Width=Prnt_HZ_Width;
+		    	}
+			  if(HardWareVerion==0x03)
+				{
+			      HZ_Width=Prnt_HZ_Width_V3;
+				}
+			  
+			for( i = 0; i < code * HZ_Width; i++ )
 			{
 				drivers1( );
 				drivers2( );
@@ -882,10 +1201,11 @@ void printer_driver_init( void )
 ***********************************************************/
 void printer( const char *str )
 {
+     GPIO_SetBits( GPIOB, GPIO_Pin_7 ); 
 	printer_write( &dev_printer, 0, str, strlen( str ) );
 }
 
-//FINSH_FUNCTION_EXPORT( printer, print string test );
+FINSH_FUNCTION_EXPORT( printer, print string test );
 
 
 /***********************************************************
