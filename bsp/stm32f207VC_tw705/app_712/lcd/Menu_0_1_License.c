@@ -15,10 +15,11 @@ static u8 License_Type_Counter=0;//  0: Êý×Ö    1:A-M         2:N-Z
 unsigned char select_License[]={0x0C,0x06,0xFF,0x06,0x0C};
 
 //-----  ÌìµØÍ¨ÒªÇó ----------------
-unsigned char Car_HZ_code[31][2]={"½ú","ÉÂ","¸Ê","¼½","Äþ","ÃÉ","ÔÆ","ÁÉ","ºÚ","Ïæ",\
-                                  "Íî","Â³","ÐÂ","ËÕ","Õã","¸Ó","¶õ","¹ð","Ô¥","½ò",\
-                                  "Óå","»¦","¼ª","Ãö","¹ó","ÔÁ","Çà","²Ø","´¨","¾©",\
+unsigned char Car_HZ_code[31][2]={"Äþ","ÉÂ","¸Ê","¾©","½ò","Óå","ÔÆ","ÁÉ","ºÚ","Ïæ",\
+                                  "Íî","Â³","ÐÂ","ËÕ","Õã","¸Ó","¶õ","¹ð","Ô¥","½ú",\
+                                  "ÃÉ","»¦","¼ª","Ãö","¹ó","ÔÁ","Çà","²Ø","´¨","¼½",\
                                   "Çí"};  
+
 unsigned char ABC_License_0_Z[36][1]={"0","1","2","3","4","5","6","7","8","9","A","B",\
 	                                  "C","D","E","F","G","H","I","J","K","L","M","N",\
 	                                  "O","P","Q","R","S","T","U","V","W","X","Y","Z"};
@@ -70,22 +71,22 @@ void License_Type_Sel( u8 type1_2,u8 par,u8 invert_last)
 			if(License_Type_Counter<=9)
 				{
 				lcd_bitmap(3+par*width_hz, 14, &BMP_select_License, LCD_MODE_SET);
-		        lcd_text12(0,20,"½úÉÂ¸Ê¼½ÄþÃÉÔÆÁÉºÚÏæ",20,LCD_MODE_SET);
+		        lcd_text12(0,20,"ÄþÉÂ¸Ê¾©½òÓåÔÆÁÉºÚÏæ",20,LCD_MODE_SET);
 				}
 			else if((License_Type_Counter>=10)&&(License_Type_Counter<=19))
 				{
 				lcd_bitmap(3+(par-10)*width_hz, 14, &BMP_select_License, LCD_MODE_SET);
-		        lcd_text12(0,20,"ÍîÂ³ÐÂËÕÕã¸Ó¶õ¹ðÔ¥½ò",20,LCD_MODE_SET);
+		        lcd_text12(0,20,"ÍîÂ³ÐÂËÕÕã¸Ó¶õ¹ðÔ¥½ú",20,LCD_MODE_SET);
 				}
 			else if((License_Type_Counter>=20)&&(License_Type_Counter<=29))
 				{
 				lcd_bitmap(3+(par-20)*width_hz, 14, &BMP_select_License, LCD_MODE_SET);
-		        lcd_text12(0,20,"Óå»¦¼ªÃö¹óÔÁÇà²Ø´¨¾©",20,LCD_MODE_SET);
+		        lcd_text12(0,20,"ÃÉÉÂ¼ªÃö¹óÔÁÇà²Ø´¨¼½",20,LCD_MODE_SET);
 				} 
 			else if(License_Type_Counter==30)
 				{
-				lcd_bitmap(3+(par-30)*width_hz, 14, &BMP_select_License, LCD_MODE_SET); 
-		        lcd_text12(0,20,"Çí",2,LCD_MODE_SET);
+				lcd_bitmap(3+(par-30)*width_hz, 14, &BMP_select_License, LCD_MODE_SET);  
+		        lcd_text12(0,20,"Çí",2,LCD_MODE_SET); 
 				}
 			}
 		}
@@ -108,7 +109,7 @@ lcd_update_all();
 }
 
 
-static void keypress(unsigned int key)
+static void keypress(unsigned int key) 
 {
 	switch(KeyValue)
 		{
