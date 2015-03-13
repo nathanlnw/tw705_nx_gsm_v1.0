@@ -30,6 +30,7 @@
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
           <SFDFile>SFD\ST\STM32F2xx\STM32F20x.sfr</SFDFile>
+          <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
@@ -71,6 +72,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
@@ -97,6 +100,7 @@
           <StopOnExitCode>3</StopOnExitCode>
           <CustomArgument></CustomArgument>
           <IncludeLibraryModules></IncludeLibraryModules>
+          <ComprImg>1</ComprImg>
         </CommonProperty>
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
@@ -126,6 +130,7 @@
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
@@ -137,9 +142,10 @@
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>7</TargetSelection>
+          <TargetSelection>6</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -165,9 +171,14 @@
             <Capability>1</Capability>
             <DriverSelection>4099</DriverSelection>
           </Flash1>
+          <bUseTDR>1</bUseTDR>
           <Flash2>Segger\JL2CM3.dll</Flash2>
           <Flash3></Flash3>
           <Flash4></Flash4>
+          <pFcarmOut></pFcarmOut>
+          <pFcarmGrp></pFcarmGrp>
+          <pFcArmRoot></pFcArmRoot>
+          <FcArmLst>0</FcArmLst>
         </Utilities>
         <TargetArmAds>
           <ArmAdsMisc>
@@ -346,11 +357,13 @@
             <wLevel>0</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
+            <uC99>0</uC99>
+            <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>STM32F2XX, USE_STDPERIPH_DRIVER,HSE_VALUE=8000000,USE_USB_OTG_FS</Define>
               <Undefine></Undefine>
-              <IncludePath>.;..\..\components\finsh;..\..\include;..\..\libcpu\arm\common;..\..\libcpu\arm\cortex-m3;applications;drivers;.\build;.\drivers\serial;.\drivers\include;.\drivers\include\drivers;.\app_712;.\app_712\gps;.\app_712\gsm;..\..\src;.\app_712\lcd;.\app_712\U4_485;.\app_712\protocol_808;.\app_712\HMI;.\app_712\rtc;.\drivers\include;.\app_712\dataflash;.\app_712\dataflash\SST25;.\app_712\printer;.\drivers\usb;..\..\components\dfs;..\..\components\dfs\include;..\..\components\dfs\src;..\..\components\dfs\filesystems\elmfat;..\..\components\dfs\filesystems\elmfat\option;..\..\components\dfs\filesystems\romfs;.\drivers\usb;.\drivers\spi_TF;.\app_712\CAN;.\app_712\shakesensor;.\app_712\ICcard;.\STM32F2xx_Libraries\CMSIS;.\STM32F2xx_Libraries\STM32F2xx_StdPeriph_Driver\inc;.\STM32F2xx_Libraries\STM32F2xx_StdPeriph_Driver\src;.\STM32F2xx_Libraries\STM32_USB_OTG_Driver;.\STM32F2xx_Libraries\STM32_USB_HOST_Library;.\STM32F2xx_Libraries\CMSIS\ST\STM32F2xx\Include;.\STM32F2xx_Libraries\STM32_USB_HOST_Library\Class\MSC;.\STM32F2xx_Libraries\STM32_USB_HOST_Library\Core\inc;.\STM32F2xx_Libraries\STM32_USB_OTG_Driver\inc;.\STM32F2xx_Libraries\STM32_USB_HOST_Library\Class\MSC\inc;.\app_712\DrvData;..\..\components\dfs\filesystems\elmfat\option</IncludePath>
+              <IncludePath>.;..\..\components\finsh;..\..\include;..\..\libcpu\arm\common;..\..\libcpu\arm\cortex-m3;applications;drivers;.\build;.\drivers\serial;.\drivers\include;.\drivers\include\drivers;.\app_712;.\app_712\gps;.\app_712\gsm;..\..\src;.\app_712\lcd;.\app_712\U4_485;.\app_712\protocol_808;.\app_712\HMI;.\app_712\rtc;.\drivers\include;.\app_712\dataflash;.\app_712\dataflash\SST25;.\app_712\printer;.\drivers\usb;..\..\components\dfs;..\..\components\dfs\include;..\..\components\dfs\src;..\..\components\dfs\filesystems\elmfat;..\..\components\dfs\filesystems\elmfat\option;..\..\components\dfs\filesystems\romfs;.\drivers\usb;.\drivers\spi_TF;.\app_712\CAN;.\app_712\shakesensor;.\app_712\ICcard;.\STM32F2xx_Libraries\CMSIS;.\STM32F2xx_Libraries\STM32F2xx_StdPeriph_Driver\inc;.\STM32F2xx_Libraries\STM32F2xx_StdPeriph_Driver\src;.\STM32F2xx_Libraries\STM32_USB_OTG_Driver;.\STM32F2xx_Libraries\STM32_USB_HOST_Library;.\STM32F2xx_Libraries\CMSIS\ST\STM32F2xx\Include;.\STM32F2xx_Libraries\STM32_USB_HOST_Library\Class\MSC;.\STM32F2xx_Libraries\STM32_USB_HOST_Library\Core\inc;.\STM32F2xx_Libraries\STM32_USB_OTG_Driver\inc;.\STM32F2xx_Libraries\STM32_USB_HOST_Library\Class\MSC\inc;.\app_712\DrvData;..\..\components\dfs\filesystems\elmfat\option;.\drivers\spi_TF</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -362,6 +375,7 @@
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
+            <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -378,6 +392,7 @@
             <useFile>0</useFile>
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
+            <pXoBase></pXoBase>
             <ScatterFile>.\rtthread-stm32f4xx.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
@@ -440,6 +455,21 @@
               <FileName>vuart.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\drivers\vuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio_sd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\drivers\spi_TF\diskio_sd.c</FilePath>
+            </File>
+            <File>
+              <FileName>SPI_SD_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\drivers\spi_TF\SPI_SD_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>SPI_SD_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\drivers\spi_TF\SPI_SD_driver.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -842,16 +872,6 @@
               <FilePath>..\..\components\dfs\src\dfs_fs.c</FilePath>
             </File>
             <File>
-              <FileName>dfs_posix.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\components\dfs\src\dfs_posix.c</FilePath>
-            </File>
-            <File>
-              <FileName>dfs_elm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\components\dfs\filesystems\elmfat\dfs_elm.c</FilePath>
-            </File>
-            <File>
               <FileName>dfs_romfs.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\components\dfs\filesystems\romfs\dfs_romfs.c</FilePath>
@@ -870,6 +890,11 @@
               <FileName>cc936.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\components\dfs\filesystems\elmfat\option\cc936.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\components\dfs\filesystems\elmfat\diskio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1122,11 +1147,6 @@
               <FilePath>.\app_712\lcd\Menu_Include.c</FilePath>
             </File>
             <File>
-              <FileName>SED1520.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\app_712\lcd\SED1520.c</FilePath>
-            </File>
-            <File>
               <FileName>Menu_0_4_VIN.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\app_712\lcd\Menu_0_4_VIN.c</FilePath>
@@ -1245,6 +1265,11 @@
               <FileName>Menu_0_0_mode.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\app_712\lcd\Menu_0_0_mode.c</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_Driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\app_712\lcd\LCD_Driver.c</FilePath>
             </File>
           </Files>
         </Group>

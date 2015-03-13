@@ -16,14 +16,14 @@
   *
   *        http://www.st.com/software_license_agreement_liberty_v2
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   * See the License for the specific language governing permissions and
   * limitations under the License.
   *
   ******************************************************************************
-  */ 
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __USH_USR_H__
@@ -35,14 +35,16 @@
 #include "usb_conf.h"
 #include <stdio.h>
 #include "usbh_msc_core.h"
+#include "diskio.h"
 
 
 
 
-// 1  : connect  not find      0:  not  find      2: connect find  
+
+// 1  : connect  not find      0:  not  find      2: connect find
 #define  USB_NOTCONNECT                        0
 #define  USB_CONNECT_NOTFIND              1
-#define  USB_FIND                                     2 
+#define  USB_FIND                                     2
 
 
 
@@ -55,7 +57,7 @@ extern  USBH_Usr_cb_TypeDef USR_cb;
 
 /** @defgroup USBH_USR_Exported_Defines
   * @{
-  */ 
+  */
 /* State Machine for the USBH_USR_ApplicationState */
 #define USH_USR_FS_INIT       0
 #define USH_USR_FS_READLIST   1
@@ -63,26 +65,26 @@ extern  USBH_Usr_cb_TypeDef USR_cb;
 #define USH_USR_FS_DRAW       3
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBH_USR_Exported_Macros
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBH_USR_Exported_Variables
   * @{
-  */ 
+  */
 extern  uint8_t USBH_USR_ApplicationState ;
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBH_USR_Exported_FunctionsPrototype
   * @{
-  */ 
+  */
 void USBH_USR_ApplicationSelected(void);
 void USBH_USR_Init(void);
 void USBH_USR_DeInit(void);
@@ -90,12 +92,12 @@ void USBH_USR_DeviceAttached(void);
 void USBH_USR_ResetDevice(void);
 void USBH_USR_DeviceDisconnected (void);
 void USBH_USR_OverCurrentDetected (void);
-void USBH_USR_DeviceSpeedDetected(uint8_t DeviceSpeed); 
+void USBH_USR_DeviceSpeedDetected(uint8_t DeviceSpeed);
 void USBH_USR_Device_DescAvailable(void *);
 void USBH_USR_DeviceAddressAssigned(void);
-void USBH_USR_Configuration_DescAvailable(USBH_CfgDesc_TypeDef * cfgDesc,
-                                          USBH_InterfaceDesc_TypeDef *itfDesc,
-                                          USBH_EpDesc_TypeDef *epDesc);
+void USBH_USR_Configuration_DescAvailable(USBH_CfgDesc_TypeDef *cfgDesc,
+        USBH_InterfaceDesc_TypeDef *itfDesc,
+        USBH_EpDesc_TypeDef *epDesc);
 void USBH_USR_Manufacturer_String(void *);
 void USBH_USR_Product_String(void *);
 void USBH_USR_SerialNum_String(void *);
@@ -105,24 +107,24 @@ void USBH_USR_DeInit(void);
 void USBH_USR_DeviceNotSupported(void);
 void USBH_USR_UnrecoveredError(void);
 int USBH_USR_MSC_Application(void);
-void   USB_DeviceFind(void); 
+void   USB_DeviceFind(void);
 /**
   * @}
-  */ 
+  */
 
 #endif /*__USH_USR_H__*/
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

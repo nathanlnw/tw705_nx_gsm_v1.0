@@ -22,24 +22,25 @@
  */
 struct finsh_var
 {
-	char name[FINSH_NAME_MAX + 1];	/* the name of variable */
+    char name[FINSH_NAME_MAX + 1];	/* the name of variable */
 
-	u_char type;					/* the type of variable */
+    u_char type;					/* the type of variable */
 
-	/* variable value */
-	union {
-		char 	char_value;
-		short 	short_value;
-		int		int_value;
-		long	long_value;
-		void*	ptr;
-	}value;
+    /* variable value */
+    union
+    {
+        char 	char_value;
+        short 	short_value;
+        int		int_value;
+        long	long_value;
+        void	*ptr;
+    } value;
 };
 extern struct finsh_var global_variable[];
 
 int finsh_var_init(void);
-int finsh_var_insert(const char* name, int type);
-int finsh_var_delete(const char* name);
-struct finsh_var* finsh_var_lookup(const char* name);
+int finsh_var_insert(const char *name, int type);
+int finsh_var_delete(const char *name);
+struct finsh_var *finsh_var_lookup(const char *name);
 
 #endif

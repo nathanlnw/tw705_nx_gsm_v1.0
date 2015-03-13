@@ -1,6 +1,5 @@
 #include <rtthread.h>
 #include <string.h>
-#include <dfs_posix.h>
 
 #ifndef GBK2UNI_FILE
 #define GBK2UNI_FILE "/resource/gbk2uni.tbl"

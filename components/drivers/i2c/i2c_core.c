@@ -37,7 +37,7 @@ rt_err_t rt_i2c_bus_device_register(struct rt_i2c_bus_device *bus,
 }
 
 
-struct rt_i2c_bus_device* rt_i2c_bus_device_find(const char *bus_name)
+struct rt_i2c_bus_device *rt_i2c_bus_device_find(const char *bus_name)
 {
     struct rt_i2c_bus_device *bus;
     rt_device_t dev = rt_device_find(bus_name);

@@ -3,7 +3,7 @@
 
 //#include "sed1520.h"
 #include <stdio.h>
-#include<./App_moduleConfig.h> 
+#include<./App_moduleConfig.h>
 
 #define KeyValueMenu    1
 #define KeyValueOk      2
@@ -18,7 +18,7 @@
 #define InforStartPage_Meun       6950
 
 
-#define DECL_BMP(width,height,imgdata)	struct IMG_DEF BMP_##imgdata={width,height,imgdata}	
+#define DECL_BMP(width,height,imgdata)	struct IMG_DEF BMP_##imgdata={width,height,imgdata}
 
 #define MaxBankIdleTime  240//60s  LCD任务执行周期60ms,1min没有按键操作推出到idle状态
 
@@ -30,17 +30,18 @@ typedef void (*MSG)(void *p);
 
 
 
-typedef  __packed struct _menuitem{
-	char *caption;			/*菜单项的文字信息*/
-	unsigned char len;
-	SHOW show;				/*显示时调用，初始化显示*/
-	KEYPRESS keypress;		/*发生按键时调用*/
-	TIMETICK timetick;		/*向其提供系统tick，比如返回待机画面*/
-	MSG msg;	
-	struct _menuitem *parent;	   
-}MENUITEM; 
+typedef  __packed struct _menuitem
+{
+    char *caption;			/*菜单项的文字信息*/
+    unsigned char len;
+    SHOW show;				/*显示时调用，初始化显示*/
+    KEYPRESS keypress;		/*发生按键时调用*/
+    TIMETICK timetick;		/*向其提供系统tick，比如返回待机画面*/
+    MSG msg;
+    struct _menuitem *parent;
+} MENUITEM;
 
-typedef __packed struct _menuitem * PMENUITEM; 
+typedef __packed struct _menuitem *PMENUITEM;
 
 
 extern unsigned int CounterBack;
@@ -51,42 +52,42 @@ extern u16 KeyCheck_Flag[4];
 
 typedef __packed struct
 {
-unsigned int id;
-unsigned int len;
-unsigned char *p;
-}MB_SendDataType;
+    unsigned int id;
+    unsigned int len;
+    unsigned char *p;
+} MB_SendDataType;
 
 typedef __packed struct
 {
-unsigned char Num;
-unsigned char Drver_Name[22];
-unsigned char StartTime[6];
-unsigned char EndTime[6];
-}PilaoRecord;
+    unsigned char Num;
+    unsigned char Drver_Name[22];
+    unsigned char StartTime[6];
+    unsigned char EndTime[6];
+} PilaoRecord;
 
 typedef __packed struct
 {
-unsigned char Num;
-unsigned char Drver_Name[22];
-unsigned char StartTime[6];
-unsigned char EndTime[6];
-unsigned char Speed;
-}ChaosuRecord;
+    unsigned char Num;
+    unsigned char Drver_Name[22];
+    unsigned char StartTime[6];
+    unsigned char EndTime[6];
+    unsigned char Speed;
+} ChaosuRecord;
 
 typedef __packed struct
 {
-unsigned char Head[3];
-unsigned int Flag;
-unsigned int AllLen;
-unsigned char ZCFlag[2];
-//unsigned char *PInfor;
-unsigned char PInfor[200];
-unsigned char CheckOut;
-unsigned char End[3];
-}DispMailBoxInfor;
+    unsigned char Head[3];
+    unsigned int Flag;
+    unsigned int AllLen;
+    unsigned char ZCFlag[2];
+    //unsigned char *PInfor;
+    unsigned char PInfor[200];
+    unsigned char CheckOut;
+    unsigned char End[3];
+} DispMailBoxInfor;
 
 extern unsigned char XinhaoStatus[20];
-extern unsigned char XinhaoStatusBAK[20]; 
+extern unsigned char XinhaoStatusBAK[20];
 
 extern unsigned int  tzxs_value;
 extern unsigned char send_data[10];
@@ -96,19 +97,19 @@ extern unsigned char Dis_date[22];
 extern unsigned char Dis_speDer[20];
 
 
-extern unsigned char GPS_Flag,Gprs_Online_Flag;//记录gps gprs状态的标志
+extern unsigned char GPS_Flag, Gprs_Online_Flag; //记录gps gprs状态的标志
 extern unsigned char speed_time_rec[15][6];
 
 extern unsigned char ErrorRecord;
 extern PilaoRecord PilaoJilu[12];
 extern ChaosuRecord ChaosuJilu[20];
 
-extern DispMailBoxInfor LCD_Post,GPStoLCD,OtherToLCD,PiLaoLCD,ChaoSuLCD;
+extern DispMailBoxInfor LCD_Post, GPStoLCD, OtherToLCD, PiLaoLCD, ChaoSuLCD;
 
 extern unsigned char StartDisTiredExpspeed;//开始显示疲劳或者超速驾驶的记录,再判断提示时间信息错误时用
-extern unsigned char tire_Flag,expsp_Flag;
-extern unsigned char pilaoCounter,chaosuCounter;//记录返回疲劳驾驶和超速驾驶的条数
-extern unsigned char pilaoCouAscii[2],chaosuCouAscii[2];
+extern unsigned char tire_Flag, expsp_Flag;
+extern unsigned char pilaoCounter, chaosuCounter; //记录返回疲劳驾驶和超速驾驶的条数
+extern unsigned char pilaoCouAscii[2], chaosuCouAscii[2];
 
 extern unsigned char ServiceNum[13];//设备的唯一性编码,IMSI号码的后12位
 extern unsigned char DisComFlag;
@@ -128,7 +129,7 @@ extern u8 OverSpeed_approach;//超速接近
 extern u8 OverSpeed_flag;//超速标识
 extern u8 SpeedStatus_abnormal;//速度状态异常
 
-extern u8 Menu_txt_state;	//	缺纸 1	 IC卡不匹配2  
+extern u8 Menu_txt_state;	//	缺纸 1	 IC卡不匹配2
 
 ALIGN(RT_ALIGN_SIZE)extern  MENUITEM    *pMenuItem;
 
@@ -185,14 +186,14 @@ ALIGN(RT_ALIGN_SIZE)extern  MENUITEM	Menu_7_CentreTextDisplay;
 
 extern unsigned char SetVIN_NUM;//   1:设置车牌号码  2:设置VIN
 extern unsigned char OK_Counter;//记录在快捷菜单下ok键按下的次数
-extern unsigned char Screen_In,Screen_in0Z; //记录备选屏内选中的汉字
+extern unsigned char Screen_In, Screen_in0Z; //记录备选屏内选中的汉字
 
-extern unsigned char OKorCancel,OKorCancel2,OKorCancelFlag;
-extern unsigned char SetTZXSFlag,SetTZXSCounter;//SetTZXSFlag  1:校准车辆特征系数开始  2:校准车辆特征系数结束
+extern unsigned char OKorCancel, OKorCancel2, OKorCancelFlag;
+extern unsigned char SetTZXSFlag, SetTZXSCounter; //SetTZXSFlag  1:校准车辆特征系数开始  2:校准车辆特征系数结束
 
-extern unsigned char OUT_DataCounter,DataOutStartFlag,DataOutOK;
+extern unsigned char OUT_DataCounter, DataOutStartFlag, DataOutOK;
 extern unsigned char Rx_TZXS_Flag;
-extern unsigned char battery_flag,tz_flag;
+extern unsigned char battery_flag, tz_flag;
 extern unsigned char USB_insertFlag;
 
 extern unsigned char BuzzerFlag;
@@ -201,7 +202,7 @@ extern unsigned char DaYinDelay;
 
 extern unsigned char FileName_zk[11];
 //==============12*12========读字库中汉字的点阵==========
-extern unsigned char test_00[24],Read_ZK[24];
+extern unsigned char test_00[24], Read_ZK[24];
 
 
 //↑ ↓
@@ -218,26 +219,26 @@ extern unsigned char UpdataDisp[8];//北斗升级进度
 extern unsigned char BD_updata_flag;//北斗升级度u盘文件的标志
 extern unsigned int  FilePageBD_Sum;//记录文件大小，读文件大小/514
 extern unsigned int  bd_file_exist;//读出存在要升级的文件
-extern unsigned char device_version[30];  
+extern unsigned char device_version[30];
 
 
 extern unsigned char ISP_Updata_Flag; //远程升级主机程序进度显示标志   1:开始升级  2:升级完成
 
 extern unsigned char BD_upgrad_contr;
 extern unsigned char print_rec_flag;
-extern u8 print_workingFlag;  // 打印进行中。。 
+extern u8 print_workingFlag;  // 打印进行中。。
 extern u8	MenuIdle_working;  //   Idle	 界面工作状态 idle下为	  1  其他为0
 
 //------------ 使用前锁定相关 ------------------
 extern unsigned char Menu_Car_license[10];//存放车牌号码
 extern u8  Menu_VechileType[10];  //  车辆类型
-extern u8  Menu_VecLogoColor[10]; // 车牌颜色 
-extern u8 Menu_color_num; 
+extern u8  Menu_VecLogoColor[10]; // 车牌颜色
+extern u8 Menu_color_num;
 extern u8 Menu_Vin_Code[17];
 extern u8 Menu_sim_Code[12];
 extern u8 License_Not_SetEnable;//    1:车牌号未设置
-extern u8 Menu_color_num; 
-extern u8 menu_type_flag,menu_color_flag;
+extern u8 Menu_color_num;
+extern u8 menu_type_flag, menu_color_flag;
 
 
 extern u8 Password_correctFlag;  // 密码正确

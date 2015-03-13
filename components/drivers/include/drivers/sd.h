@@ -21,9 +21,9 @@
 extern "C" {
 #endif
 
-rt_err_t mmcsd_send_if_cond(struct rt_mmcsd_host *host, rt_uint32_t ocr);
-rt_err_t mmcsd_send_app_op_cond(struct rt_mmcsd_host *host, rt_uint32_t ocr, rt_uint32_t *rocr);
-rt_int32_t init_sd(struct rt_mmcsd_host *host, rt_uint32_t ocr);
+    rt_err_t mmcsd_send_if_cond(struct rt_mmcsd_host *host, rt_uint32_t ocr);
+    rt_err_t mmcsd_send_app_op_cond(struct rt_mmcsd_host *host, rt_uint32_t ocr, rt_uint32_t *rocr);
+    rt_int32_t init_sd(struct rt_mmcsd_host *host, rt_uint32_t ocr);
 
 #ifdef __cplusplus
 }

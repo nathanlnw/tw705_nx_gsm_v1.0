@@ -21,7 +21,7 @@
 /**
  * This function will initialize the usb host stack, all the usb class driver and
  * host controller driver are also be initialized here.
- * 
+ *
  * @return none.
  */
 void rt_usb_host_init(void)
@@ -48,17 +48,17 @@ void rt_usb_host_init(void)
     drv = rt_usb_class_driver_hid();
     rt_usb_class_driver_register(drv);
 
-#ifdef RT_USB_HID_KEYBOARD    
+#ifdef RT_USB_HID_KEYBOARD
     /* register hid keyboard protocal */
-    protocal = rt_usb_hid_protocal_kbd();    
+    protocal = rt_usb_hid_protocal_kbd();
     rt_usb_hid_protocal_register(protocal);
 #endif
 
-#ifdef RT_USB_HID_MOUSE    
+#ifdef RT_USB_HID_MOUSE
     /* register hid mouse protocal */
-    protocal = rt_usb_hid_protocal_mouse();    
+    protocal = rt_usb_hid_protocal_mouse();
     rt_usb_hid_protocal_register(protocal);
-#endif    
+#endif
 #endif
 
 #ifdef RT_USB_CLASS_ADK

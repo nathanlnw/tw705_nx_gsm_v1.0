@@ -21,14 +21,14 @@
 extern "C" {
 #endif
 
-char *dfs_normalize_path(const char *directory, const char *filename);
-const char *dfs_subdir(const char *directory, const char *filename);
+    char *dfs_normalize_path(const char *directory, const char *filename);
+    const char *dfs_subdir(const char *directory, const char *filename);
 
-/* FD APIs */
-int fd_new(void);
-struct dfs_fd *fd_get(int fd);
-void fd_put(struct dfs_fd *fd);
-int fd_is_open(const char *pathname);
+    /* FD APIs */
+    int fd_new(void);
+    struct dfs_fd *fd_get(int fd);
+    void fd_put(struct dfs_fd *fd);
+    int fd_is_open(const char *pathname);
 
 #ifdef __cplusplus
 }

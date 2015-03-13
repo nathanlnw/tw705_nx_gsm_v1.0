@@ -169,6 +169,6 @@ void list_date(void)
 }
 FINSH_FUNCTION_EXPORT(list_date, show date and time.)
 
-FINSH_FUNCTION_EXPORT(set_date, set date. e.g: set_date(2010,2,28))
-FINSH_FUNCTION_EXPORT(set_time, set time. e.g: set_time(23,59,59))
+FINSH_FUNCTION_EXPORT(set_date, set date. e.g: set_date(2010, 2, 28))
+FINSH_FUNCTION_EXPORT(set_time, set time. e.g: set_time(23, 59, 59))
 #endif

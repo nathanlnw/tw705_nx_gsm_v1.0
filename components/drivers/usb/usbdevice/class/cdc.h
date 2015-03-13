@@ -92,9 +92,9 @@ struct ucdc_header_descriptor
     rt_uint8_t length;
     rt_uint8_t type;
     rt_uint8_t subtype;
-    rt_uint16_t bcd;        
+    rt_uint16_t bcd;
 };
-typedef struct ucdc_header_descriptor* ucdc_hdr_desc_t;
+typedef struct ucdc_header_descriptor *ucdc_hdr_desc_t;
 
 struct ucdc_acm_descriptor
 {
@@ -103,17 +103,17 @@ struct ucdc_acm_descriptor
     rt_uint8_t subtype;
     rt_uint8_t capabilties;
 };
-typedef struct ucdc_acm_descriptor* ucdc_acm_desc_t;
+typedef struct ucdc_acm_descriptor *ucdc_acm_desc_t;
 
 struct ucdc_call_mgmt_descriptor
 {
     rt_uint8_t length;
     rt_uint8_t type;
     rt_uint8_t subtype;
-    rt_uint8_t capabilties;    
+    rt_uint8_t capabilties;
     rt_uint8_t data_interface;
 };
-typedef struct ucdc_call_mgmt_descriptor* ucdc_call_mgmt_desc_t;
+typedef struct ucdc_call_mgmt_descriptor *ucdc_call_mgmt_desc_t;
 
 struct ucdc_union_descriptor
 {
@@ -123,26 +123,26 @@ struct ucdc_union_descriptor
     rt_uint8_t master_interface;
     rt_uint8_t slave_interface0;
 };
-typedef struct ucdc_union_descriptor* ucdc_union_desc_t;
+typedef struct ucdc_union_descriptor *ucdc_union_desc_t;
 
 struct ucdc_comm_descriptor
 {
     struct uinterface_descriptor intf_desc;
     struct ucdc_header_descriptor hdr_desc;
-    struct ucdc_call_mgmt_descriptor call_mgmt_desc;    
-    struct ucdc_acm_descriptor acm_desc;    
-    struct ucdc_union_descriptor union_desc;    
+    struct ucdc_call_mgmt_descriptor call_mgmt_desc;
+    struct ucdc_acm_descriptor acm_desc;
+    struct ucdc_union_descriptor union_desc;
     struct uendpoint_descriptor ep_desc;
 };
-typedef struct ucdc_comm_descriptor* ucdc_comm_desc_t;
+typedef struct ucdc_comm_descriptor *ucdc_comm_desc_t;
 
 struct ucdc_data_descriptor
 {
     struct uinterface_descriptor intf_desc;
-    struct uendpoint_descriptor ep_out_desc;        
+    struct uendpoint_descriptor ep_out_desc;
     struct uendpoint_descriptor ep_in_desc;
 };
-typedef struct ucdc_data_descriptor* ucdc_data_desc_t;
+typedef struct ucdc_data_descriptor *ucdc_data_desc_t;
 
 struct ucdc_line_coding
 {
@@ -151,7 +151,7 @@ struct ucdc_line_coding
     rt_uint8_t bParityType;
     rt_uint8_t bDataBits;
 };
-typedef struct ucdc_line_coding* ucdc_line_coding_t;
+typedef struct ucdc_line_coding *ucdc_line_coding_t;
 
 #pragma pack()
 

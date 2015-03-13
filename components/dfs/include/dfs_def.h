@@ -13,7 +13,7 @@
  * 2004-10-14     Beranard     Clean up the code.
  * 2005-01-22     Beranard     Clean up the code, port to MinGW
  */
- 
+
 #ifndef __DFS_DEF_H__
 #define __DFS_DEF_H__
 
@@ -60,7 +60,7 @@
 #define dfs_log(level, x)
 #endif
 
-#if defined(RT_USING_NEWLIB) 
+#if defined(RT_USING_NEWLIB)
 #include <string.h>
 #include <sys/stat.h> 			/* used for struct stat 	*/
 #include <sys/statfs.h>			/* used for struct statfs 	*/
@@ -147,12 +147,12 @@
 #define DFS_DT_DIR				DT_DIR
 
 #else
-	#ifdef RT_USING_MINILIBC
-		#include <string.h>
-	#else
-		typedef long off_t;
-		typedef int mode_t;
-	#endif
+#ifdef RT_USING_MINILIBC
+#include <string.h>
+#else
+typedef long off_t;
+typedef int mode_t;
+#endif
 
 /* Device error codes */
 #define DFS_STATUS_OK			0		/* no error */
@@ -242,18 +242,18 @@
 
 struct stat
 {
-	rt_device_t st_dev;
-	rt_uint16_t st_mode;
-	rt_uint32_t st_size;
-	rt_time_t  	st_mtime;
-	rt_uint32_t st_blksize;
+    rt_device_t st_dev;
+    rt_uint16_t st_mode;
+    rt_uint32_t st_size;
+    rt_time_t  	st_mtime;
+    rt_uint32_t st_blksize;
 };
 
 struct statfs
 {
-	rt_size_t f_bsize; 	 /* block size */
-	rt_size_t f_blocks;  /* total data blocks in file system */
-	rt_size_t f_bfree;	 /* free blocks in file system */
+    rt_size_t f_bsize; 	 /* block size */
+    rt_size_t f_blocks;  /* total data blocks in file system */
+    rt_size_t f_bfree;	 /* free blocks in file system */
 };
 
 /* File types */
@@ -269,10 +269,10 @@ struct statfs
 
 struct dirent
 {
-	rt_uint8_t d_type;				/* The type of the file */
-	rt_uint8_t d_namlen;			/* The length of the not including the terminating null file name */
-	rt_uint16_t d_reclen;			/* length of this record */
-	char d_name[DFS_PATH_MAX];		/* The null-terminated file name */
+    rt_uint8_t d_type;				/* The type of the file */
+    rt_uint8_t d_namlen;			/* The length of the not including the terminating null file name */
+    rt_uint16_t d_reclen;			/* length of this record */
+    char d_name[DFS_PATH_MAX];		/* The null-terminated file name */
 };
 #endif
 

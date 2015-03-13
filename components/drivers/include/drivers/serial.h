@@ -58,17 +58,30 @@
 #define RT_SERIAL_ERR_FRAMING           0x02
 #define RT_SERIAL_ERR_PARITY            0x03
 
+
+
 /* Default config for serial_configure structure */
+
 #define RT_SERIAL_CONFIG_DEFAULT           \
-{                                          \
+ 
+{
+    \
+
     BAUD_RATE_115200, /* 115200 bits/s */  \
+
     DATA_BITS_8,      /* 8 databits */     \
-	STOP_BITS_1,      /* 1 stopbit */      \
-	PARITY_NONE,      /* No parity  */     \
-	BIT_ORDER_LSB,    /* LSB first sent */ \
-	NRZ_NORMAL,       /* Normal mode */    \
-	0                                      \
-}                                                                                 
+
+    STOP_BITS_1,      /* 1 stopbit */      \
+
+    PARITY_NONE,      /* No parity  */     \
+
+    BIT_ORDER_LSB,    /* LSB first sent */ \
+
+    NRZ_NORMAL,       /* Normal mode */    \
+
+    0                                      \
+
+}
 
 struct serial_ringbuffer
 {
@@ -79,12 +92,12 @@ struct serial_ringbuffer
 struct serial_configure
 {
     rt_uint32_t baud_rate;
-    rt_uint32_t data_bits               :4;
-    rt_uint32_t stop_bits               :2;
-    rt_uint32_t parity                  :2;
-    rt_uint32_t bit_order               :1;
-    rt_uint32_t invert                  :1;
-    rt_uint32_t reserved                :20;
+    rt_uint32_t data_bits               : 4;
+    rt_uint32_t stop_bits               : 2;
+    rt_uint32_t parity                  : 2;
+    rt_uint32_t bit_order               : 1;
+    rt_uint32_t invert                  : 1;
+    rt_uint32_t reserved                : 20;
 };
 
 struct rt_serial_device

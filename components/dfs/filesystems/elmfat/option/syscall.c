@@ -19,25 +19,25 @@
 */
 
 BOOL ff_cre_syncobj (	/* TRUE:Function succeeded, FALSE:Could not create due to any error */
-	BYTE vol,			/* Corresponding logical drive being processed */
-	_SYNC_t *sobj		/* Pointer to return the created sync object */
+    BYTE vol,			/* Corresponding logical drive being processed */
+    _SYNC_t *sobj		/* Pointer to return the created sync object */
 )
 {
-	BOOL ret;
+    BOOL ret;
 
-	*sobj = CreateMutex(NULL, FALSE, NULL);					/* Win32 */
-	ret = (*sobj != INVALID_HANDLE_VALUE) ? TRUE : FALSE;
+    *sobj = CreateMutex(NULL, FALSE, NULL);					/* Win32 */
+    ret = (*sobj != INVALID_HANDLE_VALUE) ? TRUE : FALSE;
 
-//	*sobj = SyncObjects[vol];	/* uITRON (give a static created sync object) */
-//	ret = TRUE;					/* The initial value of the semaphore must be 1. */
+    //	*sobj = SyncObjects[vol];	/* uITRON (give a static created sync object) */
+    //	ret = TRUE;					/* The initial value of the semaphore must be 1. */
 
-//	*sobj = OSMutexCreate(0, &err);				/* uC/OS-II */
-//	ret = (err == OS_NO_ERR) ? TRUE : FALSE;
+    //	*sobj = OSMutexCreate(0, &err);				/* uC/OS-II */
+    //	ret = (err == OS_NO_ERR) ? TRUE : FALSE;
 
-//	*sobj = xSemaphoreCreateMutex();			/* FreeRTOS */
-//	ret = (*sobj != NULL) ? TRUE : FALSE;
+    //	*sobj = xSemaphoreCreateMutex();			/* FreeRTOS */
+    //	ret = (*sobj != NULL) ? TRUE : FALSE;
 
-	return ret;
+    return ret;
 }
 
 
@@ -51,21 +51,21 @@ BOOL ff_cre_syncobj (	/* TRUE:Function succeeded, FALSE:Could not create due to 
 */
 
 BOOL ff_del_syncobj (	/* TRUE:Function succeeded, FALSE:Could not delete due to any error */
-	_SYNC_t sobj		/* Sync object tied to the logical drive to be deleted */
+    _SYNC_t sobj		/* Sync object tied to the logical drive to be deleted */
 )
 {
-	BOOL ret;
+    BOOL ret;
 
-	ret = CloseHandle(sobj);	/* Win32 *
+    ret = CloseHandle(sobj);	/* Win32 *
 
 //	ret = TRUE;					/* uITRON (nothing to do) *
 
 //	OSMutexDel(sobj, OS_DEL_ALWAYS, &err);		/* uC/OS-II */
-//	ret = (err == OS_NO_ERR) ? TRUE : FALSE;
+    //	ret = (err == OS_NO_ERR) ? TRUE : FALSE;
 
-//	ret = TRUE;					/* FreeRTOS (nothing to do) */
+    //	ret = TRUE;					/* FreeRTOS (nothing to do) */
 
-	return ret;
+    return ret;
 }
 
 
@@ -78,21 +78,21 @@ BOOL ff_del_syncobj (	/* TRUE:Function succeeded, FALSE:Could not delete due to 
 */
 
 BOOL ff_req_grant (	/* TRUE:Got a grant to access the volume, FALSE:Could not get a grant */
-	_SYNC_t sobj	/* Sync object to wait */
+    _SYNC_t sobj	/* Sync object to wait */
 )
 {
-	BOOL ret;
+    BOOL ret;
 
-	ret = (WaitForSingleObject(sobj, _FS_TIMEOUT) == WAIT_OBJECT_0) ? TRUE : FALSE;	/* Win32 */
+    ret = (WaitForSingleObject(sobj, _FS_TIMEOUT) == WAIT_OBJECT_0) ? TRUE : FALSE;	/* Win32 */
 
-//	ret = (wai_sem(sobj) == E_OK) ? TRUE : FALSE;	/* uITRON */
+    //	ret = (wai_sem(sobj) == E_OK) ? TRUE : FALSE;	/* uITRON */
 
-//	OSMutexPend(sobj, _FS_TIMEOUT, &err));			/* uC/OS-II */
-//	ret = (err == OS_NO_ERR) ? TRUE : FALSE;
+    //	OSMutexPend(sobj, _FS_TIMEOUT, &err));			/* uC/OS-II */
+    //	ret = (err == OS_NO_ERR) ? TRUE : FALSE;
 
-//	ret = (xSemaphoreTake(sobj, _FS_TIMEOUT) == pdTRUE) ? TRUE : FALSE;	/* FreeRTOS */
+    //	ret = (xSemaphoreTake(sobj, _FS_TIMEOUT) == pdTRUE) ? TRUE : FALSE;	/* FreeRTOS */
 
-	return ret;
+    return ret;
 }
 
 
@@ -104,16 +104,16 @@ BOOL ff_req_grant (	/* TRUE:Got a grant to access the volume, FALSE:Could not ge
 */
 
 void ff_rel_grant (
-	_SYNC_t sobj	/* Sync object to be signaled */
+    _SYNC_t sobj	/* Sync object to be signaled */
 )
 {
-	ReleaseMutex(sobj);		/* Win32 */
+    ReleaseMutex(sobj);		/* Win32 */
 
-//	sig_sem(sobj);			/* uITRON */
+    //	sig_sem(sobj);			/* uITRON */
 
-//	OSMutexPost(sobj);		/* uC/OS-II */
+    //	OSMutexPost(sobj);		/* uC/OS-II */
 
-//	xSemaphoreGive(sobj);	/* FreeRTOS */
+    //	xSemaphoreGive(sobj);	/* FreeRTOS */
 
 }
 
@@ -129,11 +129,11 @@ void ff_rel_grant (
 /* If a NULL is returned, the file function fails with FR_NOT_ENOUGH_CORE.
 */
 
-void* ff_memalloc (	/* Returns pointer to the allocated memory block */
-	UINT size		/* Number of bytes to allocate */
+void *ff_memalloc (	/* Returns pointer to the allocated memory block */
+    UINT size		/* Number of bytes to allocate */
 )
 {
-	return malloc(size);
+    return malloc(size);
 }
 
 
@@ -142,10 +142,10 @@ void* ff_memalloc (	/* Returns pointer to the allocated memory block */
 /*------------------------------------------------------------------------*/
 
 void ff_memfree(
-	void* mblock	/* Pointer to the memory block to free */
+    void *mblock	/* Pointer to the memory block to free */
 )
 {
-	free(mblock);
+    free(mblock);
 }
 
 #endif

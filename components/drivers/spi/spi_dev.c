@@ -66,7 +66,7 @@ static rt_err_t _spi_bus_device_control(rt_device_t dev,
     {
     case 0: /* set device */
         break;
-    case 1: 
+    case 1:
         break;
     }
 
@@ -146,7 +146,7 @@ static rt_err_t _spidev_device_control(rt_device_t dev,
     {
     case 0: /* set device */
         break;
-    case 1: 
+    case 1:
         break;
     }
 
@@ -168,7 +168,7 @@ rt_err_t rt_spidev_device_init(struct rt_spi_device *dev, const char *name)
     device->read    = _spidev_device_read;
     device->write   = _spidev_device_write;
     device->control = _spidev_device_control;
-    
+
     /* register to device manager */
     return rt_device_register(device, name, RT_DEVICE_FLAG_RDWR);
 }

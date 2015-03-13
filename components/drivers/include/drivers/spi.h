@@ -189,7 +189,7 @@ rt_size_t rt_spi_transfer(struct rt_spi_device *device,
  *         SPI message which be transmitted failed.
  */
 struct rt_spi_message *rt_spi_transfer_message(struct rt_spi_device  *device,
-                                               struct rt_spi_message *message);
+        struct rt_spi_message *message);
 
 rt_inline rt_size_t rt_spi_recv(struct rt_spi_device *device,
                                 void                 *recv_buf,

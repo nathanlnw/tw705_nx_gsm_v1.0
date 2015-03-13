@@ -28,10 +28,10 @@
 #define IDLE_THREAD_STACK_SIZE     2048
 
 /* Using Software Timer */
-#define RT_USING_TIMER_SOFT 
+#define RT_USING_TIMER_SOFT
 #define RT_TIMER_THREAD_PRIO		4
 #define RT_TIMER_THREAD_STACK_SIZE	4096 //2048 
-#define RT_TIMER_TICK_PER_SECOND	10 
+#define RT_TIMER_TICK_PER_SECOND	10
 
 /* SECTION: IPC */
 /* Using Semaphore*/
@@ -164,14 +164,14 @@
 
 
 //----  App_712  -------------------
-/*         
-  //  oldest    setting  
+/*
+  //  oldest    setting
 #define  Prio_Demo        18                                // Demo application thread
-#define  Prio_GSM          13 
+#define  Prio_GSM          13
 #define  Prio_GPS           17
-#define  Prio_485           16  
+#define  Prio_485           16
 #define  Prio_App808     14
-#define  Prio_HMI           15 
+#define  Prio_HMI           15
 */
 
 
@@ -179,32 +179,32 @@
 
 /*
 #define  Prio_Demo         18                                // Demo application thread
-#define  Prio_GSM          13 
+#define  Prio_GSM          13
 #define  Prio_GPS          16
-#define  Prio_485          17      
+#define  Prio_485          17
 #define  Prio_App808       14
-#define  Prio_HMI          15  
+#define  Prio_HMI          15
 */
 
 
 #if  1   // hebei  current
 // FINISH   有限级别是这个    11   #define FINSH_THREAD_PRIORITY    11
 #define  Prio_Demo         18                                // Demo application thread
-#define  Prio_GSM          12 
-#define  Prio_GPS          13     
-#define  Prio_App808       15           
-#define  Prio_HMI          10   
-#define  Prio_GBDRV        16    
+#define  Prio_GSM          12
+#define  Prio_GPS          13
+#define  Prio_App808       15
+#define  Prio_HMI          10
+#define  Prio_GBDRV        16
 
 #endif
 
 /*
 #define  Prio_Demo          18                                // Demo application thread
-#define  Prio_GSM           13 
+#define  Prio_GSM           13
 #define  Prio_GPS           14
-#define  Prio_485           17      
+#define  Prio_485           17
 #define  Prio_App808        15
-#define  Prio_HMI           16  
+#define  Prio_HMI           16
 */
 //--------------------------------
 

@@ -96,8 +96,8 @@ struct stack_frame
 rt_uint8_t *rt_hw_stack_init(void *tentry, void *parameter,
                              rt_uint8_t *stack_addr, void *texit)
 {
-    struct stack_frame * stack_frame;
-    rt_uint8_t * stk;
+    struct stack_frame *stack_frame;
+    rt_uint8_t *stk;
     unsigned long i;
 
     stk = stack_addr + sizeof(rt_uint32_t);
@@ -106,9 +106,9 @@ rt_uint8_t *rt_hw_stack_init(void *tentry, void *parameter,
     stack_frame = (struct stack_frame *)stk;
 
     /* init all register */
-    for(i=0; i<sizeof(struct stack_frame)/sizeof(rt_uint32_t); i++)
+    for(i = 0; i < sizeof(struct stack_frame) / sizeof(rt_uint32_t); i++)
     {
-        ((rt_uint32_t*)stack_frame)[i] = 0xdeadbeef;
+        ((rt_uint32_t *)stack_frame)[i] = 0xdeadbeef;
     }
 
     stack_frame->exception_stack_frame.r0 = (unsigned long)parameter; /* r0 : argument */
@@ -127,7 +127,7 @@ rt_uint8_t *rt_hw_stack_init(void *tentry, void *parameter,
 extern void rt_hw_interrupt_thread_switch(void);
 extern long list_thread(void);
 extern rt_thread_t rt_current_thread;
-void rt_hw_hard_fault_exception(struct exception_stack_frame * exception_stack)
+void rt_hw_hard_fault_exception(struct exception_stack_frame *exception_stack)
 {
     rt_kprintf("psr: 0x%08x\n", exception_stack->psr);
     rt_kprintf(" pc: 0x%08x\n", exception_stack->pc);

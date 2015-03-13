@@ -850,10 +850,11 @@ ARM Macro Assembler    Page 14
 
 
 Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\build\
-startup_stm32f2xx.d -o.\build\startup_stm32f2xx.o -Ie:\Keil\ARM\RV31\INC -Ie:\K
-eil\ARM\CMSIS\Include -Ie:\Keil\ARM\Inc\ST\STM32F2xx --predefine="__MICROLIB SE
-TA 1" --list=.\startup_stm32f2xx.lst STM32F2xx_Libraries\CMSIS\ST\STM32F2xx\Sou
-rce\Templates\arm\startup_stm32f2xx.s
+startup_stm32f2xx.d -o.\build\startup_stm32f2xx.o -IE:\KEIL_v5.13\ARM\RV31\INC 
+-IE:\KEIL_v5.13\ARM\CMSIS\Include -IE:\KEIL_v5.13\ARM\Inc\ST\STM32F2xx --predef
+ine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 513" --list=.\start
+up_stm32f2xx.lst STM32F2xx_Libraries\CMSIS\ST\STM32F2xx\Source\Templates\arm\st
+artup_stm32f2xx.s
 
 
 
@@ -2265,4 +2266,4 @@ es\arm\startup_stm32f2xx.s
 es\arm\startup_stm32f2xx.s
 Comment: __main used once
 2 symbols
-441 symbols in table
+442 symbols in table

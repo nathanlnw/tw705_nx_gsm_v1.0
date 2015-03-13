@@ -7,7 +7,7 @@
  * found in the file LICENSE in this distribution or at
  * http://www.rt-thread.org/license/LICENSE
  */
- 
+
 #ifndef __RTM_H__
 #define __RTM_H__
 

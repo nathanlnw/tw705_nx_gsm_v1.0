@@ -267,9 +267,10 @@ ARM Macro Assembler    Page 5
               E000ED04 
               E000ED20 
 Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\build\
-context_rvds.d -o.\build\context_rvds.o -Ie:\Keil\ARM\RV31\INC -Ie:\Keil\ARM\CM
-SIS\Include -Ie:\Keil\ARM\Inc\ST\STM32F2xx --predefine="__MICROLIB SETA 1" --li
-st=.\context_rvds.lst ..\..\libcpu\arm\cortex-m3\context_rvds.S
+context_rvds.d -o.\build\context_rvds.o -IE:\KEIL_v5.13\ARM\RV31\INC -IE:\KEIL_
+v5.13\ARM\CMSIS\Include -IE:\KEIL_v5.13\ARM\Inc\ST\STM32F2xx --predefine="__MIC
+ROLIB SETA 1" --predefine="__UVISION_VERSION SETA 513" --list=.\context_rvds.ls
+t ..\..\libcpu\arm\cortex-m3\context_rvds.S
 
 
 
@@ -465,4 +466,4 @@ Symbol: rt_thread_switch_interrupt_flag
       At line 145 in file ..\..\libcpu\arm\cortex-m3\context_rvds.S
 
 4 symbols
-353 symbols in table
+354 symbols in table

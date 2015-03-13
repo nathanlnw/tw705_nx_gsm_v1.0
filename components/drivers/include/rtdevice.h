@@ -44,7 +44,7 @@ struct rt_pipe_device
 {
     struct rt_device parent;
 
-    /* ring buffer in pipe device */ 
+    /* ring buffer in pipe device */
     struct rt_ringbuffer ringbuffer;
 
     /* suspended list */

@@ -47,15 +47,16 @@
 #define CT_BLOCK			0x08
 
 /* MMC device configuration */
-typedef struct tagSDCFG{
-	rt_uint32_t sernum;		// serial number
-	rt_uint32_t size;			// size=sectorsize*sectorcnt
-	rt_uint32_t sectorcnt;		//
-	rt_uint32_t sectorsize; 	// 512
-	rt_uint32_t blocksize;		// erase block size
-	rt_uint8_t ocr[4];			// OCR
-	rt_uint8_t cid[16];		// CID
-	rt_uint8_t csd[16];		// CSD
+typedef struct tagSDCFG
+{
+    rt_uint32_t sernum;		// serial number
+    rt_uint32_t size;			// size=sectorsize*sectorcnt
+    rt_uint32_t sectorcnt;		//
+    rt_uint32_t sectorsize; 	// 512
+    rt_uint32_t blocksize;		// erase block size
+    rt_uint8_t ocr[4];			// OCR
+    rt_uint8_t cid[16];		// CID
+    rt_uint8_t csd[16];		// CSD
 } SDCFG;
 
 void spi_sd_init(void);

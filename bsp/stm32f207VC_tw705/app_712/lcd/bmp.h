@@ -25,11 +25,12 @@
 
 #ifndef FONTGEN_ITYPES
 #define FONTGEN_ITYPES
-typedef struct IMG_DEF 
- { unsigned char width_in_pixels;      /* Image width */
-   unsigned char height_in_pixels;     /* Image height*/
-   const unsigned char *char_table;    /* Image table start address in memory  */
- } IMG_DEF;
+typedef struct IMG_DEF
+{
+    unsigned char width_in_pixels;      /* Image width */
+    unsigned char height_in_pixels;     /* Image height*/
+    const unsigned char *char_table;    /* Image table start address in memory  */
+} IMG_DEF;
 #endif
 
-#endif 
+#endif

@@ -15,13 +15,13 @@
 #include <finsh.h>
 
 
-   #define      U3_OUT_PWR_ON       GPIO_SetBits(GPIOE,GPIO_Pin_7)       
-   #define      U3_OUT_PWR_OFF      GPIO_ResetBits(GPIOE,GPIO_Pin_7)    
+#define      U3_OUT_PWR_ON       GPIO_SetBits(GPIOE,GPIO_Pin_7)
+#define      U3_OUT_PWR_OFF      GPIO_ResetBits(GPIOE,GPIO_Pin_7)
 extern  struct rt_device  Device_CAN2;
 
-extern void  CAN2_RxHandler(unsigned char rx_data);   
-extern void  Device_CAN2_regist(void );    
+extern void  CAN2_RxHandler(unsigned char rx_data);
+extern void  Device_CAN2_regist(void );
 
 
 
-#endif 
+#endif

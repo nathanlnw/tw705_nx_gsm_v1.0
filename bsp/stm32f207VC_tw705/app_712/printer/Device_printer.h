@@ -29,9 +29,9 @@
 
 
 extern void printer_driver_init( void );
-extern void printer( const char *str ); 
+extern void printer( const char *str );
 extern u8 step( const int count, const int delay );
-extern void printer_port_init( void ); 
+extern void printer_port_init( void );
 
-#endif 
+#endif
 

@@ -132,7 +132,7 @@ static rt_err_t rt_serial_init(struct rt_device *dev)
             serial_ringbuffer_init(serial->int_rx);
 
         if (dev->flag & RT_DEVICE_FLAG_INT_TX)
-            serial_ringbuffer_init(serial->int_tx);      
+            serial_ringbuffer_init(serial->int_tx);
 
         /* set activated */
         dev->flag |= RT_DEVICE_FLAG_ACTIVATED;
@@ -245,7 +245,7 @@ static rt_size_t rt_serial_write(struct rt_device *dev,
     RT_ASSERT(dev != RT_NULL);
     serial = (struct rt_serial_device *)dev;
 
-    ptr = (rt_uint8_t*)buffer;
+    ptr = (rt_uint8_t *)buffer;
 
     if (dev->flag & RT_DEVICE_FLAG_INT_TX)
     {

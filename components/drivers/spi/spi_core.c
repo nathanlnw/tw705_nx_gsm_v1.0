@@ -313,7 +313,7 @@ __exit:
 }
 
 struct rt_spi_message *rt_spi_transfer_message(struct rt_spi_device  *device,
-                                               struct rt_spi_message *message)
+        struct rt_spi_message *message)
 {
     rt_err_t result;
     struct rt_spi_message *index;

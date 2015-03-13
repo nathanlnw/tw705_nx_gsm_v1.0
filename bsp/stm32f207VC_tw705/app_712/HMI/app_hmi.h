@@ -17,10 +17,10 @@ typedef struct    _HMI_COM
 {
     u16    Msg_ID;  //JT808  ID
     u16    Info_Len;
-    u8 *  Content;   
-}HMI_COM;
+    u8   *Content;
+} HMI_COM;
 
-extern void  HMI_app_init(void);    
+extern void  HMI_app_init(void);
 extern void Dayin_Fun(u8 dayin_par);
 
-#endif 
+#endif

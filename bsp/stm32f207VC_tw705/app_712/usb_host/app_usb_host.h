@@ -13,7 +13,7 @@
 
 
 extern void usbhost_app_init(void);
-extern void usbhost_set_device(char* device_name);
+extern void usbhost_set_device(char *device_name);
 extern rt_device_t rt_usbhost_set_device(const char *name);
 
 
@@ -22,5 +22,5 @@ extern rt_device_t rt_usbhost_set_device(const char *name);
 
 
 
-#endif 
+#endif
 

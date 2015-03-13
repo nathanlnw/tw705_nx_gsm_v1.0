@@ -10,10 +10,10 @@
  * Change Logs:
  * Date           Author       Notes
  * 2009-05-27     Yi.qiu       The first version.
- * 2010-07-18     Bernard      add stat and statfs structure definitions. 
+ * 2010-07-18     Bernard      add stat and statfs structure definitions.
  * 2011-05-16     Yi.qiu       Change parameter name of rename, "new" is C++ key word.
  */
- 
+
 #ifndef __DFS_POSIX_H__
 #define __DFS_POSIX_H__
 
@@ -34,15 +34,15 @@
 
 #define S_IFMT 		DFS_S_IFMT
 #define S_IFSOCK	DFS_S_IFSOCK
-#define S_IFLNK		DFS_S_IFLNK	
-#define S_IFREG		DFS_S_IFREG	
-#define S_IFBLK		DFS_S_IFBLK	
-#define S_IFDIR		DFS_S_IFDIR 
-#define S_IFCHR		DFS_S_IFCHR 
-#define S_IFIFO		DFS_S_IFIFO 
-#define S_ISUID		DFS_S_ISUID 
-#define S_ISGID		DFS_S_ISGID 
-#define S_ISVTX		DFS_S_ISVTX 
+#define S_IFLNK		DFS_S_IFLNK
+#define S_IFREG		DFS_S_IFREG
+#define S_IFBLK		DFS_S_IFBLK
+#define S_IFDIR		DFS_S_IFDIR
+#define S_IFCHR		DFS_S_IFCHR
+#define S_IFIFO		DFS_S_IFIFO
+#define S_ISUID		DFS_S_ISUID
+#define S_ISGID		DFS_S_ISGID
+#define S_ISVTX		DFS_S_ISVTX
 
 #define S_ISLNK(m)	(((m) & DFS_S_IFMT) == DFS_S_IFLNK)
 #define S_ISREG(m)	(((m) & DFS_S_IFMT) == DFS_S_IFREG)
@@ -75,12 +75,12 @@
 #define SEEK_END	DFS_SEEK_END
 #endif
 
-typedef struct 
+typedef struct
 {
-	int fd;		/* directory file */
-	char buf[512];
-	int num;
-	int cur;
+    int fd;		/* directory file */
+    char buf[512];
+    int num;
+    int cur;
 } DIR;
 
 /* directory api*/
@@ -90,7 +90,7 @@ struct dirent *readdir(DIR *d);
 long telldir(DIR *d);
 void seekdir(DIR *d, off_t offset);
 void rewinddir(DIR *d);
-int closedir(DIR* d);
+int closedir(DIR *d);
 
 #else
 /* use newlib header file */

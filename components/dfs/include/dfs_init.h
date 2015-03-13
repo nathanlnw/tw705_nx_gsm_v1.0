@@ -19,8 +19,8 @@
 extern "C" {
 #endif
 
-/* Initialization of dfs */
-void dfs_init(void);
+    /* Initialization of dfs */
+    void dfs_init(void);
 
 #ifdef __cplusplus
 }

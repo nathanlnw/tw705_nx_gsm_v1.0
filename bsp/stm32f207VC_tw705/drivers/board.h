@@ -79,7 +79,7 @@ void rt_hw_board_init(void);
 #elif STM32_CONSOLE_USART == 2
 #define CONSOLE_DEVICE "uart2"
 #elif STM32_CONSOLE_USART == 3
-#define CONSOLE_DEVICE "uart3" 
+#define CONSOLE_DEVICE "uart3"
 #endif
 
 #define FINSH_DEVICE_NAME   CONSOLE_DEVICE

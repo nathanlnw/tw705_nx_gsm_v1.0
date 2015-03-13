@@ -12,7 +12,7 @@
  * 2010-01-09     Bernard      first version
  * 2010-04-09     yi.qiu       implement based on first version
  */
- 
+
 #ifndef __MODULE_H__
 #define __MODULE_H__
 
@@ -137,7 +137,7 @@ typedef struct elf32_sym
 #define    STB_GLOBAL  1
 #define    STB_WEAK    2
 #define    STB_NUM     3
- 
+
 #define    STB_LOPROC  13      /* processor specific range */
 #define    STB_HIPROC  15
 
@@ -153,12 +153,12 @@ typedef struct elf32_sym
 #define    STT_HIOS    12
 #define    STT_LOPROC  13      /* processor specific range */
 #define    STT_HIPROC  15
-    
+
 #define STN_UNDEF       0               /* undefined */
 
 #define    ELF_ST_BIND(info)           ((info) >> 4)
 #define    ELF_ST_TYPE(info)           ((info) & 0xf)
-#define    ELF_ST_INFO(bind, type)     (((bind)<<4)+((type)&0xf))    
+#define    ELF_ST_INFO(bind, type)     (((bind)<<4)+((type)&0xf))
 
 /* Relocation entry with implicit addend */
 typedef struct

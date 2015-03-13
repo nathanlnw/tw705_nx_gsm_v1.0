@@ -7,7 +7,7 @@
  * found in the file LICENSE in this distribution or at
  * http://www.rt-thread.org/license/LICENSE
  */
- 
+
 #ifndef __RTDEBUG_H__
 #define __RTDEBUG_H__
 

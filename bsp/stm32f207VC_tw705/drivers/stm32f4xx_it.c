@@ -74,10 +74,10 @@ void NMI_Handler(void)
   */
 void MemManage_Handler(void)
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Memory Manage exception occurs */
+    while (1)
+    {
+    }
 }
 
 /**
@@ -87,10 +87,10 @@ void MemManage_Handler(void)
   */
 void BusFault_Handler(void)
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Bus Fault exception occurs */
+    while (1)
+    {
+    }
 }
 
 /**
@@ -100,10 +100,10 @@ void BusFault_Handler(void)
   */
 void UsageFault_Handler(void)
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Usage Fault exception occurs */
+    while (1)
+    {
+    }
 }
 
 /**
@@ -161,32 +161,33 @@ void DebugMon_Handler(void)
 }*/
 void WWDG_IRQHandler(void)
 {
-     WWDG_SetCounter(0x7F);  
-	          /* Clear EWI flag */
-      WWDG_ClearFlag();  
-   /* Update WWDG counter */
-   // WWDG_SetCounter(0x7F); 
-  
-}  
+    WWDG_SetCounter(0x7F);
+    /* Clear EWI flag */
+    WWDG_ClearFlag();
+    /* Update WWDG counter */
+    // WWDG_SetCounter(0x7F);
+
+}
 
 
 void USART2_IRQHandler(void)
 {
 #ifdef RT_USING_UART2
-       extern struct rt_device uart2_device;
-	extern void rt_hw_serial_isr(struct rt_device *device);
-	u8  data=0;
+    extern struct rt_device uart2_device;
+    extern void rt_hw_serial_isr(struct rt_device * device);
+    u8  data = 0;
 
     /* enter interrupt */
     rt_interrupt_enter();
 
-      	if (USART_GetITStatus(USART2, USART_IT_RXNE) != RESET) { 
+    if (USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)
+    {
         data = USART_ReceiveData(USART2) & 0xFF;
-	 _485_RxHandler(data);
-        USART_ClearITPendingBit(USART2, USART_IT_RXNE);              	
-    		}
+        _485_RxHandler(data);
+        USART_ClearITPendingBit(USART2, USART_IT_RXNE);
+    }
     /* leave interrupt */
-    rt_interrupt_leave();  
+    rt_interrupt_leave();
 #endif
 }
 
@@ -194,16 +195,17 @@ void USART3_IRQHandler(void)
 {
 #ifdef RT_USING_UART3
     extern struct rt_device uart3_device;
-    extern void rt_hw_serial_isr(struct rt_device *device);
-    u8  data=0;
+    extern void rt_hw_serial_isr(struct rt_device * device);
+    u8  data = 0;
     /* enter interrupt */
     rt_interrupt_enter();
 
-    if (USART_GetITStatus(USART3, USART_IT_RXNE) != RESET) { 
+    if (USART_GetITStatus(USART3, USART_IT_RXNE) != RESET)
+    {
         data = USART_ReceiveData(USART3) & 0xFF;
-	 CAN2_RxHandler(data);
-        USART_ClearITPendingBit(USART3, USART_IT_RXNE);                	
-    }  
+        CAN2_RxHandler(data);
+        USART_ClearITPendingBit(USART3, USART_IT_RXNE);
+    }
 
     /* leave interrupt */
     rt_interrupt_leave();
@@ -214,17 +216,18 @@ void UART4_IRQHandler(void)
 {
 #ifdef RT_USING_UART4
     extern struct rt_device uart4_device;
-    extern void rt_hw_serial_isr(struct rt_device *device);
-     u8  data=0;
+    extern void rt_hw_serial_isr(struct rt_device * device);
+    u8  data = 0;
     /* enter interrupt */
     rt_interrupt_enter();
 
-    // rt_hw_serial_isr(&uart4_device); 
-    	if (USART_GetITStatus(UART4, USART_IT_RXNE) != RESET) {
+    // rt_hw_serial_isr(&uart4_device);
+    if (USART_GetITStatus(UART4, USART_IT_RXNE) != RESET)
+    {
         data = USART_ReceiveData(UART4) & 0xFF;
-	 GSM_RxHandler(data);
-        USART_ClearITPendingBit(UART4, USART_IT_RXNE);          	
-    		}
+        GSM_RxHandler(data);
+        USART_ClearITPendingBit(UART4, USART_IT_RXNE);
+    }
     /* leave interrupt */
     rt_interrupt_leave();
 #endif
@@ -232,20 +235,20 @@ void UART4_IRQHandler(void)
 
 void CAN1_RX0_IRQHandler(void)
 {
-		 
-   if(SET == CAN_GetITStatus(CAN1,CAN_IT_FF0))
-   {
-        CAN_ClearITPendingBit(CAN1,CAN_IT_FF0);
-   }
-   else if(SET == CAN_GetITStatus(CAN1,CAN_IT_FOV0))
-   {
-        CAN_ClearITPendingBit(CAN1,CAN_IT_FOV0);
-   }
-   else
-   {
-        CAN_Receive(CAN1, CAN_FIFO0, &RxMessageData); 
-        CAN1_Rx_Process(); 
-   }     
+
+    if(SET == CAN_GetITStatus(CAN1, CAN_IT_FF0))
+    {
+        CAN_ClearITPendingBit(CAN1, CAN_IT_FF0);
+    }
+    else if(SET == CAN_GetITStatus(CAN1, CAN_IT_FOV0))
+    {
+        CAN_ClearITPendingBit(CAN1, CAN_IT_FOV0);
+    }
+    else
+    {
+        CAN_Receive(CAN1, CAN_FIFO0, &RxMessageData);
+        CAN1_Rx_Process();
+    }
 
 }
 

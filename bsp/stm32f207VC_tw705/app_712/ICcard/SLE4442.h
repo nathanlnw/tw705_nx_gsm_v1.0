@@ -2,7 +2,7 @@
 #ifndef _SLE4442_H_
 #define _SLE4442_H_
 
-#include <rtthread.h> 
+#include <rtthread.h>
 #include <rthw.h>
 #include "stm32f2xx.h"
 #include "usart.h"
@@ -15,7 +15,7 @@
 #include  <ctype.h>
 #include  <stdlib.h>
 #include  <stdarg.h>
-#include "App_moduleConfig.h" 
+#include "App_moduleConfig.h"
 
 
 #define  C_50Ms     1638 //50ms ±÷”÷–∂œ 
@@ -23,10 +23,10 @@
 #define  TRUE   1
 #define  FALSE  0
 
-#define IDENTIFY1   0xA2     
-#define IDENTIFY2   0x13  
+#define IDENTIFY1   0xA2
+#define IDENTIFY2   0x13
 #define IDENTIFY3   0x10
-#define IDENTIFY4   0x91     
+#define IDENTIFY4   0x91
 
 #define _CardSetRST_HIGH    GPIO_SetBits(GPIOD,GPIO_Pin_7);//P6OUT|=BIT2
 #define _CardSetRST_LOW     GPIO_ResetBits(GPIOD,GPIO_Pin_7);//P6OUT&=~BIT2
@@ -54,8 +54,8 @@ extern unsigned int R_Flag;
 void _CardPutIO_HIGH(void);
 void _CardPutIO_LOW(void);
 void CardInsertCheck(void);
-unsigned char Rx_4442(unsigned char addr,unsigned char num,unsigned char *buf);
-unsigned char Tx_4442(unsigned char addr,unsigned char num,unsigned char *buf);
+unsigned char Rx_4442(unsigned char addr, unsigned char num, unsigned char *buf);
+unsigned char Tx_4442(unsigned char addr, unsigned char num, unsigned char *buf);
 
 
 extern void Init_4442(void);
@@ -69,9 +69,9 @@ unsigned char RcvByte(void);
 unsigned char AnRst(void);
 void WrmOption(void);
 void BreakN(void);
-void SendCOM(unsigned char com1,unsigned char com2,unsigned char com3);
-unsigned char IRcvdat_4442(unsigned char area,unsigned char addr,unsigned char num,unsigned char *buf);
-unsigned char ISenddat_4442(unsigned char area,unsigned char addr,unsigned char num,unsigned char *buf);
+void SendCOM(unsigned char com1, unsigned char com2, unsigned char com3);
+unsigned char IRcvdat_4442(unsigned char area, unsigned char addr, unsigned char num, unsigned char *buf);
+unsigned char ISenddat_4442(unsigned char area, unsigned char addr, unsigned char num, unsigned char *buf);
 unsigned char IChkpsw_4442(void);
 
 
