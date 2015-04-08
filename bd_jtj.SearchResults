@@ -1,5 +1,13 @@
----- JT808Conf_struct.take_Duration Matches (4 in 3 files) ----
-Application.c (bsp\stm32f207vc_tw705\applications):        if(TimeTriggerPhoto_counter > JT808Conf_struct.take_Duration)
-SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):                    JT808Conf_struct.take_Duration = u16Temp;
-Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    JT808Conf_struct.take_Duration = 1200; // ACC  开启 后 20 min 拍照且有速度
-Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    rt_kprintf("\r\n        触发上报传感器为  TriggerSDsatus=%X    定时拍照间隔=%d s  \r\n", TriggerSDsatus, JT808Conf_struct.take_Duration);
+---- TW703 Matches (12 in 4 files) ----
+JLinkLog.txt (bsp\stm32f207vc_tw705):T28F8 000:095 JLINK_ExecCommand("ProjectFile = "D:\TW703_FormalUSE\HEBEI\HEBEI_TW703_gghypt\HBgghypt_BD_BothModule-test-limit\bsp\stm32f407vgt6_RecDrv\JLinkSettings.ini"", ...)  returns 0x00 (0000ms, 0095ms total)
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            if(( strncmp( (char *)UDP_HEX_Rx + 14, "TW703#", 6 ) == 0 ) || ( strncmp( (char *)UDP_HEX_Rx + 14, "TW705#", 6 ) == 0 ))                                        //短信修改UDP的IP和端口
+SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):    //  TW703#SET#C{津A55555}#V{12345678901234567}#M{0}#S{12345678901}#K{1}
+SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):                    product_type("TW703");
+SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):    if(( strncmp( (char *)instr, "TW705#", 6 ) == 0 ) || ( strncmp( (char *)instr, "TW703#", 6 ) == 0 ))                                            //短信修改UDP的IP和端口
+SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):    if(( strncmp( (char *)pstrTemp, "TW705#", 6 ) == 0 ) || ( strncmp( (char *)pstrTemp, "TW703#", 6 ) == 0 ))                                            //短信修改UDP的IP和端口
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    memcpy(ProductAttribute._3_Dev_TYPENUM, "TW703_BD", 8);
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    memcpy(ProductAttribute._7_HardwareVer, "TW703_BD-HW1.0", 14);
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    memcpy(ProductAttribute._9_SoftwareVer, "TW703_BD-SW1.0", 14);
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    memcpy(ProductAttribute._11_FirmWare, "TW703_BD-Firm1.0", 16);
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):	memcpy(Vechicle_Info.ProType,"TW703",5);  
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    if((strncmp(instr, "TW703", 5) == 0) || (strncmp(instr, "TW705", 5) == 0))

@@ -13,7 +13,7 @@
 #include  "Vdr.h"
 
 
-#define   SYSID            0x88BB      //88AA   
+#define   SYSID            0xB8B8      //B8B8
 /*
                         0x0000   -----   0x00FF  生产和研发用
                         0x0100   -----   0x0FFF  产品出货用
@@ -127,22 +127,22 @@ void ProductAttribute_init(void)
     ProductAttribute._1_DevType = 0x07; //  客、货、危
     memcpy(ProductAttribute._2_ProducterID, "7_1_2", 5);
     memset(ProductAttribute._3_Dev_TYPENUM, 0, sizeof(ProductAttribute._3_Dev_TYPENUM));
-    memcpy(ProductAttribute._3_Dev_TYPENUM, "TW703_BD", 8);
+    memcpy(ProductAttribute._3_Dev_TYPENUM, "TW705_BD", 8);
 
     //终端ID 和SIM卡 ICCID 在初始化时读取
 
 
     ProductAttribute._6_HardwareVer_Len = 14;
     memset(ProductAttribute._7_HardwareVer, 0, sizeof(ProductAttribute._7_HardwareVer));
-    memcpy(ProductAttribute._7_HardwareVer, "TW703_BD-HW1.0", 14);
+    memcpy(ProductAttribute._7_HardwareVer, "TW705_BD-HW1.0", 14); 
 
     ProductAttribute._8_SoftwareVer_len = 14;
     memset(ProductAttribute._9_SoftwareVer, 0, sizeof(ProductAttribute._9_SoftwareVer));
-    memcpy(ProductAttribute._9_SoftwareVer, "TW703_BD-SW1.0", 14);
+    memcpy(ProductAttribute._9_SoftwareVer, "TW705_BD-SW1.0", 14);
 
     ProductAttribute._10_FirmWareVer_len = 16;
     memset(ProductAttribute._11_FirmWare, 0, sizeof(ProductAttribute._11_FirmWare));
-    memcpy(ProductAttribute._11_FirmWare, "TW703_BD-Firm1.0", 16);
+    memcpy(ProductAttribute._11_FirmWare, "TW705_BD-Firm1.0", 16);
 
     ProductAttribute._12_GNSSAttribute = 0x03; //   支持GPS 定位 北斗定位
 
@@ -313,7 +313,7 @@ void  Vehicleinfo_Init(void)
 	memcpy(Vechicle_Info.Vech_VIN,"00000000000000000",17);
 	memcpy(Vechicle_Info.Vech_Num,"未知车牌",8);        
 	memcpy(Vechicle_Info.Vech_Type,"未知型",6);       
-	memcpy(Vechicle_Info.ProType,"TW703",5);  
+	memcpy(Vechicle_Info.ProType,"TW705",5);  
 	Vechicle_Info.Dev_ProvinceID=64;  // 默认省ID   0      13  河北省  14 : 山西省  64: 宁夏
 	Vechicle_Info.Dev_CityID=101;      // 默认市ID   0		 石家庄       101  :  银川  
 	Vechicle_Info.Dev_Color=1;       // 默认颜色    // JT415    1  蓝 2 黄 3 黑 4 白 9其他     
