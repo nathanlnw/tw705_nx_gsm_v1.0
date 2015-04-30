@@ -13,7 +13,7 @@
 #include  "Vdr.h"
 
 
-#define   SYSID            0xB8B8      //B8B8
+#define   SYSID            0xAAB8      //AAB8 
 /*
                         0x0000   -----   0x00FF  生产和研发用
                         0x0100   -----   0x0FFF  产品出货用

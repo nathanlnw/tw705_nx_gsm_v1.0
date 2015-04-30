@@ -53,7 +53,7 @@ static void keypress(unsigned int key)
             if(Vechicle_Info.Vech_Type_Mark == 1) // Á½¿ÍÒ»Î£
             {
                 // dnsr_main("www.tianyuxintong.com");
-                Socket_main_Set("111.113.20.220:9131");
+                Socket_main_Set("111.113.14.154:9131");  
                 if(DataLink_Status() == 0)
                     DataLink_EndFlag = 0;
                 // port_main("9131");
