@@ -13,7 +13,7 @@
 #include  "Vdr.h"
 
 
-#define   SYSID            0xAAB8      //AAB8 
+#define   SYSID            0xEEB8      //EEB8 
 /*
                         0x0000   -----   0x00FF  生产和研发用
                         0x0100   -----   0x0FFF  产品出货用
@@ -379,7 +379,7 @@ u8     JT808_Conf_init( void )
     JT808Conf_struct.DayStartDistance_32 = 0;   //  每天的起始里程数目
 
     JT808Conf_struct.Speed_warn_MAX = 200;         //  速度报警门限
-    JT808Conf_struct.Spd_Exd_LimitSeconds = 10; //  超速报警持续时间门限 s
+    JT808Conf_struct.Spd_Exd_LimitSeconds = 100; //  超速报警持续时间门限 s
     JT808Conf_struct.Speed_GetType = 0;           //  记录仪获取速度的方式  00  gps取速度  01 表示从传感器去速度
     JT808Conf_struct.DF_K_adjustState = 0; // 特征系数自动校准状态说明  1:自动校准过    0:尚未自动校准
 
@@ -396,7 +396,7 @@ u8     JT808_Conf_init( void )
 
 
     memset((u8 *) & (JT808Conf_struct.StdVersion), 0, sizeof(JT808Conf_struct.StdVersion)); // 标准国家版本
-    memcpy((u8 *)(JT808Conf_struct.StdVersion.stdverStr), "GB/T19056-2011", 14); // 标准版本
+    memcpy((u8 *)(JT808Conf_struct.StdVersion.stdverStr), "GB/T19056-2012", 14); // 标准版本
     JT808Conf_struct.StdVersion.MdfyID = 0x02; //修改单号
 
 

@@ -97,7 +97,7 @@ void rtthread_startup(void)
 
 
 #endif
-    rt_kprintf("\n\r 宁夏北星科技有限公司  GGHYPT  tw705-gsm-- chip:STM32F207  2015-4-30 Version 2.0 ALL hardware\r\n ");
+    rt_kprintf("\n\r 宁夏北星科技有限公司  GGHYPT  tw705-gsm-- chip:STM32F207  2015-4-30 Version 2.0 ALL hardware -Formal\r\n ");
     /* show version */
     rt_show_version(); 
 

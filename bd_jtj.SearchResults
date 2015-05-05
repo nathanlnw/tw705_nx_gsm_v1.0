@@ -1,2 +1,10 @@
----- 111.113.20.220 Matches (1 in 1 files) ----
-Menu_0_0_mode.c (bsp\stm32f207vc_tw705\app_712\lcd):                Socket_main_Set("111.113.20.220:9131");
+---- JT808Conf_struct.Spd_Exd_LimitSeconds Matches (9 in 2 files) ----
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Original_info[Original_info_Wr++] = JT808Conf_struct.Spd_Exd_LimitSeconds;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Original_info[Original_info_Wr++] = JT808Conf_struct.Spd_Exd_LimitSeconds;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        memcpy(reg_str + 4, &JT808Conf_struct.Spd_Exd_LimitSeconds, 4);
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        JT808Conf_struct.Spd_Exd_LimitSeconds = (Content[0] << 24) + (Content[1] << 16) + (Content[2] << 8)	+ Content[3];
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        memcpy(reg_str + 4, &JT808Conf_struct.Spd_Exd_LimitSeconds, 4);
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        rt_kprintf("\r\n 超时持续时间: %d s \r\n", JT808Conf_struct.Spd_Exd_LimitSeconds);
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            if ( speed_Exd.dur_seconds > JT808Conf_struct.Spd_Exd_LimitSeconds)
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    JT808Conf_struct.Spd_Exd_LimitSeconds = 10; //  超速报警持续时间门限 s
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    rt_kprintf("		   允许最大速度: %d  Km/h    超速报警持续时间门限: %d  s \r\n", JT808Conf_struct.Speed_warn_MAX, JT808Conf_struct.Spd_Exd_LimitSeconds);

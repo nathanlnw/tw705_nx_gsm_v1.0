@@ -11,7 +11,7 @@ static void msg( void *p)
 static void show(void)
 {
     lcd_fill(0);
-    lcd_text12(0, 3, "本地模式", 8, LCD_MODE_INVERT);
+lcd_text12(0, 3,"货运模式",8,LCD_MODE_INVERT);
     lcd_text12(0, 18, "两客一危模式", 12, LCD_MODE_SET);
     lcd_update_all();
     type_selc_flag = 1;
@@ -34,10 +34,10 @@ static void keypress(unsigned int key)
             if(type_selc_flag == 1)
             {
                 lcd_fill(0);
-                lcd_text12(9, 3, "模式:本地模式", 13, LCD_MODE_SET);
+						lcd_text12(9,3,"模式:货运模式",13,LCD_MODE_SET);
                 lcd_text12(6, 18, "按确认键设置下一项", 18, LCD_MODE_SET);
                 lcd_update_all();
-                Vechicle_Info.Vech_Type_Mark = 1;
+						Vechicle_Info.Vech_Type_Mark=2;
             }
             else
             {
@@ -108,7 +108,7 @@ static void keypress(unsigned int key)
         {
             type_selc_flag = 1;
             lcd_fill(0);
-            lcd_text12(0, 3, "本地模式", 8, LCD_MODE_INVERT);
+				lcd_text12(0, 3,"货运模式",8,LCD_MODE_INVERT); 
             lcd_text12(0, 18, "两客一危模式", 12, LCD_MODE_SET);
             lcd_update_all();
         }
@@ -118,7 +118,7 @@ static void keypress(unsigned int key)
         {
             type_selc_flag = 2;
             lcd_fill(0);
-            lcd_text12(0, 3, "本地模式", 8, LCD_MODE_SET);
+				lcd_text12(0, 3,"货运模式",8,LCD_MODE_SET);
             lcd_text12(0, 18, "两客一危模式", 12, LCD_MODE_INVERT);
             lcd_update_all();
         }
