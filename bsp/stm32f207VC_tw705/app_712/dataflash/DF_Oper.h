@@ -45,6 +45,9 @@ DF_APP_flah run PageNo:   50  ~ 903  page        */
 
 //   2.     config   information
 #define    ConfigStart_offset                         808        //   Block   起始位置  Conifg  Struct Save      Sector 1 
+#define    ConfigStart_BakSetting_offset              816        //   Block   起始位?
+#define    ConfigStart_Bak2Setting_offset             824        //   Block   起始位?
+
 #define    TiredCondifg_offset                        864        //   Block   起始位置  Conifg  Struct Save      Sector 3  
 #define    JT808_BakSetting_offset                    960        //   Block   起始位?
 #define    JT808_Bak2Setting_offset                   6240        //   Block   起始位?

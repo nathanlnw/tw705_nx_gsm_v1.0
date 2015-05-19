@@ -13,7 +13,7 @@
 #include  "Vdr.h"
 
 
-#define   SYSID            0xEEB8      //EEB8 
+#define   SYSID            0x55AA      //EEB8 
 /*
                         0x0000   -----   0x00FF  生产和研发用
                         0x0100   -----   0x0FFF  产品出货用
@@ -24,6 +24,10 @@
 
 ALIGN(RT_ALIGN_SIZE)
 SYS_CONF          SysConf_struct;   //  系统配置
+SYS_CONF          SysConf_struct_BAK;   //  系统配置
+SYS_CONF          SysConf_struct_BAK2;   //  系统配置
+
+
 
 ALIGN(RT_ALIGN_SIZE)
 JT808_CONF       JT808Conf_struct;    //  JT 808   相关配置
@@ -55,8 +59,6 @@ u16     Remote_Link2_Port=7000;
 u8           APN_String[30] = "UNINET"; //"CMNET";   //  河北天地通  移动的卡
 u8           DomainNameStr[50] = "jt1.gghypt.net"; ; // 域名  天地通up.gps960.com //jt1.gghypt.net
 u8           DomainNameStr_aux[50] = "jt2.gghypt.net";   //"www.sina.com";//jt2.gghypt.net
-u16         ACC_on_sd_Duration = 30;  //  ACC 开启的时候 上报的时间间隔
-u16         ACC_off_sd_Duration = 60;  //  ACC 关闭时候上报的时间间隔
 u8          TriggerSDsatus = 0x80; // 传感器触发上报状态位
 
 
@@ -204,11 +206,8 @@ u8  SysConfig_init(void)
     SysConf_struct.BD_IC_UDP_port = 29;
 
 
-    //  传感器触发上报状态
+    //  传感器触发上报状态 SysConf_struct
     SysConf_struct.TriggerSDsatus = TriggerSDsatus;
-    //   ACC  on   off  设置
-    SysConf_struct.AccOn_Dur = ACC_on_sd_Duration;
-    SysConf_struct.AccOff_Dur = ACC_off_sd_Duration;
     //    2. Operate
     return(Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct)));
 
@@ -216,10 +215,89 @@ u8  SysConfig_init(void)
 
 void SysConfig_Read(void)
 {
-    if( Api_Config_read(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct)) == false) //读取系统配置信息
-        rt_kprintf("\r\nConfig_ Read Error\r\n");
+   u16   res[3];
+    //读取系统配置信息
+   
 
+    DF_ReadFlash(ConfigStart_offset, 0, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
 
+    WatchDog_Feed();
+    DF_ReadFlash(ConfigStart_BakSetting_offset, 0, (u8 *)&SysConf_struct_BAK, sizeof(SysConf_struct_BAK));
+
+    WatchDog_Feed();
+    DF_ReadFlash(ConfigStart_Bak2Setting_offset, 0, (u8 *)&SysConf_struct_BAK2, sizeof(SysConf_struct_BAK2));
+
+    //  compare
+    /*
+            note:   res[0] == org cmp  bak    res[1]== bak  cmp  bak2    res[2]== bak2  cmp  org
+
+            ---org --<seg1>--  bak ---<seg2>----bak2 ---<seg3>---
+            |-----------<---------------<----------------------|
+     */
+    res[0] = memcmp((u8 *)&SysConf_struct, (u8 *)&SysConf_struct_BAK, sizeof(SysConf_struct_BAK));
+    res[1] = memcmp((u8 *)&SysConf_struct_BAK, (u8 *)&SysConf_struct_BAK2, sizeof(SysConf_struct_BAK));
+    res[2] = memcmp((u8 *)&SysConf_struct_BAK2, (u8 *)&Vechicle_Info, sizeof(SysConf_struct_BAK));
+
+    // 3. judge
+    if(res[0] && res[1] && res[2])	 // 全有问题
+    {
+        rt_kprintf("\r\n SysConf_struct全部失败! \r\n");
+        rt_kprintf("\r\n need all recover");
+        SysConfig_init();// 写入系统配置信息
+        reset(); 
+    }
+    else if(res[0] && res[1])	 //    seg1  seg2  有问题说明  BAK error
+    {
+        // org  bak2 ---ok 	 bak---error
+        if((u8)(SysConf_struct.Port_main>> 8) != 0xFF) // 判断正确的是不是 FF
+        {
+            DF_WriteFlashSector(ConfigStart_BakSetting_offset, 0, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+            rt_kprintf("\r\n SysConf_struct BAK error ,correct ok");
+			
+        }
+        else
+        {
+            rt_kprintf("\r\n SysConf_struct need all recover 1");
+            SysConfig_init();
+        }		
+        reset();
+    }
+    else if(res[0] && res[2])	//	seg1  seg3	  有问题说明 BAK2  error
+    {
+        // org	bak  ---ok		 bak2 -----error
+        if((u8)(SysConf_struct.Port_main >> 8) != 0xFF) // 判断正确的是不是 FF
+        {
+            DF_WriteFlashSector(ConfigStart_Bak2Setting_offset, 0, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+            rt_kprintf("\r\n SysConf_struct BAK2 error ,correct ok");
+			
+        }
+        else
+        {
+            rt_kprintf("\r\n SysConf_struct need all recover 2");
+            SysConfig_init();
+        }		
+        reset();
+
+    }
+    else if(res[1] && res[2])	//	seg2  seg3	  有问题说明 org  error
+    {
+        //	bak  bak2 --ok	   org---error
+        if((u8)(SysConf_struct.Port_main >> 8) != 0xFF) // 判断正确的是不是 FF
+        {
+            DF_WriteFlashSector(ConfigStart_offset, 0, (u8 *)&SysConf_struct_BAK, sizeof(SysConf_struct_BAK));
+            rt_kprintf("\r\n SysConf_struct BAK error ,correct ok");
+        }
+        else
+        {
+            rt_kprintf("\r\n SysConf_struct need all recover 3"); 
+            SysConfig_init();
+        }		
+        reset(); 
+    }
+    else
+        rt_kprintf("\r\n SysConf_struct 读取校验成功! \r\n"); 
+
+    //--------------------------------------------------------------------------------------------------
     memset((u8 *)APN_String, 0 , sizeof(APN_String));
     memcpy((u8 *)APN_String, SysConf_struct.APN_str, strlen((const char *)SysConf_struct.APN_str));
     //   域名
@@ -243,10 +321,6 @@ void SysConfig_Read(void)
 
     //  传感器触发上报状态
     TriggerSDsatus = SysConf_struct.TriggerSDsatus;
-    //   ACC  on   off  设置
-    ACC_on_sd_Duration = SysConf_struct.AccOn_Dur;
-    ACC_off_sd_Duration = SysConf_struct.AccOff_Dur;
-
 
 }
 
@@ -1321,7 +1395,7 @@ void ReadConfig(void)
         rt_kprintf("\r\n JT808 读取校验成功! \r\n");
     //-------------------------------------------------------------------------------------
 
-    SysConfig_Read();  //读取系统配置信息
+    SysConfig_Read();  //读取系统配置信息 
     TIRED_DoorValue_Read();
 
     Event_Read();
@@ -1494,7 +1568,6 @@ void DefaultConfig(void)
     DataLink_IC_Socket_set(SysConf_struct.BD_IC_main_IP, SysConf_struct.BD_IC_TCP_port, 0);
 
     //  ACC On 上报间隔(2Bytes)  ACC Off 上报间隔(2Bytes)
-    rt_kprintf("\r\n		   ACC on 发送间隔为: %d S\r\n		   ACC Off 发送间隔为: %d S\r\n", ACC_on_sd_Duration, ACC_off_sd_Duration);
     rt_kprintf("\r\n  播放状态: 0x%2X 最小休息时间: %d s   疲劳驾驶门限: %d s  \r\n", Warn_Play_controlBit, TiredConf_struct.TiredDoor.Door_MinSleepSec, TiredConf_struct.TiredDoor.Door_DrvKeepingSec);
 
     //  超长停车报警(2Bytes)
@@ -1572,7 +1645,7 @@ void DefaultConfig(void)
         rt_kprintf("空车2\r\n");
         break;
     }
-    rt_kprintf("\r\n\r\n  起始流水号: %d \r\n", JT808Conf_struct.Msg_Float_ID);
+    rt_kprintf("\r\n\r\n  起始流水号: %d    Password:%d\r\n", JT808Conf_struct.Msg_Float_ID,Login_Menu_Flag);
     rt_kprintf("\r\n\r\n             cyc_read:   %d ,     cyc_write :%d\r\n  \r\n", cycle_read, cycle_write);
     rt_kprintf("\r\n		停车前15分钟平均速度记录   Current	  Write=%d	  Read=%d \r\n", Avrg_15minSpd.write, Avrg_15minSpd.read);
     //=====================================================================
@@ -1627,8 +1700,8 @@ void DefaultConfig(void)
 
 void KorH_check(void)  // 客运货运显示状态查询
 {
-    // 类型判断  221.204.240.66
-    if(((Vechicle_Info.Link_Frist_Mode == 1) && (RemoteIP_main[0] == 221) && (RemoteIP_main[0] == 204) && (RemoteIP_main[0] == 240) && (RemoteIP_main[0] == 66)))
+    // 类型判断  {111,113,14,154};  //{111,113,14,154}; 宁夏北星
+    if(((Vechicle_Info.Link_Frist_Mode == 1) && (RemoteIP_main[0] == 111) && (RemoteIP_main[1] == 113) && (RemoteIP_main[2] == 14) && (RemoteIP_main[3] == 154)))
         Vechicle_Info.Vech_Type_Mark = 1;
     else if((strcmp(DomainNameStr, "jt1.gghypt.net") == 0) && (Vechicle_Info.Link_Frist_Mode == 0))
         Vechicle_Info.Vech_Type_Mark = 2;

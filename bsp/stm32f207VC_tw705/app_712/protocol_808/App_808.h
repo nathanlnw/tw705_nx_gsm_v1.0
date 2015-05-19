@@ -18,7 +18,7 @@
 #include "spi_sd.h"
 #include "Usbh_conf.h"
 
-#define   TFCARD      //  使能TF卡
+//#define   TFCARD      //  使能TF卡
 
 
 // 1  : connect  not find      0:  not  find      2: connect find

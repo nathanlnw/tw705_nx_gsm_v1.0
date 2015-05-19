@@ -1155,7 +1155,7 @@ void Socket_main_Set(u8 *str)
         sprintf((char *)reg_str + strlen((const char *)reg_str), "%u\r\n", RemotePort_main);
         memcpy((char *)SysConf_struct.IP_Main, RemoteIP_main, 4);
         SysConf_struct.Port_main = RemotePort_main;
-        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct)); 
 
         DataLink_MainSocket_set(RemoteIP_main, RemotePort_main, 1);
         DataLink_EndFlag = 1; //AT_End();
@@ -1510,7 +1510,10 @@ u8    Api_Config_write(u8 *name, u16 ID, u8 *buffer, u16 wr_len)
     if(strcmp((const char *)name, config) == 0)
     {
         DF_WriteFlashSector(ConfigStart_offset, 0, buffer, wr_len);
-        DF_delay_ms(5);
+        DF_delay_ms(10);
+        DF_WriteFlashSector(ConfigStart_BakSetting_offset, 0, buffer, wr_len); // bak  setting
+        DF_delay_ms(10); 
+        DF_WriteFlashSector(ConfigStart_Bak2Setting_offset, 0, buffer, wr_len); // bak  setting
         DF_RELEASE;
         return true;
     }

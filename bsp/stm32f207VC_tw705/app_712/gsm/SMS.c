@@ -229,8 +229,9 @@ void   SMS_protocol (u8 *instr, u16 len, u8  ACKstate)  //  ACKstate
             }
             else if(instr[40] == '1')
             {
-                memcpy(DomainNameStr, "up.gps960.com", 13);
-                memcpy(SysConf_struct.DNSR, "up.gps960.com", 13);
+               // memcpy(DomainNameStr, "up.gps960.com", 13);
+               // memcpy(SysConf_struct.DNSR, "up.gps960.com", 13);
+               ;
             }
             Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
             //----- ´«¸ø GSM Ä£¿é------

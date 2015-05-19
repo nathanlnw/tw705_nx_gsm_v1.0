@@ -1,10 +1,66 @@
----- JT808Conf_struct.Spd_Exd_LimitSeconds Matches (9 in 2 files) ----
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Original_info[Original_info_Wr++] = JT808Conf_struct.Spd_Exd_LimitSeconds;
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Original_info[Original_info_Wr++] = JT808Conf_struct.Spd_Exd_LimitSeconds;
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        memcpy(reg_str + 4, &JT808Conf_struct.Spd_Exd_LimitSeconds, 4);
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        JT808Conf_struct.Spd_Exd_LimitSeconds = (Content[0] << 24) + (Content[1] << 16) + (Content[2] << 8)	+ Content[3];
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        memcpy(reg_str + 4, &JT808Conf_struct.Spd_Exd_LimitSeconds, 4);
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        rt_kprintf("\r\n 超时持续时间: %d s \r\n", JT808Conf_struct.Spd_Exd_LimitSeconds);
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            if ( speed_Exd.dur_seconds > JT808Conf_struct.Spd_Exd_LimitSeconds)
-Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    JT808Conf_struct.Spd_Exd_LimitSeconds = 10; //  超速报警持续时间门限 s
-Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    rt_kprintf("		   允许最大速度: %d  Km/h    超速报警持续时间门限: %d  s \r\n", JT808Conf_struct.Speed_warn_MAX, JT808Conf_struct.Spd_Exd_LimitSeconds);
+---- config Matches (67 in 20 files) ----
+App_gsm.c (bsp\stm32f207vc_tw705\app_712\gsm):    //  step 2:	 process config data
+App_hmi.c (bsp\stm32f207vc_tw705\app_712\hmi):    SysConfiguration();    // system config
+Device_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    //  2.  GPIO  Config
+Device_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    //  4. DMA  Config
+Device_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct)); 
+Device_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):// 2. Config
+Device_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    if(strcmp((const char *)name, config) == 0)
+Device_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    if(strcmp((const char *)name, config) == 0)
+Device_808.h (bsp\stm32f207vc_tw705\app_712\protocol_808):// 2. Config
+Device_gsm.c (bsp\stm32f207vc_tw705\app_712\gsm):            //Api_Config_write(config,ID_CONF_SYS,(u8*)&SysConf_struct,sizeof(SysConf_struct));
+Device_gsm.c (bsp\stm32f207vc_tw705\app_712\gsm):            //Api_Config_write(config,ID_CONF_SYS,(u8*)&SysConf_struct,sizeof(SysConf_struct));
+Device_gsm.c (bsp\stm32f207vc_tw705\app_712\gsm):            Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Device_gsm.c (bsp\stm32f207vc_tw705\app_712\gsm):            Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct)); 
+DF_Oper.h (bsp\stm32f207vc_tw705\app_712\dataflash)://   2.     config   information
+Gps.c (bsp\stm32f207vc_tw705\app_712\gps)://FINSH_FUNCTION_EXPORT( gps_baud, config gsp_baud );
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        	Api_Config_write(config,ID_CONF_SYS,(u8*)&SysConf_struct,sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Protocol_808.h (bsp\stm32f207vc_tw705\app_712\protocol_808):typedef struct  _SYSConfig           //  name:  config
+Rtc.c (bsp\stm32f207vc_tw705\app_712\rtc):                rt_kprintf("\n\r  /!\\***** RTC Prescaler Config failed ********/!\\ \n\r");
+Rtconfig.h (bsp\stm32f207vc_tw705):/* RT-Thread config file */
+SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):            Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):                        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):                        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):                        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):                        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):                        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):                        Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Stm32f2xx.h (bsp\stm32f207vc_tw705\stm32f2xx_libraries\cmsis\st\stm32f2xx\include):#define __Vendor_SysTickConfig    0       /*!< Set to 1 if different SysTick Config is used  */
+Stm32f2xx.h (bsp\stm32f207vc_tw705\stm32f2xx_libraries\cmsis\st\stm32f2xx\include):#define SYSCFG_MEMRMP_MEM_MODE          ((uint32_t)0x00000003) /*!<SYSCFG_Memory Remap Config */
+Stm32f2xx_rtc.c (bsp\stm32f207vc_tw705\stm32f2xx_libraries\stm32f2xx_stdperiph_driver\src):  *           - RTC Tamper and TimeStamp Pins Selection and Output Type Config configuration
+Stm32f2xx_rtc.c (bsp\stm32f207vc_tw705\stm32f2xx_libraries\stm32f2xx_stdperiph_driver\src):/** @defgroup RTC_Group11 RTC Tamper and TimeStamp Pins Selection and Output Type Config configuration functions
+Stm32f2xx_rtc.c (bsp\stm32f207vc_tw705\stm32f2xx_libraries\stm32f2xx_stdperiph_driver\src): *  @brief   RTC Tamper and TimeStamp Pins Selection and Output Type Config 
+Stm32f2xx_rtc.c (bsp\stm32f207vc_tw705\stm32f2xx_libraries\stm32f2xx_stdperiph_driver\src):  RTC Tamper and TimeStamp Pins Selection and Output Type Config configuration 
+Stm32f2xx_rtc.h (bsp\stm32f207vc_tw705\stm32f2xx_libraries\stm32f2xx_stdperiph_driver\inc):/* RTC Tamper and TimeStamp Pins Selection and Output Type Config configuration
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808)://----------  Basic  Config---------------------------
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    return(Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct)));
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    if( Api_Config_read(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct)) == false) //读取系统配置信息
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    rt_kprintf("\r\nSave Config\r\n");
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Api_Config_read(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        rt_kprintf("\r\n Config Already Exist!\r\n");
+Sys_config.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    rt_kprintf("\r\n Read Config Over \r\n");
+Sys_config.h (bsp\stm32f207vc_tw705\app_712\protocol_808)://------------------------ RT_Thread  Config   ID  list  --------------------------------
+Sys_config.h (bsp\stm32f207vc_tw705\app_712\protocol_808):#define   config                                                "config"
+Sys_config.h (bsp\stm32f207vc_tw705\app_712\protocol_808)://----------  Basic  Config---------------------------
+Usbh_core.c (bsp\stm32f207vc_tw705\stm32f2xx_libraries\stm32_usb_host_library\core\src):        /* get FULL config descriptor (config, interface, endpoints) */
+Usbh_core.c (bsp\stm32f207vc_tw705\stm32f2xx_libraries\stm32_usb_host_library\core\src):        /* set configuration  (default config) */
+Usb_core.c (bsp\stm32f207vc_tw705\stm32f2xx_libraries\stm32_usb_otg_driver\src):*         Enables the controller's Global Int in the AHB Config reg
+Usb_core.c (bsp\stm32f207vc_tw705\stm32f2xx_libraries\stm32_usb_otg_driver\src):*         Enables the controller's Global Int in the AHB Config reg
+Usb_host.h (bsp\stm32f207vc_tw705\drivers\include\drivers):    rt_err_t rt_usb_set_configure(uinst_t uinst, int config);

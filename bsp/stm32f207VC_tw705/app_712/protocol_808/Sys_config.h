@@ -230,8 +230,6 @@ extern u32		   Current_SD_Duration;  //GPS 信息报告的时间间隔
 extern u32 		   Current_SD_Distance; // GPS 信息定距上报距离
 extern u8		   Current_State;		 // 上报实时标志位信息	 预防DF 损坏
 extern u32 		   DistanceAccumulate;	 // 定距上报累加器
-extern u16         ACC_on_sd_Duration;    //  ACC 开启的时候 上报的时间间隔
-extern u16         ACC_off_sd_Duration;    //  ACC 关闭时候上报的时间间隔
 extern u8		   TriggerSDsatus;   // 传感器触发上报状态位
 
 extern u16         StopLongDuration;    //超长停车报警最长时间

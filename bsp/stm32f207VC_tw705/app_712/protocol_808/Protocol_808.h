@@ -667,8 +667,6 @@ typedef struct  _SYSConfig           //  name:  config
     //  LINK2  Setting
     u8		Link2_IP[4];
     u16 	Link2_Port;
-    u16     AccOn_Dur;   //  ACC 开  上报间隔
-    u16     AccOff_Dur;  //   ACC 关  上报间隔
     u8      TriggerSDsatus;  //  传感器触发上报状态
     //-------- BD add-----------------
     u8      BD_IC_main_IP[4];  //  IC卡认证主服务器IP 地址
@@ -676,7 +674,7 @@ typedef struct  _SYSConfig           //  name:  config
     u32     BD_IC_UDP_port;    //  IC 卡认证主服务器 UDP 端口
     u8      BD_IC_Aux_IP[4];   //  IC 卡备用服务器IP 地址，端口同主的一样
     u8      BD_IC_DNSR[50];    //  DNSR 1  域名解析
-    u8      BD_IC_DNSR_Aux[50]; //   DNSR2   域名解析
+    u8      BD_IC_DNSR_Aux[50]; //   DNSR2   域名解析 
 
 } SYS_CONF;
 
@@ -1403,5 +1401,6 @@ extern u8  Avrg15_min_generate(u8 spd);
 extern void Averg15_min_timer_1s(void);
 extern u8  Api_15min_save_1_record(void);
 #endif
+
 
 #endif

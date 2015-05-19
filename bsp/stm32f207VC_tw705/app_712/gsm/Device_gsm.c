@@ -2046,11 +2046,17 @@ static void GSM_Process(u8 *instr, u16 len)
         //注销的卡	  +COPS: 0
         if(strncmp((char *)GSM_rx + 12, "CHINA UNICOM", 12) == 0)
         {
+          if(strncmp(APN_String, "UNINET", 6))
+          {
             memset(APN_String, 0, sizeof(APN_String));
             memcpy(APN_String, "UNINET", 6);
             memset((u8 *)SysConf_struct.APN_str, 0 , sizeof(SysConf_struct.APN_str));
             memcpy(SysConf_struct.APN_str, (u8 *)APN_String, strlen((const char *)APN_String));
             Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+          }
+		  else
+		  	 if((DispContent) && (GB19056.workstate == 0))
+            rt_kprintf("  need to update uninet\r\n");   
 
             //联通的
             memset((char *)Dialinit_APN, 0, sizeof(Dialinit_APN));
@@ -2058,11 +2064,17 @@ static void GSM_Process(u8 *instr, u16 len)
         }
         else if(strncmp((char *)GSM_rx + 12, "CHINA MOBILE", 12) == 0)
         {
+         if(strncmp(APN_String, "CMNET", 5))
+          {
             memset(APN_String, 0, sizeof(APN_String));
             memcpy(APN_String, "CMNET", 5);
             memset((u8 *)SysConf_struct.APN_str, 0 , sizeof(SysConf_struct.APN_str));
             memcpy(SysConf_struct.APN_str, (u8 *)APN_String, strlen((const char *)APN_String));
-            Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct));
+            Api_Config_write(config, ID_CONF_SYS, (u8 *)&SysConf_struct, sizeof(SysConf_struct)); 
+          }		
+		 else
+		 if((DispContent) && (GB19056.workstate == 0))
+					rt_kprintf("  need to update cmnet\r\n");	 
 
             // 移动的
             memset(Dialinit_APN, 0, sizeof(Dialinit_APN));
