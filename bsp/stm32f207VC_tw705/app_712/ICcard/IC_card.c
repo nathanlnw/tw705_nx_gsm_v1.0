@@ -272,7 +272,7 @@ void  Different_DriverIC_Checking(void)
                 {
                     if(GB19056.workstate == 0)
                         rt_kprintf( "\r\n   疲劳驾驶触发了!  on\r\n" );
-                    //  TTS_play( "您已经疲劳驾驶，请注意休息" );
+                    TTS_play( "您已经疲劳驾驶，请注意休息" );
 
 
                     //	超时驾驶 警示触发了
@@ -386,7 +386,7 @@ void  Different_DriverIC_Checking(void)
                         {
                             if(GB19056.workstate == 0)
                                 rt_kprintf( "\r\n	 速度小，但未满足休息门限时间 疲劳驾驶触发了! \r\n");
-                            //TTS_play( "您已经疲劳驾驶，请注意休息" );
+                            TTS_play( "您已经疲劳驾驶，请注意休息" ); 
 
 
 

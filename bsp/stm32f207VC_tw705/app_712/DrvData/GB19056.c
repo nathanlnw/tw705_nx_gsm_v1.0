@@ -523,8 +523,8 @@ void  GB_Warn_Running(void)
             if((GB19056.SPK_UnloginWarn.group_playTimes) && (TTS_Var.Playing == 0))
             {
                 GB19056.SPK_UnloginWarn.group_playTimes++;
-                if(Warn_Play_controlBit & 0x01)
-                    TTS_play( "¼ÝÊ»Ô±Î´µÇÂ¼Çë²å¿¨µÇÂ¼");
+                //if(Warn_Play_controlBit & 0x01)
+                   // TTS_play( "¼ÝÊ»Ô±Î´µÇÂ¼Çë²å¿¨µÇÂ¼");
                 //rt_kprintf("\r\n-----¼ÝÊ»Ô±Î´µÇÂ¼Çë²å¿¨µÇÂ¼\r\n");
                 if(GB19056.SPK_UnloginWarn.group_playTimes >= 4)
                     GB19056.SPK_UnloginWarn.group_playTimes = 0;
@@ -633,8 +633,8 @@ void  GB_Warn_Running(void)
             if((GB19056.SPK_SpeedStatus_Abnormal.group_playTimes) && (TTS_Var.Playing == 0))
             {
                 GB19056.SPK_SpeedStatus_Abnormal.group_playTimes++;
-                if(Warn_Play_controlBit & 0x08)
-                    TTS_play( "ËÙ¶È×´Ì¬Òì³££¬Çë°²È«¼ÝÊ»" );
+                //if(Warn_Play_controlBit & 0x08)
+                   // TTS_play( "ËÙ¶È×´Ì¬Òì³££¬Çë°²È«¼ÝÊ»" );
 
                 if(GB19056.SPK_SpeedStatus_Abnormal.group_playTimes >= 4)
                 {

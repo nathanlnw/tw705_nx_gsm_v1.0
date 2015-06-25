@@ -1188,6 +1188,10 @@ extern u8	 MMedia2_Flag;
 extern u8		 ACK_timer;				   //---------	ACK timer 定时器---------------------
 extern u8     Send_Rdy4ok;
 
+extern u8   Flag_0200_send; // 发送0200  flag
+extern u16  Timer_0200_send; // 0200  判断应答
+
+
 //-------------    不同北斗模块设置  ----
 //#ifdef HC_595_CONTROL
 //---------74CH595  Q5   control Power----
@@ -1404,3 +1408,4 @@ extern u8  Api_15min_save_1_record(void);
 
 
 #endif
+

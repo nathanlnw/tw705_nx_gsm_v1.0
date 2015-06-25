@@ -186,6 +186,21 @@ u8   NO_ACKtimer(void)
         }
 
     }
+
+     //----------------------------
+     if(Flag_0200_send)
+     	{
+     	   Timer_0200_send++;
+		   if(Timer_0200_send>90) 
+		   	{
+		   	   Timer_0200_send=0;
+			   Flag_0200_send=0;
+               DataLink_EndFlag = 1; 
+			   if(GB19056.workstate == 0)
+			    rt_kprintf("\r\n 连续无应答，断开 \r\n");
+		   	}
+     	}
+	
     return true;
 }
 

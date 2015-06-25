@@ -788,11 +788,13 @@ void  RailCycle_Init(void)
     Rail_Cycle.Rail_Num = 8;
     Rail_Cycle.Effective_flag = 0;
 
+    DF_TAKE;
     for(i = 0; i < 8; i++)
     {
         Rail_Cycle.Area_ID = i + 1;
         Api_RecordNum_Write(Rail_cycle, Rail_Cycle.Area_ID, (u8 *)&Rail_Cycle, sizeof(Rail_Cycle));
     }
+	DF_RELEASE;
 }
 void  RailCycle_Read(void)
 {
@@ -866,11 +868,13 @@ void  RailPolygen_Init(void)
     Rail_Polygen.Acme3_Longitude = 30;
     Rail_Polygen.Effective_flag = 0;
 
+    DF_TAKE; 
     for(i = 0; i < 8; i++)
     {
         Rail_Polygen.Area_ID = i + 1;
         Api_RecordNum_Write(Rail_polygen, Rail_Polygen.Area_ID, (u8 *)&Rail_Polygen, sizeof(Rail_Polygen));
     }
+	DF_RELEASE;
 }
 
 void  RailPolygen_Read(void)
@@ -926,12 +930,13 @@ void  RouteLine_Init(void)
     u8 i = 0;
 
     RouteLine_Obj_init();
-
+    DF_TAKE;
     for(i = 0; i < 8; i++)
     {
         ROUTE_Obj.Route_ID = i + 1;
         Api_RecordNum_Write(route_line, ROUTE_Obj.Route_ID, (u8 *)&ROUTE_Obj, sizeof(ROUTE_Obj));
     }
+	DF_RELEASE;
 }
 
 void  RouteLine_Read(void)

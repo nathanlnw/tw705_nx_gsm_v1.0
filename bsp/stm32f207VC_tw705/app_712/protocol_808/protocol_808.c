@@ -406,6 +406,9 @@ u8		 ACK_timer = 0;				 //---------	ACK timer 定时器---------------------
 u8           Send_Rdy4ok = 0;
 unsigned char	Rstart_time = 0;
 
+u8   Flag_0200_send=0; // 发送0200  flag
+u16  Timer_0200_send=0; // 0200  判断应答
+
 
 //---------------  速度脉冲相关--------------
 u32  Delta_1s_Plus = 0;
@@ -751,6 +754,7 @@ u8  Do_SendGPSReport_GPRS(void)
                 return false;
             Send_Rdy4ok = 1;
             ReadCycle_status = RdCycle_SdOver;
+			Flag_0200_send=1;
             break;
         case  1: //  发送批量数据
             //-------- change status  Ready  ACK  ------
@@ -1128,7 +1132,7 @@ void Speed_pro(u8 *tmpinfo, u8 Invalue, u8 Point)
             else
                 Speed_gps = (u16)sp_DISP;
 
-            //  Speed_gps=Speed_jiade;//800;  //  假的为了测试
+           // Speed_gps=800;//800;  //  假的为了测试     
 
             //---------------------------------------------------------------------------
             if(JT808Conf_struct.Speed_GetType)  // 通过速度传感器 获取速度
@@ -7418,7 +7422,8 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
             //------------------------------------
             if(GB19056.workstate == 0)
                 rt_kprintf( "\r\nCentre ACK!\r\n");
-
+			
+			 Timer_0200_send=0;
             //-------------------------------------------------------------------
             Api_cycle_Update();
             //--------------  多媒体上传相关  --------------
@@ -7789,8 +7794,10 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
                 //----  Instr  转 GBK ----------------------
                 EventObj.Event_Len = Instr_2_GBK(UDP_HEX_Rx + 17, UDP_HEX_Rx[16], EventObj.Event_Str);
                 EventObj.Event_Effective = 1;
+				DF_TAKE;
                 Api_RecordNum_Write(event_808, EventObj.Event_ID, (u8 *)&EventObj, sizeof(EventObj));
-                rt_kprintf("\r\n 事件内容:%s\r\n", EventObj.Event_Str);
+                DF_RELEASE;
+				rt_kprintf("\r\n 事件内容:%s\r\n", EventObj.Event_Str);
                 rt_kprintf("\r\n 事件内容:%s\r\n", EventObj.Event_Str);
                 break;
             default:
@@ -7920,7 +7927,7 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
         Ack_Resualt = 0;
         MSG_BroadCast_Obj.INFO_TYPE = UDP_HEX_Rx[13]; //  信息类型
         MSG_BroadCast_Obj.INFO_LEN = (UDP_HEX_Rx[14] << 8) + UDP_HEX_Rx[15];
-        memset(MSG_BroadCast_Obj.INFO_STR, 0, sizeof(MSG_BroadCast_Obj.INFO_STR));
+        memset(MSG_BroadCast_Obj.INFO_STR, 0, sizeof(MSG_BroadCast_Obj.INFO_STR)); 
 
         //----  Instr  转 GBK ----------------------
         // contentlen=Instr_2_GBK(UDP_HEX_Rx+16,infolen-3,TextInfo.TEXT_Content);
@@ -8079,6 +8086,7 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
             switch(UDP_HEX_Rx[13])
             {
             case 1:  // 追加区域
+                DF_TAKE;
                 for(i = 0; i < 8; i++)
                 {
                     memset((u8 *)&Rail_Cycle, 0, sizeof(Rail_Cycle));
@@ -8088,6 +8096,7 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
                         break;
 
                 }
+				DF_RELEASE;
                 if(8 == i) //  如果都满了，那么用 0
                 {
                     i = 0;
@@ -8109,9 +8118,11 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
 
                 if((Rail_Cycle.Area_ID > 8) || (Rail_Cycle.Area_ID == 0))
                     Rail_Cycle.Area_ID = 1;
+				DF_TAKE;
                 Api_RecordNum_Write(Rail_cycle, Rail_Cycle.Area_ID, (u8 *)&Rail_Cycle, sizeof(Rail_Cycle));
 
                 Rails_Routline_Read();
+				DF_RELEASE;
                 break;
             default:
                 break;
@@ -8130,7 +8141,13 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
     case  0x8601:    //  删除圆形区域
         rt_kprintf("\r\n  删除圆形区域 \r\n");
         if(0 == UDP_HEX_Rx[13]) // 区域数
+         {
             RailCycle_Init();  // 删除所有区域
+            Rail_Cycle.Effective_flag = 0; // clear
+            
+            Warn_Status[1] &= ~0x10;	// bit20 进出区域报警
+             rt_kprintf("\r\n  删除所有 \r\n");
+         }
         else
         {
             memset((u8 *)&Rail_Cycle, 0, sizeof(Rail_Cycle)); //  clear all  first
@@ -8140,8 +8157,10 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
                 if((Rail_Cycle.Area_ID > 8) || (Rail_Cycle.Area_ID == 0))
                     Rail_Cycle.Area_ID = 1;
                 Rail_Cycle.Effective_flag = 0; // clear
+                DF_TAKE;
                 Api_RecordNum_Write(Rail_cycle, Rail_Cycle.Area_ID, (u8 *)&Rail_Cycle, sizeof(Rail_Cycle)); // 删除对应的围栏
                 Rails_Routline_Read();
+				DF_RELEASE;
             }
 
         }
@@ -8178,12 +8197,15 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
 
                 if((Rail_Rectangle.Area_ID > 8) || (Rail_Rectangle.Area_ID == 0))
                     Rail_Rectangle.Area_ID = 1;
+				DF_TAKE;
                 Api_RecordNum_Write(Rail_rect, Rail_Rectangle.Area_ID, (u8 *)&Rail_Rectangle, sizeof(Rail_Rectangle));
-
+                Rails_Routline_Read();
+				DF_RELEASE;
+				
                 rt_kprintf("\r\n   中心设置  矩形围栏 leftLati=%d leftlongi=%d\r\n", Rail_Rectangle.LeftUp_Latitude, Rail_Rectangle.LeftUp_Longitude);
 
                 rt_kprintf("\r\n    attribute:%X         矩形围栏 rightLati=%d rightlongi=%d\r\n", Rail_Rectangle.Area_attribute, Rail_Rectangle.RightDown_Latitude, Rail_Rectangle.RightDown_Longitude);
-                Rails_Routline_Read();
+                
                 break;
             default:
                 break;
@@ -8203,12 +8225,18 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
         rt_kprintf("\r\n  删除矩形区域 \r\n");
         if(0 == UDP_HEX_Rx[13]) // 区域数
         {
+           DF_TAKE;
             RailRect_Init();  // 删除所有区域
             Rails_Routline_Read();
+		     Rail_Rectangle.Effective_flag = 0;	
+		   DF_RELEASE;			    
+            Warn_Status[1] &= ~0x10;	// bit20 进出区域报警
+		    rt_kprintf("\r\n  删除所有 \r\n");  
         }
         else
         {
             memset((u8 *)&Rail_Rectangle, 0, sizeof(Rail_Rectangle)); //  clear all  first
+            DF_TAKE;
             for(i = 0; i < UDP_HEX_Rx[13]; i++)
             {
                 Rail_Rectangle.Area_ID = (UDP_HEX_Rx[14 + i] << 24) + (UDP_HEX_Rx[15 + i] << 16) + (UDP_HEX_Rx[16 + i] << 8) + UDP_HEX_Rx[17 + i];
@@ -8218,6 +8246,8 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
                 Api_RecordNum_Write(Rail_rect, Rail_Rectangle.Area_ID, (u8 *)&Rail_Rectangle, sizeof(Rail_Rectangle)); // 删除对应的围栏
                 Rails_Routline_Read();
             }
+			
+			DF_RELEASE;
         }
 
 
@@ -8256,8 +8286,10 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
                 if((Rail_Polygen.Area_ID > 8) || (Rail_Polygen.Area_ID == 0))
                     Rail_Polygen.Area_ID = 1;
                 Rail_Polygen.Effective_flag = 1;
+				DF_TAKE;
                 Api_RecordNum_Write(Rail_polygen, Rail_Polygen.Area_ID, (u8 *)&Rail_Polygen, sizeof(Rail_Polygen));
-                break;
+                DF_RELEASE;
+				break;
             default:
                 break;
 
@@ -8280,6 +8312,7 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
         else
         {
             memset((u8 *)&Rail_Polygen, 0, sizeof(Rail_Polygen)); //  clear all  first
+            DF_TAKE;
             for(i = 0; i < UDP_HEX_Rx[13]; i++)
             {
                 Rail_Polygen.Area_ID = (UDP_HEX_Rx[14 + i] << 24) + (UDP_HEX_Rx[15 + i] << 16) + (UDP_HEX_Rx[16 + i] << 8) + UDP_HEX_Rx[17 + i];
@@ -8288,6 +8321,7 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
                 Rail_Polygen.Effective_flag = 0;
                 Api_RecordNum_Write(Rail_polygen, Rail_Polygen.Area_ID, (u8 *)&Rail_Polygen, sizeof(Rail_Polygen));
             }
+			DF_RELEASE;
         }
 
         //----------------
@@ -8355,8 +8389,9 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
         if((ROUTE_Obj.Route_ID > Route_Mum) || (ROUTE_Obj.Route_ID == 0))
             ROUTE_Obj.Route_ID = 1;
         ROUTE_Obj.Effective_flag = 1;
+		DF_TAKE;
         Api_RecordNum_Write(route_line, ROUTE_Obj.Route_ID, (u8 *)&ROUTE_Obj, sizeof(ROUTE_Obj)); // 删除对应的围栏
-
+        DF_RELEASE;      
 
 
         //----------------
@@ -8374,6 +8409,7 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
         else
         {
             memset((u8 *)&ROUTE_Obj, 0, sizeof(ROUTE_Obj)); //  clear all  first
+            DF_TAKE;
             for(i = 0; i < UDP_HEX_Rx[13]; i++)
             {
                 ROUTE_Obj.Route_ID = (UDP_HEX_Rx[14 + i] << 24) + (UDP_HEX_Rx[15 + i] << 16) + (UDP_HEX_Rx[16 + i] << 8) + UDP_HEX_Rx[17 + i];
@@ -8382,6 +8418,7 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
                 ROUTE_Obj.Effective_flag = 0;
                 Api_RecordNum_Write(route_line, ROUTE_Obj.Route_ID, (u8 *)&ROUTE_Obj, sizeof(ROUTE_Obj)); 	 // 删除对应的围栏
             }
+			DF_RELEASE;
         }
 
         //----------------

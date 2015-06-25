@@ -361,6 +361,8 @@ u8 Process_GGA(u8 *packet)
             case 12:// Geoid Separation
                 Hight2 = atof((const char *)tmpinfo);
                 GPS_Hight = (u16)(Hight1 + Hight2);
+				if(GPS_Hight>6000)
+					  GPS_Hight=6000; 
                 //printf("\r\n 当前海拔高度为:%f,  %f ,%d m\r\n",Hight1,Hight2,GPS_Hight);
                 break;
             default:
