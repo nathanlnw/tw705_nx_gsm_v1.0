@@ -427,9 +427,9 @@ static void timeout_app(void   *parameter)
 		 //  LCD
         Lcd_hardInit_timer();
 
-#ifdef TFCARD
+//#ifdef TFCARD
         TakePhoto_timerISR_1S();
-#endif
+//#endif
     }
 
 

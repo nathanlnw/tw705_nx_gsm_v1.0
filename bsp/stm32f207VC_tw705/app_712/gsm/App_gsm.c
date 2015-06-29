@@ -172,6 +172,8 @@ u8   Stop_Communicate(void)
 
 u8   NO_ACKtimer(void)
 {
+  if((DataLink_Status()==0)||(MultiTake.Taking==1))
+  	   return 0;
     // 判断中心应答
     //------- no  ack  process -----
     if((Send_Rdy4ok == 2) && ( ReadCycle_status == RdCycle_SdOver))
@@ -197,7 +199,7 @@ u8   NO_ACKtimer(void)
 			   Flag_0200_send=0;
                DataLink_EndFlag = 1; 
 			   if(GB19056.workstate == 0)
-			    rt_kprintf("\r\n 连续无应答，断开 \r\n");
+			    rt_kprintf("\r\n 连续无应答，断开 \r\n"); 
 		   	}
      	}
 	

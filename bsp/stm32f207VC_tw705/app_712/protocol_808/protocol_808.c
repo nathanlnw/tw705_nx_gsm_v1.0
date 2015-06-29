@@ -410,9 +410,11 @@ u8   Flag_0200_send=0; // 发送0200  flag
 u16  Timer_0200_send=0; // 0200  判断应答
 
 
-//---------------  速度脉冲相关--------------
+//---------------  速度脉冲相关-------------- 
 u32  Delta_1s_Plus = 0;
 u16  Sec_counter = 0;
+u32  TimeTriggerPhoto_counter = 0; // 定时触发拍照计时器
+
 
 void  K_AdjustUseGPS(u32  sp_DISP);  // 通过GPS 校准  K 值  (车辆行驶1KM 的脉冲数目)
 void  Delta_Speed_judge(void);
@@ -1477,7 +1479,7 @@ void  GPS_Delta_DurPro(void)    //告GPS 触发上报处理函数
     // if((Temp_Gps_Gprs.Time[2]==5)||(Temp_Gps_Gprs.Time[2]==25)||(Temp_Gps_Gprs.Time[2]==45)) //
     if(Temp_Gps_Gprs.Time[2] % 2 == 0) //    认证时要求2 秒
     {
-        RectangleRail_Judge(Temp_Gps_Gprs.Latitude, Temp_Gps_Gprs.Longitude);
+       ;// RectangleRail_Judge(Temp_Gps_Gprs.Latitude, Temp_Gps_Gprs.Longitude);
         //rt_kprintf("\r\n -----判断矩形电子围栏");
     }
     if((Temp_Gps_Gprs.Time[2] % 5) == 0) //
@@ -7328,7 +7330,8 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
     u8   Reg_buf[22];
     u8   CheckResualt = 0;
     u32  reg_u32 = 0;
-    u16  GB19056infolen = 0;
+    u16  GB19056infolen = 0;	
+    char *pstrTemp;
     //----------------      行车记录仪808 协议 接收处理   --------------------------
 
     //  0.  Decode
@@ -7424,6 +7427,7 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
                 rt_kprintf( "\r\nCentre ACK!\r\n");
 			
 			 Timer_0200_send=0;
+			 Flag_0200_send=0;   
             //-------------------------------------------------------------------
             Api_cycle_Update();
             //--------------  多媒体上传相关  --------------
@@ -7724,8 +7728,17 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
             //    1. 短信设置命令
             if(( strncmp( (char *)UDP_HEX_Rx + 14, "TW703#", 6 ) == 0 ) || ( strncmp( (char *)UDP_HEX_Rx + 14, "TW705#", 6 ) == 0 ))                                        //短信修改UDP的IP和端口
             {
+                
+				pstrTemp = (char *)rt_malloc(200);	///短信解码后的完整内容，解码后汉子为GB码
+				memset(pstrTemp, 0, 200);
+				memcpy(pstrTemp,(UDP_HEX_Rx + 14) + 5, (infolen - 1) - 5 );
+				if(GB19056.workstate==0)
+					 rt_kprintf("%s",pstrTemp);
                 //-----------  自定义 短息设置修改 协议 ----------------------------------
-                SMS_protocol( (UDP_HEX_Rx + 14) + 5, (infolen - 1) - 5 , SMS_ACK_none);
+                SMS_protocol(pstrTemp, (infolen - 1) - 5 , SMS_ACK_none); 
+				
+				rt_free( pstrTemp );
+				pstrTemp = RT_NULL;
             }
             else
             {
@@ -8758,8 +8771,16 @@ void TCP_RX_Process( u8  LinkNum)  //  ---- 808  标准协议
     case  0x8801:   //    摄像头立即拍照
 
         Camera_Obj.Channel_ID = UDP_HEX_Rx[13];   //   通道
-        Camera_Obj.Operate_state = UDP_HEX_Rx[18]; //   是否保存标志位
+        Camera_Obj.Operate_state = UDP_HEX_Rx[18]; //   是否保存标志位 
         //----------------------------------
+        TimeTriggerPhoto_counter = 0;
+         GB19056infolen=((u16)UDP_HEX_Rx[16]<<8)+(u16)UDP_HEX_Rx[17];          // 借用变量填写定时拍照  16  17  bytes
+        if(GB19056infolen>=600) //大于等于5 分钟
+        {
+                rt_kprintf("\r\n   定时拍照间隔: %d s\r\n",GB19056infolen);
+				JT808Conf_struct.take_Duration = GB19056infolen;
+				Api_Config_Recwrite_Large(jt808, 0, (u8 *)&JT808Conf_struct, sizeof(JT808Conf_struct));
+        }
 
         if((Camera_Take_Enable()) && (Photo_sdState.photo_sending == 0)) //图片传输中不能拍
         {

@@ -43,7 +43,6 @@
 uint8_t sd_ok = 0;
 static FATFS fs;
 static FIL 	file;
-u32  TimeTriggerPhoto_counter = 0; // 定时触发拍照计时器
 u8	dir_name[32];
 
 
@@ -289,22 +288,22 @@ void TF_Init(void)
     sd_init_process();
 
 }
+#endif
 
 void  TakePhoto_timerISR_1S(void)
 {
     // acc on  且有速度
-    if(ACC_StatusGet() && (Speed_gps > 50))
+   if(ACC_StatusGet() && (Speed_gps > 50)&&(DataLink_Status())&&(JT808Conf_struct.take_Duration>=600))
+   //	if(JT808Conf_struct.take_Duration)	
     {
         TimeTriggerPhoto_counter++;
-        if(TimeTriggerPhoto_counter > JT808Conf_struct.take_Duration)
+        if(TimeTriggerPhoto_counter > JT808Conf_struct.take_Duration) 
             // if(TimeTriggerPhoto_counter>50)
         {
             TimeTriggerPhoto_counter = 0;
-            if(DataLink_Status())
-            {
-                takephoto("1");
-                //  rt_kprintf("\r\n 定时拍照触发 \r\n");
-            }
+				MultiTake_Start();
+			    if(GB19056.workstate==0)
+                  rt_kprintf("\r\n 定时拍照触发 \r\n"); 
         }
     }
     else
@@ -312,7 +311,6 @@ void  TakePhoto_timerISR_1S(void)
 
 }
 
-#endif
 
 
 void rt_init_thread_entry(void *parameter)

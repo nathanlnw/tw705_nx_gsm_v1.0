@@ -1,23 +1,8 @@
----- Warn_Status[1] Matches (22 in 1 files) ----
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Warn_Status[1] = 0x00; //HL
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        if(Warn_Status[1] & 0x10)
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    if(Warn_Status[1] & 0x10)
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    if(Warn_Status[1] & 0x10)
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Warn_Status[1] &= ~0x08; // 清除超时触发
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            Warn_Status[1] &= ~0x10;	// bit20 进出区域报警
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            Warn_Status[1] &= ~0x20;  // bit 21 进出线路报警
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            Warn_Status[1] &= ~0x40; 	// bit 22  路段行驶时间不足报警
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            if((Warn_Status[1] & 0x10) && (0x00001000 & HumanConfirmWarn.ConfirmWarnType)) // 进出区域报警
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                Warn_Status[1] &= ~0x10;
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            if((Warn_Status[1] & 0x20) && (0x00002000 & HumanConfirmWarn.ConfirmWarnType)) // 进出路线报警
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                Warn_Status[1] &= ~0x20;
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            if((Warn_Status[1] & 0x40) && (0x00004000 & HumanConfirmWarn.ConfirmWarnType)) // 路段行驶时间不足、过长
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                Warn_Status[1] &= ~0x40;
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                    Warn_Status[1] |= 0x10; // 进出区域报警
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                    Warn_Status[1] |= 0x10; // 进出区域报警
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                    Warn_Status[1] |= 0x10; // 进出区域报警
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                    Warn_Status[1] |= 0x10; // 进出区域报警
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        if( (Warn_Status[1] & 0x80) == 0) //  如果以前没触发，那么及时上报
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Warn_Status[1] |= 0x80; // 路线偏航报警
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        if (Warn_Status[1] & 0x80) //  如果以前没触发，那么及时上报
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Warn_Status[1] &= ~0x80; // 路线偏航报警
+---- Timer_0200_send Matches (7 in 3 files) ----
+App_gsm.c (bsp\stm32f207vc_tw705\app_712\gsm):     	   Timer_0200_send++;
+App_gsm.c (bsp\stm32f207vc_tw705\app_712\gsm):		   if(Timer_0200_send>90) 
+App_gsm.c (bsp\stm32f207vc_tw705\app_712\gsm):		   	   Timer_0200_send=0;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):u16  Timer_0200_send=0; // 0200  判断应答
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):			Timer_0200_send=0;   
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):			 Timer_0200_send=0;
+Protocol_808.h (bsp\stm32f207vc_tw705\app_712\protocol_808):extern u16  Timer_0200_send; // 0200  判断应答

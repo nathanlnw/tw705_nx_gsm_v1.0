@@ -525,6 +525,8 @@ typedef struct _CAMERA
     u8 Channel_ID;     //  拍照通道
     u8 Operate_state;  //  拍照后处理状态    0 : 保存   1:  实时上传
 
+
+
 } CAMERA;
 //---------- 多媒体  ----------
 typedef struct _MULTIMEDIA
@@ -981,6 +983,7 @@ extern _Media_SD_state Video_sdState;	//视频发送
 //------ Photo -----
 extern  u32 PicFileSize; // 图片文件大小
 extern  u8  PictureName[40];
+extern  u32 TimeTriggerPhoto_counter;
 
 
 
@@ -1403,9 +1406,13 @@ extern void  Spd_Exp_Wr(void);
 extern u8  Api_avrg15minSpd_Content_read(u8 *dest);
 extern u8  Avrg15_min_generate(u8 spd);
 extern void Averg15_min_timer_1s(void);
-extern u8  Api_15min_save_1_record(void);
+extern u8  Api_15min_save_1_record(void); 
 #endif
 
 
+
+
+
 #endif
+
 

@@ -56,8 +56,9 @@ extern  void  MainPower_Recover_process(void);
 extern  void TF_Init(void);
 extern  uint8_t sd_ok;
 extern  void sd_writefile(char *name, char *str, int len_str);
-extern   void  TakePhoto_timerISR_1S(void);
 #endif
+
+extern   void  TakePhoto_timerISR_1S(void);
 
 
 #endif
