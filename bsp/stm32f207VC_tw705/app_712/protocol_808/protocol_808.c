@@ -1134,7 +1134,7 @@ void Speed_pro(u8 *tmpinfo, u8 Invalue, u8 Point)
             else
                 Speed_gps = (u16)sp_DISP;
 
-           // Speed_gps=800;//800;  //  假的为了测试     
+           //Speed_gps=800;//800;  //  假的为了测试     
 
             //---------------------------------------------------------------------------
             if(JT808Conf_struct.Speed_GetType)  // 通过速度传感器 获取速度
@@ -9472,7 +9472,7 @@ void SpeedWarnJudge(void)  //  速度报警判断
     if(Spd_Using > ( JT808Conf_struct.Speed_warn_MAX * 10) )
     {
         if(GB19056.SPK_Speed_Warn.Warn_state_Enable == 0)
-            GB19056.SPK_Speed_Warn.Warn_state_Enable = 1;
+            GB19056.SPK_Speed_Warn.Warn_state_Enable = 1; 
     }
     else
         GB19056.SPK_Speed_Warn.Warn_state_Enable = 0; // clear
@@ -9497,6 +9497,7 @@ void SpeedWarnJudge(void)  //  速度报警判断
 
                     StatusReg_SPD_WARN(); //  超速报警状态
                     rt_kprintf("\r\n  超速报警\r\n");
+					 TTS_play( "您已超速请安全驾驶" ); 
 
                     // modify  国标要求
                     if(GB19056.SPK_Speed_Warn.Warn_state_Enable == 0)

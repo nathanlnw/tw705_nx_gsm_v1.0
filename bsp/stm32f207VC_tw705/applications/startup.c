@@ -97,7 +97,7 @@ void rtthread_startup(void)
 
 
 #endif
-    rt_kprintf("\n\r 宁夏北星科技有限公司  GGHYPT  tw705-gsm-- chip:STM32F207   2015-6-29 Version 2.0 ALL hardware 判应答-Formal\r\n ");
+    rt_kprintf("\n\r 宁夏北星科技有限公司  GGHYPT  tw705-gsm-- chip:STM32F207   2015-7-10  Version 2.0 ALL hardware 判应答-Formal\r\n ");
     /* show version */
     rt_show_version(); 
 
@@ -105,19 +105,18 @@ void rtthread_startup(void)
     rt_system_tick_init();
 
     /* init kernel object */
-    rt_system_object_init();
+    rt_system_object_init(); 
 
     /* init timer system */
     rt_system_timer_init();
 
-    rt_system_heap_init((void *)STM32_SRAM_BEGIN, (void *)STM32_SRAM_END);
+    rt_system_heap_init((void *)STM32_SRAM_BEGIN, (void *)STM32_SRAM_END);  
 
     /* init scheduler system */
     rt_system_scheduler_init();
 
     /* init all device */
     rt_device_init_all();
-
     //------------------- Device  thread ----------------------------------
 
 

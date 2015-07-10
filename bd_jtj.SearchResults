@@ -1,8 +1,12 @@
----- Timer_0200_send Matches (7 in 3 files) ----
-App_gsm.c (bsp\stm32f207vc_tw705\app_712\gsm):     	   Timer_0200_send++;
-App_gsm.c (bsp\stm32f207vc_tw705\app_712\gsm):		   if(Timer_0200_send>90) 
-App_gsm.c (bsp\stm32f207vc_tw705\app_712\gsm):		   	   Timer_0200_send=0;
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):u16  Timer_0200_send=0; // 0200  ÅÐ¶ÏÓ¦´ð
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):			Timer_0200_send=0;   
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):			 Timer_0200_send=0;
-Protocol_808.h (bsp\stm32f207vc_tw705\app_712\protocol_808):extern u16  Timer_0200_send; // 0200  ÅÐ¶ÏÓ¦´ð
+---- GB19056.SPK_Speed_Warn.Warn_state_Enable Matches (11 in 2 files) ----
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):    GB19056.SPK_Speed_Warn.Warn_state_Enable = 0;
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):    if(GB19056.SPK_Speed_Warn.Warn_state_Enable)
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):        if(GB19056.SPK_Speed_Warn.Warn_state_Enable == 1)
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):            GB19056.SPK_Speed_Warn.Warn_state_Enable = 2;
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):        GB19056.SPK_Speed_Warn.Warn_state_Enable = value;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        if(GB19056.SPK_Speed_Warn.Warn_state_Enable == 0)
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            GB19056.SPK_Speed_Warn.Warn_state_Enable = 1;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        GB19056.SPK_Speed_Warn.Warn_state_Enable = 0; // clear
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                    if(GB19056.SPK_Speed_Warn.Warn_state_Enable == 0)
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                        GB19056.SPK_Speed_Warn.Warn_state_Enable = 1;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            GB19056.SPK_Speed_Warn.Warn_state_Enable = 0; // clear
