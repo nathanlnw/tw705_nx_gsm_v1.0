@@ -169,6 +169,8 @@ void GPSGPRS_Status(void)
     else if(JT808Conf_struct.LOAD_STATE==3)
     	lcd_bitmap(95,2,&BMP_full_1, LCD_MODE_SET);
     */
+     if(Oil.oil_YH_workstate) 
+      	lcd_bitmap(95,2,&BMP_full_0, LCD_MODE_SET);
 
     //电源标志
     if(ModuleStatus & 0x04)

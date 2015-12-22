@@ -361,6 +361,16 @@ static void timeout_app(void   *parameter)
                 XinhaoStatus[i + 10] = 0x30;
             SensorFlag = SensorFlag >> 1;
         }
+        // 每秒一次检测 信号线状态变化   2015-11-16
+        if(Vehicle_sensor_Bak^Vehicle_sensor)
+			{
+			   Current_UDP_sd=1;
+			   PositionSD_Enable();
+			    // rt_kprintf("\r\n  传感器状态发生变化 ");   
+        	}   
+		
+        Vehicle_sensor_Bak=Vehicle_sensor;  
+        
 
 
         //   gps using   confirm    确保车辆确实是在运行
@@ -430,6 +440,11 @@ static void timeout_app(void   *parameter)
 //#ifdef TFCARD
         TakePhoto_timerISR_1S();
 //#endif
+
+        //  油耗盒连接状态检测
+        Oil_Sensor_Connect_Checking();
+
+
     }
 
 
@@ -552,6 +567,9 @@ static void App808_thread_entry(void *parameter)
             delay_ms(8);
             Redial_reset_save = 0;
         }
+		// 11. Read Write check 
+         if((cycle_read > Max_CycleNum)||(cycle_write> Max_CycleNum))
+		 	    write_read(0,0);
         //-------     485  TX ------------------------
         Send_const485(CameraState.TX_485const_Enable);
         rt_thread_delay(15);

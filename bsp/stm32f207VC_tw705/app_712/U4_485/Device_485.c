@@ -560,7 +560,6 @@ static rt_err_t   Device_485_init( rt_device_t dev )
     GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_8;		//--------- 485 外设置的电
     GPIO_Init(GPIOB, &GPIO_InitStructure);
     Power_485CH1_OFF;  //  485  关电
-
     //------------------- PC4------------------------------
     GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_4;				 //--------- 485const	收发控制线
     GPIO_Init(GPIOC, &GPIO_InitStructure);

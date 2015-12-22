@@ -13,7 +13,7 @@
 #include  "Vdr.h"
 
 
-#define   SYSID            0x55AA      //55AA 
+#define   SYSID            0xB712      //55AA     A712
 /*
                         0x0000   -----   0x00FF  生产和研发用
                         0x0100   -----   0x0FFF  产品出货用
@@ -1721,6 +1721,7 @@ void SysConfiguration(void)
     SetConfig();
     ReadConfig();
     DefaultConfig();
+
 }
 
 void product_type(u8 *instr)

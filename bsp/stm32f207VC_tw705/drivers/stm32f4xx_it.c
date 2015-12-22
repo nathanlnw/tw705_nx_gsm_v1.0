@@ -203,7 +203,7 @@ void USART3_IRQHandler(void)
     if (USART_GetITStatus(USART3, USART_IT_RXNE) != RESET)
     {
         data = USART_ReceiveData(USART3) & 0xFF;
-        CAN2_RxHandler(data);
+        u3_RxHandler(data);
         USART_ClearITPendingBit(USART3, USART_IT_RXNE);
     }
 

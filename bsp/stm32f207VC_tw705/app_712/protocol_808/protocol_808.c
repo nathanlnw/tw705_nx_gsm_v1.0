@@ -78,6 +78,7 @@ u8  arr_A3F0[22] = {0xA3, 0xF0, 0xA3, 0xF1, 0xA3, 0xF2, 0xA3, 0xF3, 0xA3, 0xF4, 
 
 //----------- 行车记录仪相关  -----------------
 u8          Vehicle_sensor = 0; // 车辆传感器状态   0.2s  查询一次
+u8          Vehicle_sensor_Bak=0;  // BAK
 /*
 D7  刹车
 D6  左转灯
@@ -414,6 +415,7 @@ u16  Timer_0200_send=0; // 0200  判断应答
 u32  Delta_1s_Plus = 0;
 u16  Sec_counter = 0;
 u32  TimeTriggerPhoto_counter = 0; // 定时触发拍照计时器
+u32  Timer_stop_taking_timer=0;  //   终止定时拍照 计时器 
 
 
 void  K_AdjustUseGPS(u32  sp_DISP);  // 通过GPS 校准  K 值  (车辆行驶1KM 的脉冲数目)
@@ -1844,28 +1846,18 @@ void  Save_GPS(void)
         GPSsaveBuf[GPSsaveBuf_Wr++] = BD_EXT.FJ_SignalValue;
 
 
-        //if(DispContent)
-        //	  printf("\r\n---- Satelitenum: %d , CSQ:%d\r\n",Satelite_num,ModuleSQ);
-#if  0
-        //  附加信息 6  -----------------------------
-        //  附加信息 ID
-        GPSsaveBuf[GPSsaveBuf_Wr++] = 0x2A; //自定义io
-        //  附加信息长度
-        GPSsaveBuf[GPSsaveBuf_Wr++] = 2;
-        //  类型
-        GPSsaveBuf[GPSsaveBuf_Wr++] = 0x00;
-        GPSsaveBuf[GPSsaveBuf_Wr++] = 0x00;
+		 //  附加信息 6  -----------------------------	油耗信息
+		 //  附加信息 ID
+		if(Oil.oil_YH_workstate)  
+		{
+			 GPSsaveBuf[GPSsaveBuf_Wr++] = 0x02; //自定义油耗信息
+			 //  附加信息长度
+			 GPSsaveBuf[GPSsaveBuf_Wr++] = 2;
+			 //  类型
+			 GPSsaveBuf[GPSsaveBuf_Wr++] = (u8)(Oil.oil_value>>8);
+			 GPSsaveBuf[GPSsaveBuf_Wr++] =(u8)Oil.oil_value;
+		}
 
-        //  附加信息 7 -----------------------------
-        //  附加信息 ID
-        GPSsaveBuf[GPSsaveBuf_Wr++] = 0x2B; //自定义模拟量上传 AD
-        //  附加信息长度
-        GPSsaveBuf[GPSsaveBuf_Wr++] = 4;
-        GPSsaveBuf[GPSsaveBuf_Wr++] = (BD_EXT.AD_0 >> 8);	// 模拟量 1
-        GPSsaveBuf[GPSsaveBuf_Wr++] = BD_EXT.AD_0;
-        GPSsaveBuf[GPSsaveBuf_Wr++] = (BD_EXT.AD_1 >> 8);	// 模拟量 2
-        GPSsaveBuf[GPSsaveBuf_Wr++] = BD_EXT.AD_1;
-#endif
         //------------------------------------------------
         GPSsaveBuf[0] = GPSsaveBuf_Wr;
 
@@ -2328,28 +2320,19 @@ u8  Stuff_Current_Data_0200H(void)   //  发送即时数据不存储到存储器中
     //  类型
     Original_info[Original_info_Wr++] = BD_EXT.FJ_SignalValue;
 
-    //if(DispContent)
-    // 	printf("\r\n---- Satelitenum: %d , CSQ:%d\r\n",Satelite_num,ModuleSQ);
-#if  0
-    //	附加信息 6	-----------------------------
-    //  附加信息 ID
-    Original_info[Original_info_Wr++] = 0x2A; //自定义io
-    //  附加信息长度
-    Original_info[Original_info_Wr++] = 2;
-    //  类型
-    Original_info[Original_info_Wr++] = 0x00;
-    Original_info[Original_info_Wr++] = 0x00;
 
-    //	附加信息 7 -----------------------------
+    //	附加信息 6	-----------------------------  油耗信息
     //  附加信息 ID
-    Original_info[Original_info_Wr++] = 0x2B; //自定义模拟量上传 AD
-    //  附加信息长度
-    Original_info[Original_info_Wr++] = 4;
-    Original_info[Original_info_Wr++] = (BD_EXT.AD_0 >> 8);	 // 模拟量 1
-    Original_info[Original_info_Wr++] = BD_EXT.AD_0;
-    Original_info[Original_info_Wr++] = (BD_EXT.AD_1 >> 8); // 模拟量 2
-    Original_info[Original_info_Wr++] = BD_EXT.AD_1;
-#endif
+   if(Oil.oil_YH_workstate)  
+   {
+	    Original_info[Original_info_Wr++] = 0x02; //自定义油耗信息
+	    //  附加信息长度
+	    Original_info[Original_info_Wr++] = 2;
+	    //  类型
+	    Original_info[Original_info_Wr++] = (u8)(Oil.oil_value>>8);
+	    Original_info[Original_info_Wr++] =(u8)Oil.oil_value;
+   }
+
     //  3. Send
     Protocol_End(Packet_Normal , 0);
 
@@ -2491,6 +2474,18 @@ u8  Stuff_Current_Data_0201H(void)   //   位置信息查询回应
     Original_info[Original_info_Wr++] = BD_EXT.AD_0;
     Original_info[Original_info_Wr++] = (BD_EXT.AD_1 >> 8);	 // 模拟量 2
     Original_info[Original_info_Wr++] = BD_EXT.AD_1;
+
+	    //	附加信息 6	-----------------------------  油耗信息
+    //  附加信息 ID
+   if(Oil.oil_YH_workstate)  
+   {
+	    Original_info[Original_info_Wr++] = 0x02; //自定义油耗信息
+	    //  附加信息长度
+	    Original_info[Original_info_Wr++] = 2;
+	    //  类型
+	    Original_info[Original_info_Wr++] = (u8)(Oil.oil_value>>8);
+	    Original_info[Original_info_Wr++] =(u8)Oil.oil_value;
+   } 
 
     //  3. Send
     Protocol_End(Packet_Normal , 0);
@@ -5636,6 +5631,8 @@ u8  Stuff_BatchDataTrans_BD_0704H(void)
             continue;
         }
         cycle_read++;
+		if(cycle_read >= Max_CycleNum)
+            cycle_read = 0;
         //----------  子项信息长度 --------------------------
         rd_infolen = reg_128[0];
         Original_info[Original_info_Wr++]   = 0;
@@ -9497,7 +9494,8 @@ void SpeedWarnJudge(void)  //  速度报警判断
 
                     StatusReg_SPD_WARN(); //  超速报警状态
                     rt_kprintf("\r\n  超速报警\r\n");
-					 TTS_play( "您已超速请安全驾驶" ); 
+					speed_Exd.PlayState=1; 
+					 
 
                     // modify  国标要求
                     if(GB19056.SPK_Speed_Warn.Warn_state_Enable == 0)
@@ -9524,12 +9522,16 @@ void SpeedWarnJudge(void)  //  速度报警判断
         else
         {
             StatusReg_SPD_NORMAL(); //  清除速度报警状态寄存器
-
+            speed_Exd.PlayState=0;
+		    speed_Exd.PlayCounter=0; 
+			
             if(speed_Exd.excd_status != 2)
             {
                 StatusReg_SPD_NORMAL(); //  清除速度报警状态寄存器
                 speed_Exd.dur_seconds = 0;
                 speed_Exd.speed_flag = 0;
+
+				
             }
             //----------------------------------------------
             if(speed_Exd.excd_status == 1)
@@ -9544,6 +9546,24 @@ void SpeedWarnJudge(void)  //  速度报警判断
             GB19056.SPK_Speed_Warn.Warn_state_Enable = 0; // clear
         }
     }//------- 速度报警 over	 ---
+
+
+
+     //  Play status
+     if(speed_Exd.PlayState)
+     {
+        if(0==(speed_Exd.PlayCounter%10))
+	     {
+	       TTS_play( "您已超速请安全驾驶" ); 
+         }  
+		 speed_Exd.PlayCounter++;
+		 if(speed_Exd.PlayCounter>57)
+		 	{
+		 	   speed_Exd.PlayState=0;
+               speed_Exd.PlayCounter=0;  
+		 	}
+     }	  
+
 
 
 }

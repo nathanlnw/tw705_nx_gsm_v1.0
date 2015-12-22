@@ -17,22 +17,217 @@
 #include "Device_CAN2.h"
 
 
+
+
+
 u8   U3_Rx[100];
 u8   U3_content[100];
 u16   U3_content_len = 0;
 u8   U3_flag = 0;
 u16   U3_rxCounter = 0;
 
+// 油耗相关
+#define   ABNORMAL_MAXTIMES      10   //30
+#define   Zero_Clear_MAXTIMES    10   // 60
+#define   OIL_CONNECT_MAXTIME    120 //  300  5 分钟
+
+
+YH   Oil;
+
 
 #ifdef RT_USING_DEVICE
 struct rt_device  Device_CAN2;
 #endif
 
+
+
+unsigned long AssicBufToUL(char * buf,unsigned int num)
+{
+ unsigned char tempChar;
+ unsigned int i,j;
+ unsigned long retLong=0;
+ 
+ for(i=0;i<num;i++)
+ 	{
+ 	tempChar=(unsigned char)buf[i];
+	if((tempChar>='0')&&(tempChar<='9'))
+		{
+	 	retLong*=10;
+		retLong+=tempChar-'0';
+		}
+	else
+		{
+		return retLong;
+		}
+ 	}
+ return retLong;
+}
+
+uint8_t u3_process_YH( uint8_t * pinfo )
+{
+	//检查数据完整性,执行数据转换
+	uint8_t		i;
+	uint8_t		buf[32];
+	uint8_t		commacount	= 0, count = 0;
+	uint8_t		*psrc		= pinfo + 7; //指向开始位置
+	uint8_t		crc = 0,crc2;
+	u32  temp_u32data=0;
+
+	for(i=0;i<52;i++) 
+		{
+		crc += pinfo[i];
+		}
+	//rt_kprintf("\n   CRC1    =0x%2X",crc); 
+	while( *psrc++ )
+	{
+		if(( *psrc != ',' )&&(*psrc != '#'))
+		{
+			buf[count++]	= *psrc;
+			buf[count]		= 0;
+			if(count+1 >= sizeof(buf))
+				return 1;
+			continue;
+		}
+		commacount++;
+		switch( commacount )
+		{
+			case 1: /*协议相关内容，4字节*/
+				break;
+
+			case 2: /*硬件相关版本等，3字节*/
+				break;
+
+			case 3: /*设备上线时长，千时，百时，十时，个时，十分，个分；6字节*/
+				break;
+
+			case 4: /*平滑处理后的液位值；5字节*/
+				if(count<5)
+					return 0;
+				Oil.oil_average_value = AssicBufToUL(buf,5);
+				//rt_kprintf("\n 液位平均值=%d",Oil.oil_average_value);
+				break;
+			case 5: /*数据滤波等级；1字节*/
+				break;
+			case 6: /*车辆运行和停止状态；2字节*/
+				break;
+			case 7: /*当前实时液位正负1cm范围内的液位个数；2字节*/
+				break;
+			case 8: /*接收信号灵明度，共85级；2字节*/
+				break;
+			case 9: /*信号强度，最大99；2字节*/
+				break;
+			case 10: /*实时液位，精度0.1mm；5字节*/
+				if(count<5)
+					return 0;
+				Oil.oil_realtime_value = AssicBufToUL(buf,5);
+				//rt_kprintf(" 实时值=%d",Oil.oil_realtime_value);
+				break;
+			case 11: /*满量程，默认为800；5字节*/
+				if(count<5)
+					return 0;
+				temp_u32data = AssicBufToUL(buf,5);
+				//rt_kprintf(" 满量程=%d",temp_u32data);
+				break;
+			case 12: /*从"*"开始前面52个字符的和；2字节*/
+				  Ascii_To_Hex(buf,&crc2,1);  
+				//rt_kprintf("\n   CRC2    =0x%2X",crc2);  
+				if(crc2 == crc)
+				 {	
+				   //  Data come  ,  update  every packet
+				    Oil.oil_YH_no_data_Counter=0;
+
+                   //  check the   change  
+					if(Oil.oil_realtime_value!= Oil.oil_average_value)  // 实时数值和 平均不等更新实时数值
+						{
+						  Oil.oil_value = Oil.oil_average_value;
+						 if((GB19056.workstate == 0)&&(DispContent))
+						     rt_kprintf("\r\n Finalvalue update =%d",Oil.oil_value);
+
+						   //  update Oil workstate
+						   if(Oil.oil_realtime_value)
+				            {
+				               Oil.oil_YH_workstate=OIL_NORMAL;
+							   Oil.oil_YH_no_data_Counter=0;
+							   Oil.oil_YH_0_value_cacheCounter=0;
+							   Oil.oil_YH_Abnormal_counter=0;
+							   Warn_Status[0] &= ~0x02; //   油量异常还原正常
+						   	}  
+						   else
+						   	{   // check  with vehicle  speed 
+						   	  if(Oil.oil_YH_workstate==OIL_NORMAL)
+						   	  {
+								   	    if(Speed_gps >100)  //  Speed_gps > 10 km/h    
+		                                {
+		                                   Oil.oil_YH_Abnormal_counter++;
+										   if(Oil.oil_YH_Abnormal_counter>ABNORMAL_MAXTIMES)  //  30次是300s   5分钟
+										   	{
+										   	   Oil.oil_YH_workstate=OIL_ABNORMAL;
+											   Oil.oil_YH_Abnormal_counter=0;
+											    Warn_Status[0] |= 0x02; //   油量异常还原正常
+		                                      // rt_kprintf("\r\n 油耗盒工作异常"); 
+											   
+										   	}
+										    Oil.oil_YH_0_value_cacheCounter=0; 
+
+								   	    } 
+										else
+										{
+										   if(Oil.oil_YH_Abnormal_counter)
+										   	{
+										   	   Oil.oil_YH_0_value_cacheCounter++;
+											   if(Oil.oil_YH_0_value_cacheCounter>Zero_Clear_MAXTIMES)
+											   	{
+		                                           Oil.oil_YH_0_value_cacheCounter=0;
+									               Oil.oil_YH_Abnormal_counter=0;    // just  clear coutner  not  change the state
+									              // rt_kprintf("\r\n 速度小于10km 清除中"); 
+											   	}
+										   	}							    
+
+										}
+								
+						       }
+						   	}
+						}
+				    // 	Debug related
+						if((GB19056.workstate == 0)&&(DispContent))
+					       rt_kprintf("\r\n Average =%d,realtime=%d,final=%d 剩余量=%d.%d升  speed=%d  \r\n",Oil.oil_average_value,Oil.oil_realtime_value,Oil.oil_value,Oil.oil_value/10,Oil.oil_value%10,Speed_gps);  
+				 } 
+				break;
+		}
+		count	= 0;
+		buf[0]	= 0;
+	}
+	return 9;
+}
+
+
+//   检查油耗盒的连接状态      in     1s  
+void Oil_Sensor_Connect_Checking(void)
+{
+  if(Oil.oil_YH_workstate)
+   {
+     Oil.oil_YH_no_data_Counter++;
+	 if(Oil.oil_YH_no_data_Counter>OIL_CONNECT_MAXTIME)
+	 {
+	       Oil.oil_YH_no_data_Counter=0;
+           Oil.oil_YH_workstate=OIL_NOCONNECT;
+	 	   Oil.oil_YH_no_data_Counter=0;
+	 	   Oil.oil_YH_0_value_cacheCounter=0;
+	 	   Oil.oil_YH_Abnormal_counter=0;    // 油耗异常状态
+	 	   Warn_Status[0] &= ~0x02; //   油量异常还原正常
+	 	   	if((GB19056.workstate == 0)&&(DispContent))
+	 	   		rt_kprintf("\r\n     油耗盒断开"); 
+  	 }
+	
+   }
+}
+
+
 void U3_RxProcess(void)
 {
-    u8  iRX;
-
-
+   u8  iRX;
+   
+   #if  0  
     if(U3_content[1] == 0x33) // CAN 2
     {
         if(U3_content[2] == 0x03) // CAN 数据接收
@@ -59,8 +254,19 @@ void U3_RxProcess(void)
         }
 
     }
+	#endif
+
+	if(U3_flag)
+	{
+		if((GB19056.workstate == 0)&&(DispContent)) 
+		  rt_kprintf("%s", U3_Rx);
+		u3_process_YH(U3_Rx); 
+		U3_flag=0;
+        U3_rxCounter = 0;
+	}	
 
 }
+
 
 u16  Protocol_808_Decode_Good(u8 *Instr , u8 *Outstr, u16  in_len) // 解析指定buffer :  UDP_HEX_Rx
 {
@@ -93,7 +299,7 @@ u16  Protocol_808_Decode_Good(u8 *Instr , u8 *Outstr, u16  in_len) // 解析指定bu
     return decode_len;
 }
 
-void CAN2_RxHandler(unsigned char rx_data)
+void u3_RxHandler(unsigned char rx_data)
 {
 #if 0
     if(U3_flag)
@@ -125,8 +331,8 @@ void CAN2_RxHandler(unsigned char rx_data)
     }
     else
     {
-        rt_kprintf("%s", U3_Rx);
-        U3_rxCounter = 0;
+        U3_flag = 1; 
+		U3_RxProcess(); 
     }
 
 }

@@ -1,12 +1,53 @@
----- GB19056.SPK_Speed_Warn.Warn_state_Enable Matches (11 in 2 files) ----
-GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):    GB19056.SPK_Speed_Warn.Warn_state_Enable = 0;
-GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):    if(GB19056.SPK_Speed_Warn.Warn_state_Enable)
-GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):        if(GB19056.SPK_Speed_Warn.Warn_state_Enable == 1)
-GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):            GB19056.SPK_Speed_Warn.Warn_state_Enable = 2;
-GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):        GB19056.SPK_Speed_Warn.Warn_state_Enable = value;
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        if(GB19056.SPK_Speed_Warn.Warn_state_Enable == 0)
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            GB19056.SPK_Speed_Warn.Warn_state_Enable = 1;
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        GB19056.SPK_Speed_Warn.Warn_state_Enable = 0; // clear
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                    if(GB19056.SPK_Speed_Warn.Warn_state_Enable == 0)
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                        GB19056.SPK_Speed_Warn.Warn_state_Enable = 1;
-Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            GB19056.SPK_Speed_Warn.Warn_state_Enable = 0; // clear
+---- Speed_gps Matches (52 in 10 files) ----
+Application.c (bsp\stm32f207vc_tw705\applications):   if(ACC_StatusGet() && (Speed_gps > 50)&&(DataLink_Status())&&(JT808Conf_struct.take_Duration>=600))
+App_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        rt_kprintf("\r\n 当前校准状态: %d  传感器速度=%d  速度脉冲系数:%d   卫星速度spd=%d\r\n", JT808Conf_struct.DF_K_adjustState, Speed_cacu, JT808Conf_struct.Vech_Character_Value, Speed_gps);
+Device_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Speed_working = Speed_gps;
+Device_CAN2.c (bsp\stm32f207vc_tw705\app_712\can):								   	    if(Speed_gps>100)  //  speed > 10 km/h    
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):    if(Speed_gps > 400)
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):        deltaSpd = abs(Speed_gps - Speed_cacu) * 100; // 速度差值扩大100倍
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):        if((deltaSpd / Speed_gps) >= 11)
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):                spd_reg = Speed_gps % 10;
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):                    spd_reg = Speed_gps / 10 + 1;
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):                    spd_reg = Speed_gps / 10;
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):        Speed_gps = gps_spd;
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):        Speed_gps = 0;
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):        Speed_gps = gps_spd;
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):        rt_kprintf("\r\n  假 gps speed enable =%d\r\n", Speed_gps);
+GB19056.c (bsp\stm32f207vc_tw705\app_712\drvdata):        Speed_gps = 0;
+Menu_1_Idle.c (bsp\stm32f207vc_tw705\app_712\lcd):        if((disp_spd < 5) && ((Speed_gps / 10) > 15))
+Menu_1_Idle.c (bsp\stm32f207vc_tw705\app_712\lcd):            disp_spd = Speed_gps / 10;
+Menu_1_Idle.c (bsp\stm32f207vc_tw705\app_712\lcd):        disp_spd = Speed_gps / 10;
+Menu_Include.c (bsp\stm32f207vc_tw705\app_712\lcd):        disp_spd = Speed_gps / 10;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):u16     Speed_gps = 0; // 通过GPS计算出来的速度 0.1km/h
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                    Speed_gps = (u16)sp_DISP;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                Speed_gps = (u16)sp_DISP;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):           //Speed_gps=800;//800;  //  假的为了测试     
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                K_AdjustUseGPS(Speed_gps);  //  调整K值
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                    Spd_Using = Speed_gps;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                    if((Speed_cacu < 50) && (Speed_gps > 150))
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                        Spd_Using = Speed_gps;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                Spd_Using = Speed_gps;  // 用GPS数据计算得的速度 单位0.1km/h
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            Speed_gps = 0;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                Spd_Using = Speed_gps;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    if((JT808Conf_struct.DF_K_adjustState) && (JT808Conf_struct.Speed_GetType) && (Speed_gps >= 400) && (UDP_dataPacket_flag == 0x02 ))
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        if(abs(Speed_gps - Speed_cacu) > 150) // 速度相差18Km/h    这里的单位是0.1km/h
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        GPSsaveBuf[GPSsaveBuf_Wr++] = (Speed_gps >> 8);	// High
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        GPSsaveBuf[GPSsaveBuf_Wr++] = (u8)Speed_gps; // Low
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        //rt_kprintf("\r\n GPS速度=%d km/h , 传感器速度=%d km/h\r\n",Speed_gps,Speed_cacu);
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Original_info[Original_info_Wr++] = (u8)(Speed_gps >> 8); //(Spd_Using>>8);
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Original_info[Original_info_Wr++] = (u8)(Speed_gps); //Spd_Using;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    //rt_kprintf("\r\n GPS速度=%d km/h , 传感器速度=%d km/h\r\n",Speed_gps,Speed_cacu);
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Original_info[Original_info_Wr++] = (u8)(Speed_gps >> 8);
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Original_info[Original_info_Wr++] = (u8)Speed_gps;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Original_info[Original_info_Wr++] = (u8)(Speed_gps >> 8);
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Original_info[Original_info_Wr++] = (u8)Speed_gps;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Original_info[Original_info_Wr++] = (u8)(Speed_gps >> 8); //(Spd_Using>>8);
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):        Original_info[Original_info_Wr++] = (u8)(Speed_gps); //Spd_Using;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Instr[Infowr++] = (u8)(Speed_gps >> 8);
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    Instr[Infowr++] = (u8)Speed_gps;
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):                if((InOutState == 0) && (CacuDist < Rail_Cycle.Radius ) && (Rail_Cycle.MaxSpd > (Speed_gps / 10)))
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):            if((Rail_Cycle.Area_attribute & 0x0020) && (Rail_Cycle.MaxSpd > (Speed_gps / 10))) //Bit 5 出区域报警给平台
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    if((Speed_gps >= 60) || (Speed_cacu >= 60))	// 记录仪认证时候是这样的 1km/h
+Protocol_808.c (bsp\stm32f207vc_tw705\app_712\protocol_808):    if((Speed_gps < 60) && (Speed_cacu < 60))
+Protocol_808.h (bsp\stm32f207vc_tw705\app_712\protocol_808):extern  u16		        Speed_gps;    // 通过GPS计算出来的速度 km/h
+SMS.c (bsp\stm32f207vc_tw705\app_712\gsm):                    sprintf(SMS_Service.SMS_sd_Content + strlen(SMS_Service.SMS_sd_Content), "%d km/h)", Speed_gps / 10);

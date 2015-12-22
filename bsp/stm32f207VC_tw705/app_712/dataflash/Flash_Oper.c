@@ -77,6 +77,7 @@ SV_RTRY:
                 Current_UDP_sd = 1;
                 if(GB19056.workstate == 0)
                     rt_kprintf("\r\n wrte error-> current\r\n");
+				write_read(0, 0); // clear  reset to  zero 
                 return false;
             }
         }

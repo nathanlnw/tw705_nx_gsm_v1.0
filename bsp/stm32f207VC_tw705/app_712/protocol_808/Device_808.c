@@ -1105,6 +1105,16 @@ void dispdata(char *instr)
     {
         DispContent = (instr[0] - 0x30);
         rt_kprintf("\r\n		Dispdata =%d \r\n", DispContent);
+		/*
+		if(DispContent==1)
+		   speed_Exd.PlayState=1;
+		else
+			{
+                speed_Exd.PlayState=0; 
+		         speed_Exd.PlayCounter=0;
+ 
+			}
+		*/
         return;
     }
 }

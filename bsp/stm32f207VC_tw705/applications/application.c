@@ -292,12 +292,27 @@ void TF_Init(void)
 
 void  TakePhoto_timerISR_1S(void)
 {
-    // acc on  且有速度
+    // Judge
    if(ACC_StatusGet() && (Speed_gps > 50)&&(DataLink_Status())&&(JT808Conf_struct.take_Duration>=600))
    //	if(JT808Conf_struct.take_Duration)	
+   //if(ACC_StatusGet()&&(DataLink_Status())&&(JT808Conf_struct.take_Duration>=600)) 
     {
-        TimeTriggerPhoto_counter++;
-        if(TimeTriggerPhoto_counter > JT808Conf_struct.take_Duration) 
+        TimeTriggerPhoto_counter++;      
+		Timer_stop_taking_timer=0;  // stop clear
+    }
+    else
+     {
+        Timer_stop_taking_timer++;
+       if(Timer_stop_taking_timer>=580)  // 不满足该状态持续10分钟
+        {
+          TimeTriggerPhoto_counter = 0;
+       	}  
+	   else	   	 
+	       TimeTriggerPhoto_counter++; 
+
+     }  
+    //   Do  action  
+	   if((TimeTriggerPhoto_counter > JT808Conf_struct.take_Duration)&&(Login_Menu_Flag)) 
             // if(TimeTriggerPhoto_counter>50)
         {
             TimeTriggerPhoto_counter = 0;
@@ -305,9 +320,6 @@ void  TakePhoto_timerISR_1S(void)
 			    if(GB19056.workstate==0)
                   rt_kprintf("\r\n 定时拍照触发 \r\n"); 
         }
-    }
-    else
-        TimeTriggerPhoto_counter = 0;
 
 }
 

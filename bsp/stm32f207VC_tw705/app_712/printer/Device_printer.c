@@ -439,11 +439,11 @@ void printer_print_glyph( unsigned char len )
        }
      */
 
-    if(HardWareVerion == 0x01)
+    if(HardWareVerion == 0xff)
     {
         COL = GLYPH_COL;
     }
-    if(HardWareVerion == 0x03)
+    if((HardWareVerion == 0x03)||(HardWareVerion == 0x01))
     {
         COL = GLYPH_COL_V3;
     }
@@ -577,11 +577,11 @@ void printer_get_str_glyph( unsigned char *pstr, unsigned char len )
     WatchDog_Feed();
 
 
-    if(HardWareVerion == 0x01)
+    if(HardWareVerion == 0xff)
     {
         COL = GLYPH_COL;
     }
-    if(HardWareVerion == 0x03)
+     if((HardWareVerion == 0x03)||(HardWareVerion == 0x01))
     {
         COL = GLYPH_COL_V3;
     }
@@ -605,7 +605,7 @@ void printer_get_str_glyph( unsigned char *pstr, unsigned char len )
         charnum--;
         if( msb <= 0x80 ) //ascii×Ö·û
         {
-            if(HardWareVerion == 0x01)
+            if(HardWareVerion == 0xff)
             {
                 //     ¶ÁÈ¡ 6x12  µãÕó£¬ ÖðÁÐÄæÏòÊ½¾ØÕó×Ö¿â
                 ///OUT FLASH
@@ -683,7 +683,7 @@ void printer_get_str_glyph( unsigned char *pstr, unsigned char len )
                 }
                 start_col += 6; // ÁÐÊý
             }
-            else if(HardWareVerion == 0x03)
+            else if((HardWareVerion == 0x03)||(HardWareVerion == 0x01))
             {
                 //-------------------------------
                 ///OUT FLASH
@@ -729,13 +729,13 @@ void printer_get_str_glyph( unsigned char *pstr, unsigned char len )
             if( ( msb >= 0xa1 ) && ( msb <= 0xa3 ) && ( lsb >= 0xa1 ) )
             {
                 ///OUT FLASH
-                if(HardWareVerion == 0x01)
+                if(HardWareVerion == 0xff)
                 {
                     addr = FONT_HZ1212_ADDR + ( ( ( (unsigned long)msb ) - 0xa1 ) * 94 + ( ( (unsigned long)lsb ) - 0xa1 ) ) * 24;
                     SST25V_BufferRead( font_buf, addr, 24);
                     addr = (int)font_buf;
                 }
-                else if(HardWareVerion == 0x03)
+                else   if((HardWareVerion == 0x03)||(HardWareVerion == 0x01))
                 {
                     addr = FONT_HZ2424_ADDR + ( ( ( (unsigned long)msb ) - 0xa1 ) * 94 + ( ( (unsigned long)lsb ) - 0xa1 ) ) * 72;
                     SST25V_BufferRead( font_buf, addr, 72);
@@ -745,13 +745,13 @@ void printer_get_str_glyph( unsigned char *pstr, unsigned char len )
             else if( ( msb >= 0xb0 ) && ( msb <= 0xf7 ) && ( lsb >= 0xa1 ) )
             {
                 ///OUT FLASH
-                if(HardWareVerion == 0x01)
+                if(HardWareVerion == 0xff)
                 {
                     addr = FONT_HZ1212_ADDR + ( ( ( (unsigned long)msb ) - 0xb0 ) * 94 + ( ( (unsigned long)lsb ) - 0xa1 ) ) * 24 + 282 * 24;
                     SST25V_BufferRead( font_buf, addr, 24);
                     addr = (int)font_buf;
                 }
-                else if(HardWareVerion == 0x03)
+                else   if((HardWareVerion == 0x03)||(HardWareVerion == 0x01))
                 {
                     addr = FONT_HZ2424_ADDR + ( ( ( (unsigned long)msb ) - 0xb0 ) * 94 + ( ( (unsigned long)lsb ) - 0xa1 ) ) * 72 + 282 * 72;
                     SST25V_BufferRead( font_buf, addr, 72);
@@ -760,7 +760,7 @@ void printer_get_str_glyph( unsigned char *pstr, unsigned char len )
             }
 
 
-            if(HardWareVerion == 0x01)
+            if(HardWareVerion == 0xff)
             {
                 //  Sart  : ¾ØÕó×ª»»
 
@@ -844,7 +844,7 @@ void printer_get_str_glyph( unsigned char *pstr, unsigned char len )
                 }
                 start_col += 12;
             }
-            else if(HardWareVerion == 0x03)
+            else   if((HardWareVerion == 0x03)||(HardWareVerion == 0x01))
             {
                 for( offset = 0; offset < 18; offset++ )
                 {
@@ -912,14 +912,14 @@ static void printer_get_str_line( void )
     u8 HZ_Width = 0;
     u8 COL = 0;
 
-    if(HardWareVerion == 0x01)
+    if(HardWareVerion == 0xff)
     {
         Dotline = Dotline_Num;
         asii_width = Prnt_asii_width;
         HZ_Width = Prnt_HZ_Width;
         COL = GLYPH_COL;
     }
-    if(HardWareVerion == 0x03)
+     if((HardWareVerion == 0x03)||(HardWareVerion == 0x01))
     {
         Dotline = Dotline_Num_V3;
         asii_width = Prnt_asii_width_V3;
@@ -1033,14 +1033,14 @@ static rt_err_t printer_init( rt_device_t dev )
     int Dotline = 0;
 
     HardWareVerion = HardWareGet();
-    if(HardWareVerion == 0x03) // common
+     if((HardWareVerion == 0x03)||(HardWareVerion == 0x01)) // common
     {
         printer_setting_init(1);     //192 point
         Dotline = Dotline_Num_V3;
 
     }
     else   //  new  printer
-        if(HardWareVerion == 0x01)
+        if(HardWareVerion == 0xff)
         {
             printer_setting_init(0);     //192 point
             Dotline = Dotline_Num;
@@ -1127,11 +1127,11 @@ static rt_err_t printer_control( rt_device_t dev, rt_uint8_t cmd, void *arg )
         break;
     case PRINTER_CMD_DOTLINE_N:
 
-        if(HardWareVerion == 0x01)
+        if(HardWareVerion == 0xff)
         {
             HZ_Width = Prnt_HZ_Width;
         }
-        if(HardWareVerion == 0x03)
+         if((HardWareVerion == 0x03)||(HardWareVerion == 0x01))
         {
             HZ_Width = Prnt_HZ_Width_V3;
         }

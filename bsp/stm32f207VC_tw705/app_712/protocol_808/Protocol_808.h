@@ -374,6 +374,10 @@ typedef struct SPDEXP
     u8  speed_flag;        //  超速报警触发后先立即上报一包标志位
     u8  ex_startTime[6];
     u8  ex_endTime[6];
+
+	u8   PlayState; //  播放状态
+	u32  PlayCounter;  // 
+	
 } SPD_EXP;
 //------- 疲劳驾驶门限 ----
 typedef struct _TIRED_DOOR
@@ -984,6 +988,7 @@ extern _Media_SD_state Video_sdState;	//视频发送
 extern  u32 PicFileSize; // 图片文件大小
 extern  u8  PictureName[40];
 extern  u32 TimeTriggerPhoto_counter;
+extern  u32 Timer_stop_taking_timer;  //   终止定时拍照 计时器 
 
 
 
@@ -997,6 +1002,7 @@ extern  u32 TimeTriggerPhoto_counter;
 
 //-------  行车记录仪相关extern BD_EXTEND     BD_EXT;     //  北斗扩展协议
 extern  u8         Vehicle_sensor; // 车辆传感器状态   0.2s  查询一次
+extern  u8		   Vehicle_sensor_Bak;  // BAK 
 
 extern  DOUBT_TYPE        Sensor_buf[200];// 20s 状态记录
 extern 	u8		   save_sensorCounter, sensor_writeOverFlag;

@@ -581,6 +581,7 @@ void   SMS_protocol (u8 *instr, u16 len, u8  ACKstate)  //  ACKstate
             else if(strncmp(pstrTemp, "TIREDCLEAR", 10) == 0)		///8.清除疲劳驾驶记录
             {
                 index_write(0x11, 0);
+				Warn_Status[3] &= ~0x04; //BIT(2)	 疲劳驾驶  
                 Add_SMS_Ack_Content(sms_ack_data, ACKstate);
             }
             else if(strncmp(pstrTemp, "SPDLIMIT", 8) == 0)		///8+1.清除疲劳驾驶记录
