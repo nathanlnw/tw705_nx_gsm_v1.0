@@ -574,6 +574,8 @@ static void App808_thread_entry(void *parameter)
         Send_const485(CameraState.TX_485const_Enable);
         rt_thread_delay(15);
         //    485   related  over
+
+		  U3_RxProcess();
         //----------------------------------------
         app_thread_runCounter = 0;
         //--------------------------------------------------------

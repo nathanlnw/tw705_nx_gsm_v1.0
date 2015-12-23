@@ -47,6 +47,7 @@ extern  struct rt_device  Device_CAN2;
 extern void  u3_RxHandler(unsigned char rx_data);
 extern void  Device_CAN2_regist(void );
 extern void Oil_Sensor_Connect_Checking(void);
+extern void U3_RxProcess(void); 
 
 
 

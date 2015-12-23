@@ -723,6 +723,9 @@ void   SMS_protocol (u8 *instr, u16 len, u8  ACKstate)  //  ACKstate
                     sprintf(SMS_Service.SMS_sd_Content + strlen(SMS_Service.SMS_sd_Content), "%d km/h)", Speed_gps / 10);
                     strcat(SMS_Service.SMS_sd_Content, "#sensor("); // ·Ö¸ô·ûºÅ
                     sprintf(SMS_Service.SMS_sd_Content + strlen(SMS_Service.SMS_sd_Content), "%d km/h)", Speed_cacu / 10);
+				case '6':	
+					strcat(SMS_Service.SMS_sd_Content, "#oilvalue("); // ·Ö¸ô·ûºÅ
+                    sprintf(SMS_Service.SMS_sd_Content + strlen(SMS_Service.SMS_sd_Content), "%d (0.1mm) state:%d)", Oil.oil_value,Oil.oil_YH_workstate);
 
                     break;
                 }

@@ -27,9 +27,9 @@ u8   U3_flag = 0;
 u16   U3_rxCounter = 0;
 
 // 油耗相关
-#define   ABNORMAL_MAXTIMES      10   //30
-#define   Zero_Clear_MAXTIMES    10   // 60
-#define   OIL_CONNECT_MAXTIME    120 //  300  5 分钟
+#define   ABNORMAL_MAXTIMES      30
+#define   Zero_Clear_MAXTIMES     60
+#define   OIL_CONNECT_MAXTIME      300  //5 分钟
 
 
 YH   Oil;
@@ -332,7 +332,7 @@ void u3_RxHandler(unsigned char rx_data)
     else
     {
         U3_flag = 1; 
-		U3_RxProcess(); 
+		//U3_RxProcess(); 
     }
 
 }

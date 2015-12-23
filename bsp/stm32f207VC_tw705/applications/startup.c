@@ -97,7 +97,7 @@ void rtthread_startup(void)
 
 
 #endif
-    rt_kprintf("\n\r 宁夏北星科技有限公司  GGHYPT  tw705-gsm-- chip:STM32F207   2015-12-22  Version 2.0 newLCD old print YH \r\n ");
+    rt_kprintf("\n\r 宁夏北星科技有限公司  GGHYPT  tw705-gsm-- chip:STM32F207   2015-12-22  Version 2.0 newLCD old print YH -Formal\r\n ");
     /* show version */
     rt_show_version(); 
 
